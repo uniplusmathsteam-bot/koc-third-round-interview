@@ -1,0 +1,3655 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="UniPlus Education KOC practical recruitment task — build an inequality tool, a percentages animation and a probability comic in 60 minutes, then demonstrate them in 15.">
+  <title>UniPlus KOC · Creation Sprint</title>
+  <style>
+    :root {
+      --ink: #16211d;
+      --muted: #5e6b65;
+      --paper: #f5f1e8;
+      --card: #fffdf8;
+      --line: #d9d6cc;
+      --green: #0b6b53;
+      --green-dark: #064d3c;
+      --green-soft: #dcebe3;
+      --lime: #c7e36d;
+      --orange: #e76f42;
+      --orange-soft: #f8ddd1;
+      --blue: #3979a8;
+      --blue-soft: #deebf4;
+      --yellow: #f5c85b;
+      --shadow: 0 12px 40px rgba(22, 33, 29, .08);
+      --radius: 22px;
+      --mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+      --sans: Inter, Aptos, "Segoe UI", Arial, sans-serif;
+      --display: Georgia, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 86px;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 4%, rgba(199, 227, 109, .2), transparent 25rem),
+        linear-gradient(rgba(22, 33, 29, .025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(22, 33, 29, .025) 1px, transparent 1px),
+        var(--paper);
+      background-size: auto, 28px 28px, 28px 28px, auto;
+      font-family: var(--sans);
+      line-height: 1.55;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 8px;
+      left: 8px;
+      z-index: 1000;
+      padding: 10px 14px;
+      color: white;
+      background: var(--green-dark);
+      border-radius: 10px;
+      transform: translateY(-150%);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 68px;
+      padding: 10px max(24px, calc((100vw - 1180px) / 2));
+      border-bottom: 1px solid rgba(22, 33, 29, .11);
+      background: rgba(245, 241, 232, .91);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex: 0 0 auto;
+      font-weight: 850;
+      letter-spacing: -.02em;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      color: white;
+      background: var(--green);
+      border-radius: 50% 50% 48% 52% / 55% 45% 55% 45%;
+      transform: rotate(-7deg);
+    }
+
+    .brand-mark span {
+      transform: rotate(7deg);
+      font-family: var(--display);
+      font-size: 18px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .nav-links a {
+      padding: 8px 11px;
+      color: var(--muted);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .topbar-actions {
+      display: inline-flex;
+      align-items: center;
+      flex: 0 0 auto;
+      gap: 8px;
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 13px;
+      color: var(--ink);
+      border: 1px solid rgba(22, 33, 29, .28);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, .8);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .lang-toggle:hover {
+      color: white;
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .timer-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 122px;
+      padding: 8px 12px;
+      color: white;
+      border: 0;
+      border-radius: 999px;
+      background: var(--ink);
+      cursor: pointer;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    /* Georgia and Inter carry no CJK glyphs, and the tight negative tracking
+       tuned for Latin display type looks broken on Chinese characters. */
+    html[lang="zh-Hant"] {
+      --display: "Noto Serif TC", "Source Han Serif TC", "Songti TC", "PMingLiU", Georgia, serif;
+      --sans: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", "Heiti TC", Inter, sans-serif;
+    }
+
+    html[lang="zh-Hant"] h1,
+    html[lang="zh-Hant"] h2,
+    html[lang="zh-Hant"] .sheet-title,
+    html[lang="zh-Hant"] .demo-copy h3,
+    html[lang="zh-Hant"] .task-copy h3,
+    html[lang="zh-Hant"] .lane h3,
+    html[lang="zh-Hant"] .tool-guide h3,
+    html[lang="zh-Hant"] .rubric-card h3,
+    html[lang="zh-Hant"] .presentation-card h3 {
+      letter-spacing: normal;
+      line-height: 1.25;
+    }
+
+    html[lang="zh-Hant"] h1 {
+      font-size: clamp(46px, 5.6vw, 78px);
+    }
+
+    /* CJK breaks between any two characters, which would split the highlighted
+       phrase and its underline across two lines. */
+    html[lang="zh-Hant"] h1 em {
+      white-space: nowrap;
+    }
+
+    html[lang="zh-Hant"] h2 {
+      font-size: clamp(34px, 4vw, 52px);
+    }
+
+    html[lang="zh-Hant"] .eyebrow,
+    html[lang="zh-Hant"] .section-label,
+    html[lang="zh-Hant"] .detail-title,
+    html[lang="zh-Hant"] .workflow-title,
+    html[lang="zh-Hant"] .materials-title,
+    html[lang="zh-Hant"] .sheet-kicker,
+    html[lang="zh-Hant"] .tool-tag,
+    html[lang="zh-Hant"] .idea-list b,
+    html[lang="zh-Hant"] .example-label {
+      letter-spacing: .04em;
+    }
+
+    .timer-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--lime);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(199, 227, 109, .17);
+    }
+
+    .timer-chip.running .timer-dot {
+      animation: pulse 1.4s infinite;
+    }
+
+    @keyframes pulse {
+      50% { opacity: .45; }
+    }
+
+    main {
+      overflow: hidden;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    .hero {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(340px, .85fr);
+      align-items: center;
+      gap: 70px;
+      min-height: 670px;
+      padding-block: 80px 72px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 18px;
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: currentColor;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin-bottom: 24px;
+      font-family: var(--display);
+      font-size: clamp(58px, 7.2vw, 104px);
+      font-weight: 500;
+      letter-spacing: -.065em;
+      line-height: .9;
+    }
+
+    h1 em {
+      position: relative;
+      color: var(--green);
+      font-weight: inherit;
+      text-decoration: none;
+    }
+
+    h1 em::after {
+      content: "";
+      position: absolute;
+      right: 1%;
+      bottom: -.09em;
+      left: 1%;
+      height: .09em;
+      background: var(--lime);
+      border-radius: 50%;
+      transform: rotate(-2deg);
+      z-index: -1;
+    }
+
+    .hero-lede {
+      max-width: 650px;
+      margin-bottom: 30px;
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 22px);
+      line-height: 1.5;
+    }
+
+    .hero-lede strong {
+      color: var(--ink);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 11px 18px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      font-weight: 850;
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(22, 33, 29, .12);
+    }
+
+    .button.primary {
+      color: white;
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .button.secondary {
+      background: rgba(255, 253, 248, .75);
+    }
+
+    .hero-note {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .hero-note svg {
+      flex: 0 0 auto;
+    }
+
+    .hero-board {
+      position: relative;
+      padding: 20px;
+      background: #efe8d8;
+      border: 1px solid #d8cdb8;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      transform: rotate(1.4deg);
+    }
+
+    .hero-board::before {
+      content: "";
+      position: absolute;
+      top: -12px;
+      left: 42%;
+      width: 94px;
+      height: 28px;
+      background: rgba(245, 200, 91, .7);
+      transform: rotate(-4deg);
+    }
+
+    .board-sheet {
+      position: relative;
+      min-height: 440px;
+      padding: 30px 30px 106px;
+      background: var(--card);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .sheet-top {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 22px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .sheet-kicker {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .sheet-number {
+      color: var(--green);
+      font-family: var(--display);
+      font-size: 44px;
+      line-height: .8;
+    }
+
+    .sheet-title {
+      margin: 26px 0 6px;
+      font-family: var(--display);
+      font-size: 32px;
+      line-height: 1.08;
+    }
+
+    .sheet-subtitle {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .sheet-options {
+      display: grid;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .sheet-option {
+      display: grid;
+      grid-template-columns: 34px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+
+    .sheet-option > span:first-child {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      font-weight: 900;
+    }
+
+    .sheet-option:nth-child(1) > span:first-child { background: var(--green-soft); }
+    .sheet-option:nth-child(2) > span:first-child { background: var(--blue-soft); }
+    .sheet-option:nth-child(3) > span:first-child { background: var(--orange-soft); }
+
+    .sheet-option strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .sheet-option small {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .sheet-option > b {
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .sheet-stamp {
+      position: absolute;
+      right: 26px;
+      bottom: 22px;
+      padding: 12px 18px;
+      color: var(--green);
+      border: 3px solid var(--green);
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 950;
+      letter-spacing: .08em;
+      text-align: center;
+      text-transform: uppercase;
+      transform: rotate(-12deg);
+    }
+
+    .format-strip {
+      position: relative;
+      z-index: 2;
+      color: white;
+      background: var(--ink);
+    }
+
+    .format-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr 1fr 1fr;
+      align-items: stretch;
+    }
+
+    .format-intro,
+    .format-item {
+      padding: 32px 28px;
+    }
+
+    .format-intro {
+      padding-left: 0;
+    }
+
+    .format-intro p {
+      margin: 0;
+      color: #aeb8b3;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .format-intro strong {
+      display: block;
+      margin-top: 5px;
+      font-family: var(--display);
+      font-size: 27px;
+      font-weight: 500;
+      letter-spacing: -.02em;
+    }
+
+    .format-item {
+      border-left: 1px solid rgba(255, 255, 255, .13);
+    }
+
+    .format-item span {
+      display: block;
+      color: var(--lime);
+      font-family: var(--display);
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .format-item strong {
+      display: block;
+      margin: 7px 0 3px;
+      font-size: 14px;
+    }
+
+    .format-item small {
+      color: #aeb8b3;
+      font-size: 12px;
+    }
+
+    .section {
+      padding-block: 96px;
+    }
+
+    .section.tight {
+      padding-block: 72px;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(260px, .82fr) minmax(300px, 1.18fr);
+      align-items: end;
+      gap: 52px;
+      margin-bottom: 42px;
+    }
+
+    .section-label {
+      margin-bottom: 13px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font-family: var(--display);
+      font-size: clamp(42px, 5vw, 66px);
+      font-weight: 500;
+      letter-spacing: -.045em;
+      line-height: .98;
+    }
+
+    .section-head > p {
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .task-picker {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .task-tab {
+      position: relative;
+      min-height: 148px;
+      padding: 22px;
+      color: var(--ink);
+      text-align: left;
+      border: 2px solid transparent;
+      border-radius: 20px;
+      background: rgba(255, 253, 248, .72);
+      box-shadow: 0 6px 22px rgba(22, 33, 29, .05);
+      cursor: pointer;
+      transition: border .18s ease, transform .18s ease, background .18s ease;
+    }
+
+    .task-tab:hover {
+      transform: translateY(-3px);
+    }
+
+    .task-tab[aria-selected="true"] {
+      border-color: var(--ink);
+      background: var(--card);
+    }
+
+    .task-tab[aria-selected="true"]::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: calc(50% - 8px);
+      width: 14px;
+      height: 14px;
+      background: var(--card);
+      border-right: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      transform: rotate(45deg);
+    }
+
+    .task-tab-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .task-no {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .tool-tag {
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .tool-tag.cursor { color: var(--green-dark); background: var(--green-soft); }
+    .tool-tag.manim { color: #1d5278; background: var(--blue-soft); }
+    .tool-tag.youmind { color: #8d3c20; background: var(--orange-soft); }
+
+    .task-tab strong {
+      display: block;
+      font-family: var(--display);
+      font-size: 25px;
+      font-weight: 500;
+      letter-spacing: -.02em;
+      line-height: 1.08;
+    }
+
+    .task-panel {
+      display: none;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .task-panel.active {
+      display: block;
+      animation: reveal .32s ease both;
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(9px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .task-hero {
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+      min-height: 420px;
+    }
+
+    .task-copy {
+      padding: 48px;
+    }
+
+    .task-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      padding: 6px 10px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .task-copy h3 {
+      max-width: 580px;
+      margin-bottom: 16px;
+      font-family: var(--display);
+      font-size: clamp(34px, 4.3vw, 56px);
+      font-weight: 500;
+      letter-spacing: -.045em;
+      line-height: 1;
+    }
+
+    .task-copy > p {
+      max-width: 600px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .brief-box {
+      margin-top: 26px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--green);
+      background: #f1f5ef;
+      border-radius: 0 14px 14px 0;
+    }
+
+    .brief-box strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .brief-box p {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .task-visual {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 420px;
+      padding: 28px;
+      overflow: hidden;
+    }
+
+    .tool-visual {
+      background: var(--green-soft);
+    }
+
+    .manim-visual {
+      background: var(--blue-soft);
+    }
+
+    .comic-visual {
+      background: var(--orange-soft);
+    }
+
+    .example-frame {
+      width: 100%;
+      border: 1px solid rgba(22, 33, 29, .16);
+      border-radius: 16px;
+      background: var(--card);
+      box-shadow: 0 16px 36px rgba(22, 33, 29, .13);
+      overflow: hidden;
+    }
+
+    .example-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .example-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .09em;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    .example-label::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+    }
+
+    .example-link {
+      flex: 0 0 auto;
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 850;
+      text-underline-offset: 3px;
+      white-space: nowrap;
+    }
+
+    .example-embed {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      background: #edeae2;
+      overflow: hidden;
+    }
+
+    .example-embed iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* The embedded lesson shows its own title band and section tabs above the
+       tool. Rendering the iframe at a fixed 620px and scaling it to fit keeps
+       that band the same height at every container size, so the crop below
+       lands just above the tool's controls instead of guessing per breakpoint.
+       620 * 3/4 + 236 = 701px of iframe height fills the 4/3 window. */
+    .example-embed.cropped {
+      --embed-w: 620px;
+      --crop: 236px;
+      --embed-scale: 1;
+    }
+
+    .example-embed.cropped iframe {
+      inset: 0 auto auto 0;
+      width: var(--embed-w);
+      height: 701px;
+      transform: scale(var(--embed-scale)) translateY(calc(-1 * var(--crop)));
+      transform-origin: top left;
+    }
+
+    .example-body {
+      display: grid;
+      place-items: center;
+      padding: 14px;
+      background: #edeae2;
+    }
+
+    .example-shot {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 620px;
+      border-radius: 6px;
+      box-shadow: 0 8px 20px rgba(22, 33, 29, .18);
+    }
+
+    .example-note {
+      padding: 12px 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .example-note strong {
+      color: var(--ink);
+    }
+
+    .example-note a {
+      font-weight: 800;
+      text-underline-offset: 3px;
+    }
+
+    .workflow {
+      margin-bottom: 26px;
+      padding: 26px;
+      border: 1px dashed rgba(22, 33, 29, .24);
+      border-radius: 24px;
+      background: rgba(255, 253, 248, .5);
+    }
+
+    .demo-stack {
+      display: grid;
+      gap: 26px;
+    }
+
+    .demo-row {
+      display: grid;
+      grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .demo-copy {
+      padding: 42px 40px;
+    }
+
+    .demo-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .demo-no {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .demo-copy h3 {
+      margin-bottom: 11px;
+      font-family: var(--display);
+      font-size: clamp(26px, 3vw, 35px);
+      font-weight: 500;
+      letter-spacing: -.032em;
+      line-height: 1.05;
+    }
+
+    .demo-copy > p {
+      color: var(--muted);
+      font-size: 15.5px;
+    }
+
+    .task-side {
+      display: grid;
+      align-content: start;
+      gap: 15px;
+      padding: 34px 30px;
+    }
+
+    .materials-card {
+      padding: 22px;
+      border: 1px solid rgba(22, 33, 29, .14);
+      border-radius: 18px;
+      background: var(--card);
+      box-shadow: 0 10px 26px rgba(22, 33, 29, .09);
+    }
+
+    .materials-title {
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .materials-path {
+      display: block;
+      margin-bottom: 17px;
+      padding: 9px 11px;
+      border-radius: 9px;
+      background: #f1efe8;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .materials-list {
+      display: grid;
+      gap: 11px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .materials-list li {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      align-items: start;
+      gap: 11px;
+    }
+
+    .materials-list li > span {
+      display: grid;
+      place-items: center;
+      padding: 5px 0;
+      color: var(--green-dark);
+      background: var(--green-soft);
+      border-radius: 7px;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .05em;
+    }
+
+    .materials-list strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.3;
+      overflow-wrap: anywhere;
+    }
+
+    .materials-list small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .materials-note {
+      margin: 17px 0 0;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    .jump-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      justify-self: start;
+      padding: 10px 15px;
+      color: var(--ink);
+      border: 1px solid rgba(22, 33, 29, .22);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, .85);
+      font-size: 12.5px;
+      font-weight: 850;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .jump-link:hover {
+      background: white;
+    }
+
+    .idea-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .idea-list li {
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: rgba(255, 253, 248, .62);
+      font-size: 14.5px;
+      line-height: 1.5;
+    }
+
+    .idea-list b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .prompt-swap {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 0 0 16px;
+      padding: 12px 14px;
+      border-left: 3px solid var(--lime);
+      border-radius: 0 10px 10px 0;
+      background: rgba(255, 255, 255, .07);
+      color: #cfe0d6;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    .prompt-swap code {
+      color: white;
+      font-family: var(--mono);
+      overflow-wrap: anywhere;
+    }
+
+    .workflow-title {
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .lane {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--card);
+    }
+
+    .lane-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 13px;
+    }
+
+    .lane-no {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .lane h3 {
+      margin-bottom: 6px;
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -.02em;
+      line-height: 1.1;
+    }
+
+    .lane p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .workflow-hint {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin: 16px 0 0;
+      padding: 15px 17px;
+      border-left: 4px solid var(--orange);
+      border-radius: 0 12px 12px 0;
+      background: var(--orange-soft);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .workflow-hint strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .task-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--line);
+    }
+
+    .task-details.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .detail-col {
+      padding: 42px 48px;
+    }
+
+    .task-details.three .detail-col {
+      padding: 38px 32px;
+    }
+
+    .detail-col + .detail-col {
+      border-left: 1px solid var(--line);
+    }
+
+    .detail-title {
+      margin-bottom: 20px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .requirement-list,
+    .timeline-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .requirement-list {
+      display: grid;
+      gap: 13px;
+    }
+
+    .requirement-list li {
+      position: relative;
+      padding-left: 29px;
+    }
+
+    .requirement-list li::before {
+      content: "✓";
+      position: absolute;
+      top: 1px;
+      left: 0;
+      display: grid;
+      place-items: center;
+      width: 19px;
+      height: 19px;
+      color: white;
+      background: var(--green);
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .timeline-list {
+      counter-reset: minute;
+      display: grid;
+      gap: 15px;
+    }
+
+    .timeline-list li {
+      display: grid;
+      grid-template-columns: 66px 1fr;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .timeline-list strong {
+      color: var(--green);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .prompt-wrap {
+      padding: 0 48px 48px;
+    }
+
+    .prompt-card {
+      position: relative;
+      padding: 26px;
+      color: #e5ede9;
+      border-radius: 18px;
+      background: var(--ink);
+    }
+
+    .prompt-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 17px;
+    }
+
+    .prompt-head strong {
+      font-size: 13px;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .copy-button {
+      padding: 7px 11px;
+      color: var(--ink);
+      border: 0;
+      border-radius: 999px;
+      background: var(--lime);
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .copy-button:hover {
+      background: white;
+    }
+
+    .prompt-text {
+      margin: 0;
+      color: #c5d0cb;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .file-output {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.15);
+      color: #aebbb5;
+      font-size: 12px;
+    }
+
+    .file-output code {
+      color: white;
+      font-family: var(--mono);
+      overflow-wrap: anywhere;
+    }
+
+    .setup-section {
+      background: #e9e4d8;
+    }
+
+    .setup-grid {
+      display: grid;
+      grid-template-columns: .76fr 1.24fr;
+      gap: 72px;
+      align-items: start;
+    }
+
+    .setup-sticky {
+      position: sticky;
+      top: 100px;
+    }
+
+    .setup-sticky h2 {
+      margin-bottom: 22px;
+    }
+
+    .setup-sticky > p {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .path-card {
+      margin-top: 26px;
+      padding: 18px;
+      border: 1px solid #cfc8b9;
+      border-radius: 16px;
+      background: rgba(255, 253, 248, .58);
+    }
+
+    .path-card span {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .path-card code {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .path-card + .path-card {
+      margin-top: 12px;
+    }
+
+    .path-note {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    .step-list {
+      position: relative;
+      display: grid;
+      gap: 16px;
+    }
+
+    .step-card {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 19px;
+      padding: 26px;
+      border: 1px solid #d5cec0;
+      border-radius: 18px;
+      background: var(--card);
+    }
+
+    .step-number {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      color: white;
+      background: var(--green);
+      border-radius: 50%;
+      font-family: var(--display);
+      font-size: 24px;
+    }
+
+    .step-card h3 {
+      margin-bottom: 7px;
+      font-size: 18px;
+    }
+
+    .step-card p {
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .step-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .ui-callout {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 7px;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #f4f2ed;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tool-guide-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 52px;
+    }
+
+    .tool-guide {
+      padding: 30px;
+      border-radius: 20px;
+      background: var(--card);
+      box-shadow: 0 8px 28px rgba(22, 33, 29, .06);
+    }
+
+    .tool-guide-icon {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      margin-bottom: 22px;
+      border-radius: 14px;
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .tool-guide:first-child .tool-guide-icon {
+      color: white;
+      background: var(--ink);
+    }
+
+    .tool-guide:last-child .tool-guide-icon {
+      color: #8d3c20;
+      background: var(--orange-soft);
+    }
+
+    .tool-guide h3 {
+      margin-bottom: 10px;
+      font-family: var(--display);
+      font-size: 28px;
+      font-weight: 500;
+    }
+
+    .tool-guide > p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .mini-steps {
+      display: grid;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .mini-step {
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .mini-step b {
+      flex: 0 0 auto;
+      color: var(--green);
+      font-family: var(--mono);
+    }
+
+    .rules-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 22px;
+    }
+
+    .rubric-card,
+    .presentation-card {
+      padding: 36px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--card);
+      box-shadow: 0 7px 24px rgba(22, 33, 29, .05);
+    }
+
+    .rubric-card h3,
+    .presentation-card h3 {
+      margin-bottom: 7px;
+      font-family: var(--display);
+      font-size: 31px;
+      font-weight: 500;
+    }
+
+    .card-intro {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .rubric-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .rubric-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      padding: 15px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .rubric-row strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .rubric-row span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .score {
+      align-self: center;
+      color: var(--green);
+      font-family: var(--display);
+      font-size: 25px;
+    }
+
+    .presentation-list {
+      counter-reset: talk;
+      display: grid;
+      gap: 13px;
+      margin: 25px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .presentation-list li {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .presentation-list li::before {
+      counter-increment: talk;
+      content: counter(talk);
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      color: white;
+      background: var(--orange);
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .presentation-list strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .presentation-list span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .ready-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 40px;
+      align-items: center;
+      padding: 58px;
+      color: white;
+      border-radius: 30px;
+      background: var(--green-dark);
+      overflow: hidden;
+    }
+
+    .ready-card::after {
+      content: "60";
+      position: absolute;
+      right: 4%;
+      bottom: -28%;
+      color: rgba(255,255,255,.06);
+      font-family: var(--display);
+      font-size: 310px;
+      line-height: 1;
+    }
+
+    .ready-copy,
+    .countdown {
+      position: relative;
+      z-index: 1;
+    }
+
+    .ready-copy h2 {
+      margin-bottom: 17px;
+      font-size: clamp(40px, 5vw, 60px);
+    }
+
+    .ready-copy p {
+      max-width: 580px;
+      margin-bottom: 25px;
+      color: #bcd2c9;
+    }
+
+    .ready-card .button.primary {
+      color: var(--ink);
+      background: var(--lime);
+      border-color: var(--lime);
+    }
+
+    .countdown {
+      padding: 30px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 22px;
+      background: rgba(0,0,0,.12);
+      text-align: center;
+    }
+
+    .countdown-label {
+      margin-bottom: 8px;
+      color: #bcd2c9;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .countdown-time {
+      margin-bottom: 22px;
+      font-family: var(--mono);
+      font-size: clamp(46px, 6vw, 76px);
+      font-weight: 800;
+      letter-spacing: -.07em;
+      line-height: 1;
+    }
+
+    .timer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .timer-button {
+      min-width: 84px;
+      padding: 8px 12px;
+      color: white;
+      border: 1px solid rgba(255,255,255,.26);
+      border-radius: 999px;
+      background: transparent;
+      font-size: 12px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    .timer-button:hover {
+      color: var(--ink);
+      background: white;
+    }
+
+    .timer-message {
+      min-height: 18px;
+      margin: 14px 0 0;
+      color: var(--lime);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    footer {
+      padding: 42px 0 50px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer-inner strong {
+      color: var(--ink);
+    }
+
+    .footer-inner a {
+      font-weight: 800;
+      text-underline-offset: 3px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 200;
+      padding: 12px 17px;
+      color: white;
+      border-radius: 12px;
+      background: var(--ink);
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      font-weight: 800;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 54px;
+      }
+
+      .hero-board {
+        width: min(560px, 100%);
+        margin-inline: auto;
+      }
+
+      .format-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .demo-row {
+        grid-template-columns: 1fr;
+      }
+
+      .demo-copy {
+        padding: 34px 32px;
+      }
+
+      .format-intro {
+        grid-column: 1 / -1;
+        padding: 24px 0 0;
+      }
+
+      .format-item:first-of-type {
+        border-left: 0;
+      }
+
+      .section-head,
+      .setup-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .setup-sticky {
+        position: static;
+      }
+
+      .task-copy {
+        padding: 38px;
+      }
+
+      .detail-col {
+        padding: 36px 38px;
+      }
+
+      /* Three columns leave under 200px of content here, which wrecks the
+         timeline rows, so stack them while the hero is still side by side. */
+      .task-details.three {
+        grid-template-columns: 1fr;
+      }
+
+      .task-details.three .detail-col {
+        padding: 30px 38px;
+      }
+
+      .task-details.three .detail-col + .detail-col {
+        border-top: 1px solid var(--line);
+        border-left: 0;
+      }
+
+      .prompt-wrap {
+        padding: 0 38px 38px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        width: min(100% - 30px, 1180px);
+      }
+
+      .topbar {
+        min-height: 60px;
+        padding-inline: 15px;
+      }
+
+      .brand-text {
+        display: none;
+      }
+
+      .hero {
+        min-height: 0;
+        padding-block: 54px;
+      }
+
+      h1 {
+        font-size: clamp(52px, 17vw, 78px);
+      }
+
+      .hero-lede {
+        font-size: 17px;
+      }
+
+      .board-sheet {
+        min-height: 410px;
+        padding: 23px 23px 100px;
+      }
+
+      .sheet-stamp {
+        right: 20px;
+      }
+
+      .format-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .format-intro {
+        padding-bottom: 10px;
+      }
+
+      .format-item {
+        padding: 18px 0;
+        border-top: 1px solid rgba(255,255,255,.13);
+        border-left: 0;
+      }
+
+      .format-item span {
+        display: inline-block;
+        min-width: 70px;
+      }
+
+      .format-item strong {
+        display: inline;
+      }
+
+      .format-item small {
+        display: block;
+        margin-left: 74px;
+      }
+
+      .section {
+        padding-block: 72px;
+      }
+
+      .section-head {
+        margin-bottom: 30px;
+      }
+
+      .section-head > p {
+        font-size: 16px;
+      }
+
+      .task-picker {
+        grid-template-columns: 1fr;
+      }
+
+      .task-tab {
+        min-height: 116px;
+      }
+
+      .task-tab[aria-selected="true"]::after {
+        display: none;
+      }
+
+      .task-hero,
+      .task-details,
+      .task-details.three {
+        grid-template-columns: 1fr;
+      }
+
+      .task-copy,
+      .detail-col,
+      .prompt-wrap,
+      .task-details.three .detail-col {
+        padding: 28px 24px;
+      }
+
+      .detail-col + .detail-col {
+        border-top: 1px solid var(--line);
+        border-left: 0;
+      }
+
+      .prompt-wrap {
+        padding-top: 0;
+      }
+
+      .task-visual {
+        min-height: 0;
+        padding: 22px;
+      }
+
+      .workflow {
+        padding: 20px;
+      }
+
+      .workflow-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .demo-copy {
+        padding: 28px 24px;
+      }
+
+      .task-side {
+        padding: 24px;
+      }
+
+      .example-shot {
+        max-height: 500px;
+      }
+
+      .tool-guide-grid,
+      .rules-grid,
+      .ready-card {
+        grid-template-columns: 1fr;
+      }
+
+      .step-card {
+        grid-template-columns: 42px 1fr;
+        gap: 14px;
+        padding: 21px;
+      }
+
+      .step-number {
+        width: 40px;
+        height: 40px;
+      }
+
+      .ready-card {
+        padding: 36px 25px;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    /* Too narrow to scale the embed down and still read it, so show the lesson
+       page as it comes and let the note point at the tab. */
+    @media (max-width: 560px) {
+      .example-embed.cropped iframe {
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        transform: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+
+    @media print {
+      :root {
+        --paper: white;
+        --card: white;
+      }
+
+      body {
+        background: white;
+        font-size: 10pt;
+      }
+
+      .topbar,
+      .button-row,
+      .timer-chip,
+      .copy-button,
+      .countdown,
+      .toast {
+        display: none !important;
+      }
+
+      .hero {
+        min-height: 0;
+        padding-block: 30px;
+      }
+
+      .hero-board {
+        box-shadow: none;
+      }
+
+      .section {
+        padding-block: 35px;
+      }
+
+      .task-picker {
+        display: none;
+      }
+
+      .task-panel {
+        display: block !important;
+        margin-bottom: 24px;
+        break-inside: avoid;
+        box-shadow: none;
+      }
+
+      .demo-row {
+        display: block;
+        break-inside: avoid;
+        box-shadow: none;
+      }
+
+      .jump-link {
+        display: none !important;
+      }
+
+      .example-embed,
+      .example-link {
+        display: none;
+      }
+
+      .task-visual {
+        min-height: 0;
+        padding: 0 24px 24px;
+      }
+
+      .example-frame,
+      .example-shot {
+        box-shadow: none;
+      }
+
+      .prompt-card {
+        color: var(--ink);
+        border: 1px solid var(--line);
+        background: white;
+      }
+
+      .prompt-text,
+      .file-output,
+      .prompt-swap {
+        color: var(--ink);
+      }
+
+      .prompt-swap {
+        border-left-color: var(--green);
+        background: #f1f5ef;
+      }
+
+      .file-output code,
+      .prompt-swap code {
+        color: var(--ink);
+      }
+
+      .task-hero {
+        display: block;
+        min-height: 0;
+      }
+
+      .task-details.three {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .setup-sticky {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to the task</a>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="UniPlus KOC recruitment home">
+      <span class="brand-mark" aria-hidden="true"><span>U+</span></span>
+      <span class="brand-text">UniPlus Education · KOC</span>
+    </a>
+    <nav class="nav-links" aria-label="Page sections">
+      <a href="#demo" data-i18n="nav.demo">Demonstration</a>
+      <a href="#tasks" data-i18n="nav.tasks">The three tasks</a>
+      <a href="#setup" data-i18n="nav.setup">Getting started</a>
+      <a href="#present" data-i18n="nav.present">Your demo</a>
+      <a href="#assessment" data-i18n="nav.assessment">Assessment</a>
+    </nav>
+    <div class="topbar-actions">
+      <button class="lang-toggle" id="langToggle" type="button" lang="zh-Hant" aria-label="切換至繁體中文">
+        <span aria-hidden="true">✦</span>
+        <span id="langToggleText">繁體中文</span>
+      </button>
+      <button class="timer-chip" id="timerChip" type="button" aria-label="Jump to the 60 minute timer">
+        <span class="timer-dot" aria-hidden="true"></span>
+        <span id="timerChipText">60:00 · Ready</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="container hero" id="top">
+      <div>
+        <p class="eyebrow" data-i18n="hero.eyebrow">KOC practical recruitment task</p>
+        <h1 data-i18n="hero.h1">Make three ideas <em>click.</em></h1>
+        <p class="hero-lede" data-i18n="hero.lede">
+          An interactive tool on <strong>Inequality</strong>, a Manim animation on
+          <strong>Percentages II</strong>, and a concept comic on <strong>Probability</strong>. All
+          three in the same hour. The topics and the materials are given to you—how you teach them is
+          what we are looking at.
+        </p>
+        <div class="button-row">
+          <a class="button primary" href="#demo">
+            <span data-i18n="hero.cta1">Start with the demonstration</span>
+            <span aria-hidden="true">↓</span>
+          </a>
+          <a class="button secondary" href="https://youmind.ai/" target="_blank" rel="noopener">
+            <span data-i18n="hero.cta2">Open YouMind</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <p class="hero-note">
+          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+            <circle cx="10" cy="10" r="9" fill="none" stroke="currentColor"/>
+            <path d="M10 5v5l3 2" fill="none" stroke="currentColor" stroke-linecap="round"/>
+          </svg>
+          <span data-i18n="hero.note">No coding experience is expected. We are assessing how you direct AI and judge the result.</span>
+        </p>
+      </div>
+
+      <div class="hero-board" aria-label="Creation sprint task sheet illustration">
+        <div class="board-sheet">
+          <div class="sheet-top">
+            <span class="sheet-kicker" data-i18n="sheet.kicker">Creation sprint<br>Candidate brief</span>
+            <span class="sheet-number">03</span>
+          </div>
+          <h2 class="sheet-title" data-i18n="sheet.title">Three set tasks.</h2>
+          <p class="sheet-subtitle" data-i18n="sheet.subtitle">One topic per task, already assigned. Nothing to choose—build all three side by side in one hour.</p>
+          <div class="sheet-options">
+            <div class="sheet-option">
+              <span>↗</span>
+              <span data-i18n="sheet.opt1"><strong>Interactive tool · Inequality</strong><small>Cursor agent 1</small></span>
+              <b>01</b>
+            </div>
+            <div class="sheet-option">
+              <span>▶</span>
+              <span data-i18n="sheet.opt2"><strong>Manim animation · Percentages II</strong><small>Cursor agent 2</small></span>
+              <b>02</b>
+            </div>
+            <div class="sheet-option">
+              <span>✦</span>
+              <span data-i18n="sheet.opt3"><strong>Concept comic · Probability</strong><small>YouMind</small></span>
+              <b>03</b>
+            </div>
+          </div>
+          <div class="sheet-stamp" data-i18n="sheet.stamp">60 min<br>make</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="format-strip" aria-label="Interview format">
+      <div class="container format-grid">
+        <div class="format-intro">
+          <p data-i18n="format.kicker">Today’s format</p>
+          <strong data-i18n="format.total">Two parts, 75 minutes</strong>
+        </div>
+        <div class="format-item">
+          <span>03</span>
+          <strong data-i18n="format.1label">set tasks</strong>
+          <small data-i18n="format.1note">Inequality, Percentages II, Probability.</small>
+        </div>
+        <div class="format-item">
+          <span>60</span>
+          <strong data-i18n="format.2label">minutes · Create</strong>
+          <small data-i18n="format.2note">Part one. Three lanes, running together.</small>
+        </div>
+        <div class="format-item">
+          <span>15</span>
+          <strong data-i18n="format.3label">minutes · Demonstrate</strong>
+          <small data-i18n="format.3note">Part two. Show all three and talk us through.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="demo">
+      <div class="section-head">
+        <div>
+          <p class="section-label" data-i18n="demo.label">Part one · 01 · Demonstration</p>
+          <h2 data-i18n="demo.h2">See it first.</h2>
+        </div>
+        <p data-i18n="demo.intro">
+          Three finished pieces made by working KOCs—one demonstration per task. Study the
+          <strong>standard</strong>, not the subject: every demonstration is deliberately on a
+          different topic from the task it belongs to, so none of it can be copied and handed in.
+        </p>
+      </div>
+
+      <div class="demo-stack">
+        <article class="demo-row" id="demo-tool">
+          <div class="demo-copy">
+            <div class="demo-head">
+              <span class="demo-no" data-i18n="demo.tool.no">DEMONSTRATION 01</span>
+              <span class="tool-tag cursor" data-i18n="demo.tool.tag">For task 01 · Interactive tool</span>
+            </div>
+            <h3 data-i18n="demo.tool.h3">A tool the student can act on.</h3>
+            <p data-i18n="demo.tool.p">
+              A single HTML page a student opens in a browser. It does not explain and stop—it makes
+              the student do something, then answers back.
+            </p>
+            <ul class="idea-list" style="margin-top: 20px">
+              <li data-i18n="demo.tool.n1"><b>What to notice</b>The student changes the numbers themselves, so the same tool gives a different question every time.</li>
+              <li data-i18n="demo.tool.n2"><b>What to notice</b>They must commit to an answer before anything is revealed.</li>
+              <li data-i18n="demo.tool.n3"><b>What to notice</b>The feedback says right or wrong <em>and why</em>—one colour per quantity, all the way through.</li>
+            </ul>
+            <p class="workflow-hint">
+              <span aria-hidden="true">◈</span>
+              <span data-i18n="demo.tool.hint">
+                <strong>Different topic on purpose</strong>
+                This demonstration is factorization. Your task 01 is <b>Inequality</b>. Copy the
+                standard, not the content—and yours may be much simpler than this.
+              </span>
+            </p>
+            <a class="jump-link" href="#tasks" data-goto="tool"><span data-i18n="demo.tool.jump">Open the task 01 brief</span> <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="task-visual tool-visual">
+            <div class="example-frame">
+              <div class="example-bar">
+                <span class="example-label" data-i18n="demo.tool.caption">Demonstration · Factorization</span>
+                <a class="example-link" href="https://unikoc5.github.io/s3-maths/topics/factorization_polynomials/#tools" target="_blank" rel="noopener" data-i18n="common.openfull">Open full ↗</a>
+              </div>
+              <div class="example-embed cropped" data-scale-embed>
+                <iframe src="https://unikoc5.github.io/s3-maths/topics/factorization_polynomials/#tools" title="Demonstration: the JM25 factorization interactive tool" loading="lazy"></iframe>
+              </div>
+              <p class="example-note" data-i18n="demo.tool.note">
+                Drag the sliders and switch between <em>(a+b)²</em>, <em>a²−b²</em> and the cross
+                method. The same lesson also has
+                <a href="https://unikoc5.github.io/s3-maths/topics/factorization_polynomials/#comics" target="_blank" rel="noopener">comics attached</a>,
+                but only the interactive tool is shown here—that is what task 01 asks for.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="demo-row" id="demo-manim">
+          <div class="demo-copy">
+            <div class="demo-head">
+              <span class="demo-no" data-i18n="demo.manim.no">DEMONSTRATION 02</span>
+              <span class="tool-tag manim" data-i18n="demo.manim.tag">For task 02 · Manim animation</span>
+            </div>
+            <h3 data-i18n="demo.manim.h3">An idea built up, not stated.</h3>
+            <p data-i18n="demo.manim.p">
+              Rendered with Manim, the animation library. Nothing appears fully formed: the figure is
+              drawn, then labelled, then worked through, one step at a time.
+            </p>
+            <ul class="idea-list" style="margin-top: 20px">
+              <li data-i18n="demo.manim.n1"><b>What to notice</b>Every number that appears can be traced back to something already on screen.</li>
+              <li data-i18n="demo.manim.n2"><b>What to notice</b>Labels arrive with the part they name, so the screen is never crowded.</li>
+              <li data-i18n="demo.manim.n3"><b>What to notice</b>It is short. One idea per animation, 30–45 seconds.</li>
+            </ul>
+            <p class="workflow-hint">
+              <span aria-hidden="true">◈</span>
+              <span data-i18n="demo.manim.hint">
+                <strong>Different topic on purpose</strong>
+                This demonstration is area and volume. Your task 02 is <b>Percentages II</b>. Copy how
+                the idea is built.
+              </span>
+            </p>
+            <a class="jump-link" href="#tasks" data-goto="manim"><span data-i18n="demo.manim.jump">Open the task 02 brief</span> <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="task-visual manim-visual">
+            <div class="example-frame">
+              <div class="example-bar">
+                <span class="example-label" data-i18n="demo.manim.caption">Demonstration · Area &amp; volume</span>
+                <a class="example-link" href="https://unikoc5.github.io/s3-maths/slides/area_volume/plane-shapes/" target="_blank" rel="noopener" data-i18n="common.openfull">Open full ↗</a>
+              </div>
+              <div class="example-embed">
+                <iframe src="https://unikoc5.github.io/s3-maths/slides/area_volume/plane-shapes/" title="Demonstration: UniPlus Area and Volume plane shapes animation deck" loading="lazy"></iframe>
+              </div>
+              <p class="example-note" data-i18n="demo.manim.note">
+                Press <strong>space</strong> to play a slide and the arrow keys to move on. See also
+                the
+                <a href="https://unikoc5.github.io/s3-maths/slides/area_volume/solids/" target="_blank" rel="noopener">solids deck</a>
+                and the mathematics area of the
+                <a href="https://uni-education-elearning.pages.dev/subject/math" target="_blank" rel="noopener">Uni+ E-learning Platform</a>
+                (sign-in required).
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="demo-row" id="demo-comic">
+          <div class="demo-copy">
+            <div class="demo-head">
+              <span class="demo-no" data-i18n="demo.comic.no">DEMONSTRATION 03</span>
+              <span class="tool-tag youmind" data-i18n="demo.comic.tag">For task 03 · Concept comic</span>
+            </div>
+            <h3 data-i18n="demo.comic.h3">Maths that happens to somebody.</h3>
+            <p data-i18n="demo.comic.p">
+              One page, six panels, the same characters throughout. The mathematics is not decoration
+              on a story—the story is how the mathematics gets solved.
+            </p>
+            <ul class="idea-list" style="margin-top: 20px">
+              <li data-i18n="demo.comic.n1"><b>What to notice</b>Panel 1 asks a question; the last panel answers that same question.</li>
+              <li data-i18n="demo.comic.n2"><b>What to notice</b>Real working is visible inside the panels, not just conclusions.</li>
+              <li data-i18n="demo.comic.n3"><b>What to notice</b>A banner names the topic, and a summary strip states the idea in one sentence.</li>
+            </ul>
+            <p class="workflow-hint">
+              <span aria-hidden="true">◈</span>
+              <span data-i18n="demo.comic.hint">
+                <strong>Different topic on purpose</strong>
+                This demonstration is triangle centres. Your task 03 is <b>Probability</b>. Match the
+                house style, change the maths.
+              </span>
+            </p>
+            <a class="jump-link" href="#tasks" data-goto="comic"><span data-i18n="demo.comic.jump">Open the task 03 brief</span> <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="task-visual comic-visual">
+            <div class="example-frame">
+              <div class="example-bar">
+                <span class="example-label" data-i18n="demo.comic.caption">Demonstration · Triangle centres</span>
+                <a class="example-link" href="comics_Example_circumcenter.png" target="_blank" rel="noopener" data-i18n="common.openfull">Open full ↗</a>
+              </div>
+              <div class="example-body">
+                <img class="example-shot" src="comics_Example_circumcenter.png" alt="Triangle Centres Quest page 2, A Fair Meeting Point: a six-panel comic in which three students find the circumcentre of the triangle formed by their homes." loading="lazy">
+              </div>
+              <p class="example-note" data-i18n="demo.comic.note">
+                <strong>comics_Example_circumcenter.png</strong> is in your starter kit—click it in
+                Cursor’s sidebar to study it full size, and keep it open beside YouMind while you
+                write your prompt.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="tasks">
+      <div class="section-head">
+        <div>
+          <p class="section-label" data-i18n="tasks.label">Part one · 02 · The three tasks</p>
+          <h2 data-i18n="tasks.h2">Now build all three.</h2>
+        </div>
+        <p data-i18n="tasks.intro">
+          <strong>All three are required, and the topics are fixed.</strong> Task 01 is Inequality,
+          task 02 is Percentages II, task 03 is Probability—each with its own folder of notes and
+          slides. Run the three lanes at the same time, not one after another.
+        </p>
+      </div>
+
+      <div class="workflow">
+        <p class="workflow-title" data-i18n="workflow.title">How the hour works</p>
+        <div class="workflow-grid">
+          <article class="lane">
+            <div class="lane-head">
+              <span class="lane-no" data-i18n="workflow.lane1">Lane 1</span>
+              <span class="tool-tag cursor" data-i18n="common.agent1">Cursor agent 1</span>
+            </div>
+            <h3 data-i18n="workflow.lane1h">Tool · Inequality</h3>
+            <p data-i18n="workflow.lane1p">Start here. This lane needs the most testing by you, so give it the first minutes.</p>
+          </article>
+          <article class="lane">
+            <div class="lane-head">
+              <span class="lane-no" data-i18n="workflow.lane2">Lane 2</span>
+              <span class="tool-tag manim" data-i18n="common.agent2">Cursor agent 2</span>
+            </div>
+            <h3 data-i18n="workflow.lane2h">Animation · Percentages II</h3>
+            <p data-i18n="workflow.lane2p">Start it early and leave it. Installing and rendering run without you watching.</p>
+          </article>
+          <article class="lane">
+            <div class="lane-head">
+              <span class="lane-no" data-i18n="workflow.lane3">Lane 3</span>
+              <span class="tool-tag youmind">YouMind</span>
+            </div>
+            <h3 data-i18n="workflow.lane3h">Comic · Probability</h3>
+            <p data-i18n="workflow.lane3p">Runs in your browser, so it fills the waiting time while Cursor is busy.</p>
+          </article>
+        </div>
+        <p class="workflow-hint">
+          <span aria-hidden="true">◈</span>
+          <span data-i18n="workflow.hint">
+            <strong>Two Cursor agents at the same time</strong>
+            Press the <span class="ui-callout">+</span> at the top of Cursor’s chat panel to open a
+            second agent tab. Each tab works on its own task independently—give tab 1 the tool and
+            tab 2 the animation, then switch to your browser for the comic.
+          </span>
+        </p>
+      </div>
+
+      <div class="task-picker" role="tablist" aria-label="Task briefs">
+        <button class="task-tab" id="tab-tool" type="button" role="tab" aria-selected="true" aria-controls="panel-tool" data-task="tool">
+          <span class="task-tab-top">
+            <span class="task-no" data-i18n="tab.tool.no">TASK 01 · INEQUALITY</span>
+            <span class="tool-tag cursor">Cursor</span>
+          </span>
+          <strong data-i18n="tab.tool.name">Interactive<br>teaching tool</strong>
+        </button>
+        <button class="task-tab" id="tab-manim" type="button" role="tab" aria-selected="false" aria-controls="panel-manim" data-task="manim" tabindex="-1">
+          <span class="task-tab-top">
+            <span class="task-no" data-i18n="tab.manim.no">TASK 02 · PERCENTAGES II</span>
+            <span class="tool-tag manim">Cursor + Manim</span>
+          </span>
+          <strong data-i18n="tab.manim.name">Manim<br>animation</strong>
+        </button>
+        <button class="task-tab" id="tab-comic" type="button" role="tab" aria-selected="false" aria-controls="panel-comic" data-task="comic" tabindex="-1">
+          <span class="task-tab-top">
+            <span class="task-no" data-i18n="tab.comic.no">TASK 03 · PROBABILITY</span>
+            <span class="tool-tag youmind">YouMind</span>
+          </span>
+          <strong data-i18n="tab.comic.name">Concept<br>comic</strong>
+        </button>
+      </div>
+
+      <article class="task-panel active" id="panel-tool" role="tabpanel" aria-labelledby="tab-tool" data-panel="tool">
+        <div class="task-hero">
+          <div class="task-copy">
+            <div class="task-badges">
+              <span class="badge" data-i18n="common.subject">S3 Mathematics</span>
+              <span class="badge" data-i18n="task1.badge.topic">Topic: Inequality · set</span>
+              <span class="badge" data-i18n="task1.badge.deliverable">Deliverable: HTML</span>
+            </div>
+            <h3 data-i18n="task1.h3">An interactive tool for Inequality.</h3>
+            <p data-i18n="task1.p">
+              Build a browser tool that teaches one idea from Inequality—solving a linear inequality
+              and reading the solution off a number line, including the moment the sign flips because
+              both sides were divided by a negative. The student must be able to change something,
+              commit to an answer, and be told whether it is right and why.
+            </p>
+            <div class="brief-box">
+              <strong data-i18n="common.goal">Learning goal</strong>
+              <p data-i18n="task1.goal">After using your tool, a student should be able to solve a linear inequality and know when the inequality sign turns around—and be corrected by the tool when they get it wrong.</p>
+            </div>
+            <p class="workflow-hint">
+              <span aria-hidden="true">◈</span>
+              <span data-i18n="task1.hint">
+                <strong>The topic is set, the teaching is yours</strong>
+                Inequality is fixed for this task. How you teach it—number line, balance scale,
+                sorting game—is your decision, and that decision is what we mark.
+              </span>
+            </p>
+          </div>
+          <div class="task-side tool-visual">
+            <div class="materials-card">
+              <p class="materials-title" data-i18n="task1.materials">Your materials · task 01</p>
+              <code class="materials-path">task_1_inequality_interactive_tool\</code>
+              <ul class="materials-list">
+                <li>
+                  <span>PPTX</span>
+                  <div><strong>S3 JM26 Inequalities I - 2023.pptx</strong><small data-i18n="task1.file1">Lesson slides — the teaching order we use</small></div>
+                </li>
+                <li>
+                  <span>PDF</span>
+                  <div><strong>Rev Set - JM26 Inequalities I (QUE).pdf</strong><small data-i18n="task1.file2">Revision questions — real S3 wording</small></div>
+                </li>
+                <li>
+                  <span>PDF</span>
+                  <div><strong>Rev Set - JM26 Inequalities I (ANS).pdf</strong><small data-i18n="task1.file3">Answers — check your tool against these</small></div>
+                </li>
+              </ul>
+              <p class="materials-note" data-i18n="task1.materialsnote">
+                Click any file in Cursor’s sidebar to open it. You do not have to read all of it—the
+                starter prompt already tells Cursor to read the folder for you.
+              </p>
+            </div>
+            <a class="jump-link" href="#demo-tool"><span data-i18n="task1.seedemo">See demonstration 01</span> <span aria-hidden="true">↑</span></a>
+          </div>
+        </div>
+        <div class="task-details three">
+          <div class="detail-col">
+            <p class="detail-title" data-i18n="task1.ideas">Build one of these</p>
+            <ul class="idea-list">
+              <li data-i18n="task1.idea1"><b>Suggested</b>A step-by-step solver: the student picks the numbers in <em>ax + b &gt; c</em>, predicts the solution, then watches each step and sees the sign flip when dividing by a negative.</li>
+              <li data-i18n="task1.idea2"><b>Alternative</b>A tester: given one inequality, the student drags values onto a number line and the tool says which ones satisfy it, and why the boundary point is or is not included.</li>
+              <li data-i18n="task1.idea3"><b>Alternative</b>A budget question: “we must spend under $50.” The student turns the sentence into an inequality, then checks which shopping baskets are allowed.</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <p class="detail-title" data-i18n="task1.reqtitle">Your tool must include</p>
+            <ul class="requirement-list">
+              <li data-i18n="task1.req1">At least two things the student can change, not just a Next button.</li>
+              <li data-i18n="task1.req2">A point where the student commits to an answer before seeing the result.</li>
+              <li data-i18n="task1.req3">Feedback that says right or wrong <strong>and explains why</strong>, in plain English.</li>
+              <li data-i18n="task1.req4">A worked example button, and a Try another button with fresh numbers.</li>
+              <li data-i18n="task1.req5">One HTML file, no external libraries, readable on a laptop screen.</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <p class="detail-title" data-i18n="common.timeline">Where this fits in the hour</p>
+            <ol class="timeline-list">
+              <li><strong>0–05 min</strong><span data-i18n="task1.t1">Read this brief and demonstration 01.</span></li>
+              <li><strong>05–12 min</strong><span data-i18n="task1.t2">Paste the prompt into Cursor agent 1 and let it build.</span></li>
+              <li><strong>12–30 min</strong><span data-i18n="task1.t3">Test every field yourself; report each problem in plain English.</span></li>
+              <li><strong>30–45 min</strong><span data-i18n="task1.t4">Add the worked example and the Try another button.</span></li>
+              <li><strong>45–60 min</strong><span data-i18n="task1.t5">Final browser check, then save and pick what to demo.</span></li>
+            </ol>
+          </div>
+        </div>
+        <div class="prompt-wrap">
+          <div class="prompt-card">
+            <div class="prompt-head">
+              <strong data-i18n="task1.prompttitle">Starter prompt for Cursor agent 1</strong>
+              <button class="copy-button" type="button" data-copy="prompt-tool" data-i18n="common.copy">Copy prompt</button>
+            </div>
+            <p class="prompt-swap">
+              <span aria-hidden="true">◈</span>
+              <span data-i18n="task1.promptnote">Paste this whole prompt exactly as it is—the topic and the folder are already filled in. Nothing to edit.</span>
+            </p>
+            <pre class="prompt-text" id="prompt-tool">TOPIC (set): Inequality — solving a linear inequality, reading the solution on a number line, and the sign flipping when both sides are divided by a negative number.
+
+Read every file in the folder task_1_inequality_interactive_tool of this project — the lesson PowerPoint and the revision set — and follow the way inequalities are taught there. Then create a single-file HTML teaching tool for a Hong Kong S3 student on the topic above. The tool must: (1) let the student change at least two things, for example the numbers in the inequality; (2) ask the student for an answer or a prediction before it shows anything; (3) say clearly whether they are right or wrong AND explain why in one or two sentences; (4) have a “Show worked example” button; (5) have a “Try another” button that generates a fresh question with clean numbers. Use large readable text, keep the same colour for the same quantity throughout, write in plain English for a 14-year-old, and use no external libraries. Save it as interactive-tool.html inside that same task_1_inequality_interactive_tool folder, then open it in a browser so I can test it.</pre>
+            <div class="file-output">
+              <span aria-hidden="true">▣</span>
+              <span><span data-i18n="common.handin">Hand in:</span> <code>task_1_inequality_interactive_tool\interactive-tool.html</code></span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="task-panel" id="panel-manim" role="tabpanel" aria-labelledby="tab-manim" data-panel="manim" hidden>
+        <div class="task-hero">
+          <div class="task-copy">
+            <div class="task-badges">
+              <span class="badge" data-i18n="common.subject">S3 Mathematics</span>
+              <span class="badge" data-i18n="task2.badge.topic">Topic: Percentages II · set</span>
+              <span class="badge" data-i18n="task2.badge.deliverable">Deliverable: MP4 + PY</span>
+            </div>
+            <h3 data-i18n="task2.h3">A Manim animation for Percentages II.</h3>
+            <p data-i18n="task2.p">
+              Make a 30–45 second Manim animation in which one idea from Percentages II is built up on
+              screen, step by step, rather than stated. Nothing should appear fully formed—the student
+              watches each number arrive.
+            </p>
+            <div class="brief-box">
+              <strong data-i18n="common.goal">Learning goal</strong>
+              <p data-i18n="task2.goal">A student should watch a percentage change happen and see where every number comes from, instead of being handed the answer.</p>
+            </div>
+            <p class="workflow-hint">
+              <span aria-hidden="true">◈</span>
+              <span data-i18n="task2.hint">
+                <strong>The topic is set, the teaching is yours</strong>
+                Percentages II is fixed for this task. Which idea inside it you animate, and how you
+                stage it, is your decision.
+              </span>
+            </p>
+          </div>
+          <div class="task-side manim-visual">
+            <div class="materials-card">
+              <p class="materials-title" data-i18n="task2.materials">Your materials · task 02</p>
+              <code class="materials-path">task_2_percentages_II_manim_animation\</code>
+              <ul class="materials-list">
+                <li>
+                  <span>PPTX</span>
+                  <div><strong>F.3 Percentage(2023).pptx</strong><small data-i18n="task2.file1">Lesson slides — worked examples to animate</small></div>
+                </li>
+                <li>
+                  <span>PDF</span>
+                  <div><strong>Rev Set - JM27 Percentage II (QUE).pdf</strong><small data-i18n="task2.file2">Revision questions — real S3 wording</small></div>
+                </li>
+                <li>
+                  <span>PDF</span>
+                  <div><strong>Rev Set - JM27 Percentage II (ANS).pdf</strong><small data-i18n="task2.file3">Answers — check your numbers against these</small></div>
+                </li>
+              </ul>
+              <p class="materials-note" data-i18n="task2.materialsnote">
+                Click any file in Cursor’s sidebar to open it. The starter prompt already tells Cursor
+                to read this folder before it writes anything.
+              </p>
+            </div>
+            <a class="jump-link" href="#demo-manim"><span data-i18n="task2.seedemo">See demonstration 02</span> <span aria-hidden="true">↑</span></a>
+          </div>
+        </div>
+        <div class="task-details three">
+          <div class="detail-col">
+            <p class="detail-title" data-i18n="task2.ideas">Animate one of these</p>
+            <ul class="idea-list">
+              <li data-i18n="task2.idea1"><b>Suggested</b>A bar shrinks by 20%, then grows by 20%, and lands below where it started—so two equal-looking changes visibly do not cancel.</li>
+              <li data-i18n="task2.idea2"><b>Alternative</b>Profit and loss: a cost price bar and a selling price bar side by side, showing why the percentage profit is taken on the cost price, not the selling price.</li>
+              <li data-i18n="task2.idea3"><b>Alternative</b>Two successive discounts, “30% off then 10% off”, compared with a single 40% off—and why they are not the same.</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <p class="detail-title" data-i18n="task2.reqtitle">Your animation must include</p>
+            <ul class="requirement-list">
+              <li data-i18n="task2.req1">One clear figure or diagram with every part labelled.</li>
+              <li data-i18n="task2.req2">The idea built up step by step, never shown all at once.</li>
+              <li data-i18n="task2.req3">The same colour for the same quantity from start to finish.</li>
+              <li data-i18n="task2.req4">One worked line with real numbers, and units where they apply.</li>
+              <li data-i18n="task2.req5">A 30–45 second runtime that stays readable on a phone.</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <p class="detail-title" data-i18n="common.timeline">Where this fits in the hour</p>
+            <ol class="timeline-list">
+              <li><strong>0–05 min</strong><span data-i18n="task2.t1">Read this brief and watch demonstration 02.</span></li>
+              <li><strong>05–12 min</strong><span data-i18n="task2.t2">Paste the prompt into Cursor agent 2 so installing starts early.</span></li>
+              <li><strong>12–30 min</strong><span data-i18n="task2.t3">Rendering runs on its own—work on another lane, then come back.</span></li>
+              <li><strong>30–45 min</strong><span data-i18n="task2.t4">Watch the MP4; fix timing, overlaps and unreadable labels.</span></li>
+              <li><strong>45–60 min</strong><span data-i18n="task2.t5">Render the final file and save it with the Python source.</span></li>
+            </ol>
+          </div>
+        </div>
+        <div class="prompt-wrap">
+          <div class="prompt-card">
+            <div class="prompt-head">
+              <strong data-i18n="task2.prompttitle">Starter prompt for Cursor agent 2</strong>
+              <button class="copy-button" type="button" data-copy="prompt-manim" data-i18n="common.copy">Copy prompt</button>
+            </div>
+            <p class="prompt-swap">
+              <span aria-hidden="true">◈</span>
+              <span data-i18n="task2.promptnote">Paste this whole prompt exactly as it is. Change the second sentence only if you picked a different idea from the list above.</span>
+            </p>
+            <pre class="prompt-text" id="prompt-manim">TOPIC (set): Percentages II — a 20% decrease followed by a 20% increase does not return to the original amount.
+
+Read every file in the folder task_2_percentages_II_manim_animation of this project — the lesson PowerPoint and the revision set — and use the same style of example. Then help me create a beginner-friendly Manim animation about the topic above for a Hong Kong S3 student. In 30–45 seconds, build the idea up on screen one step at a time instead of stating it: draw the figure or diagram first, label every part, then reveal each step so the student sees where each number comes from. Keep the same colour for the same quantity throughout, and finish with one worked line using real numbers. First check whether Manim is installed and help me install it if it is not. Render at low quality first so I can watch it quickly, then render the final version. Save the source as animation.py and the video as animation.mp4 inside that same task_2_percentages_II_manim_animation folder, and tell me the exact command you ran.</pre>
+            <div class="file-output">
+              <span aria-hidden="true">▣</span>
+              <span><span data-i18n="common.handin">Hand in:</span> <code>task_2_percentages_II_manim_animation\animation.py</code> + <code>animation.mp4</code></span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="task-panel" id="panel-comic" role="tabpanel" aria-labelledby="tab-comic" data-panel="comic" hidden>
+        <div class="task-hero">
+          <div class="task-copy">
+            <div class="task-badges">
+              <span class="badge" data-i18n="common.subject">S3 Mathematics</span>
+              <span class="badge" data-i18n="task3.badge.topic">Topic: Probability · set</span>
+              <span class="badge" data-i18n="task3.badge.deliverable">Deliverable: PNG</span>
+            </div>
+            <h3 data-i18n="task3.h3">A concept comic for Probability.</h3>
+            <p data-i18n="task3.p">
+              Turn one idea from Probability into a six-panel story in the house style, so that a
+              student who reads it once remembers the idea because of what happened to the
+              characters.
+            </p>
+            <div class="brief-box">
+              <strong data-i18n="common.goal">Learning goal</strong>
+              <p data-i18n="task3.goal">A student should follow one probability question from the moment it is asked to a conclusion they can state in a sentence.</p>
+            </div>
+            <p class="workflow-hint">
+              <span aria-hidden="true">◈</span>
+              <span data-i18n="task3.hint">
+                <strong>The topic is set, the story is yours</strong>
+                Probability is fixed for this task. The characters, the situation and the twist are
+                yours to invent—just keep the mathematics correct.
+              </span>
+            </p>
+          </div>
+          <div class="task-side comic-visual">
+            <div class="materials-card">
+              <p class="materials-title" data-i18n="task3.materials">Your materials · task 03</p>
+              <code class="materials-path">task_3_probability_comics\</code>
+              <ul class="materials-list">
+                <li>
+                  <span>PPTX</span>
+                  <div><strong>Ch.11 Maths Introduction to Probability - 2016alex.pptx</strong><small data-i18n="task3.file1">Lesson slides — the core ideas</small></div>
+                </li>
+                <li>
+                  <span>PPTX</span>
+                  <div><strong>S3 JM36 Probabilities - 2024 Q (Done by PT).pptx</strong><small data-i18n="task3.file2">Question set used in class</small></div>
+                </li>
+                <li>
+                  <span>PDF</span>
+                  <div><strong>Rev Set - JM30 Probabilities (QUE + ANS).pdf</strong><small data-i18n="task3.file3">Revision questions and answers</small></div>
+                </li>
+              </ul>
+              <p class="materials-note" data-i18n="task3.materialsnote">
+                Take one question from these files as the situation in your comic, so the mathematics
+                is real S3 material rather than invented.
+              </p>
+            </div>
+            <a class="jump-link" href="#demo-comic"><span data-i18n="task3.seedemo">See demonstration 03</span> <span aria-hidden="true">↑</span></a>
+          </div>
+        </div>
+        <div class="task-details three">
+          <div class="detail-col">
+            <p class="detail-title" data-i18n="task3.ideas">Tell one of these</p>
+            <ul class="idea-list">
+              <li data-i18n="task3.idea1"><b>Suggested</b>A game that looks fair until the characters list every outcome and prove that it is not.</li>
+              <li data-i18n="task3.idea2"><b>Alternative</b>Two dice, and the argument over whether a total of 7 is really more likely than a total of 2—settled by writing out the sample space.</li>
+              <li data-i18n="task3.idea3"><b>Alternative</b>“At least one” problems: it is easier to work out the chance of the thing <em>not</em> happening, and the characters discover why.</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <p class="detail-title" data-i18n="task3.reqtitle">Your comic must include</p>
+            <ul class="requirement-list">
+              <li data-i18n="task3.req1">Six numbered panels under a title banner in the demonstrated style.</li>
+              <li data-i18n="task3.req2">The same characters in every panel, drawn consistently.</li>
+              <li data-i18n="task3.req3">A question in panel 1 that the last panel answers.</li>
+              <li data-i18n="task3.req4">Correct mathematics, with the working visible in at least two panels.</li>
+              <li data-i18n="task3.req5">A closing summary strip stating the idea in one sentence.</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <p class="detail-title" data-i18n="common.timeline">Where this fits in the hour</p>
+            <ol class="timeline-list">
+              <li><strong>0–05 min</strong><span data-i18n="task3.t1">Read this brief and study demonstration 03.</span></li>
+              <li><strong>05–15 min</strong><span data-i18n="task3.t2">Paste the prompt into YouMind while Cursor works on lanes 1 and 2.</span></li>
+              <li><strong>15–30 min</strong><span data-i18n="task3.t3">Check the mathematics in every panel, including the numbers.</span></li>
+              <li><strong>30–45 min</strong><span data-i18n="task3.t4">Regenerate only the panels that are wrong or unreadable.</span></li>
+              <li><strong>45–60 min</strong><span data-i18n="task3.t5">Download the best version and save it with your final prompt.</span></li>
+            </ol>
+          </div>
+        </div>
+        <div class="prompt-wrap">
+          <div class="prompt-card">
+            <div class="prompt-head">
+              <strong data-i18n="task3.prompttitle">Starter prompt for YouMind</strong>
+              <button class="copy-button" type="button" data-copy="prompt-comic" data-i18n="common.copy">Copy prompt</button>
+            </div>
+            <p class="prompt-swap">
+              <span aria-hidden="true">◈</span>
+              <span data-i18n="task3.promptnote">The topic line is set. Edit the STORY line only—that is your invention. Everything after it fixes the house style.</span>
+            </p>
+            <pre class="prompt-text" id="prompt-comic">TOPIC (set): Probability — a game that looks fair but is not.
+STORY: three classmates play a dice game, one of them keeps winning, and they list every outcome to find out why.
+
+Create a portrait, six-panel educational comic for Hong Kong S3 mathematics about the topic and story above, with a title banner naming the topic. Match this style: bright anime classroom art, a blue title banner with bold yellow display type, numbered panels with white borders, and short speech bubbles in clear English. Keep the same three secondary-school students in every panel. Panel 1 asks the question. Panels 2 to 5 work it out, with the numbers or the working visible in at least two of them. Panel 6 answers the question and carries a bottom summary strip stating the idea in one sentence. Make all text large and readable, keep every number mathematically correct, and use exactly six panels.</pre>
+            <div class="file-output">
+              <span aria-hidden="true">▣</span>
+              <span><span data-i18n="common.handin">Hand in:</span> <code>task_3_probability_comics\comic.png</code> + <code>comic-prompt.txt</code></span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section setup-section" id="setup">
+      <div class="container">
+        <div class="setup-grid">
+          <div class="setup-sticky">
+            <p class="section-label" data-i18n="setup.label">Part one · 03 · Getting started</p>
+            <h2 data-i18n="setup.h2">One folder per task.</h2>
+            <p data-i18n="setup.intro">
+              Cursor’s left sidebar is a file explorer. Your notes are already sorted into three
+              folders—one per task—and your finished file goes back into the same folder it came
+              from.
+            </p>
+            <div class="path-card">
+              <span data-i18n="setup.path1">Task 01 · Inequality · tool</span>
+              <code>task_1_inequality_interactive_tool\</code>
+            </div>
+            <div class="path-card">
+              <span data-i18n="setup.path2">Task 02 · Percentages II · animation</span>
+              <code>task_2_percentages_II_manim_animation\</code>
+            </div>
+            <div class="path-card">
+              <span data-i18n="setup.path3">Task 03 · Probability · comic</span>
+              <code>task_3_probability_comics\</code>
+            </div>
+            <div class="path-card">
+              <span data-i18n="setup.path4">Comic house style</span>
+              <code>comics_Example_circumcenter.png</code>
+            </div>
+            <p class="path-note" data-i18n="setup.pathnote">
+              Every path above is inside the <strong>starter_kit</strong> folder you were given.
+              Nothing else on the computer matters today.
+            </p>
+          </div>
+
+          <div class="step-list">
+            <article class="step-card">
+              <span class="step-number">1</span>
+              <div>
+                <h3 data-i18n="setup.s1h">Open the starter kit in Cursor</h3>
+                <p data-i18n="setup.s1a">Choose <span class="ui-callout">File → Open Folder…</span>, select the <strong>starter_kit</strong> folder you were given, then choose “Select Folder”.</p>
+                <p data-i18n="setup.s1b">The three task folders appear in the <strong>left sidebar</strong>, each already holding the notes and slides for its topic.</p>
+              </div>
+            </article>
+            <article class="step-card">
+              <span class="step-number">2</span>
+              <div>
+                <h3 data-i18n="setup.s2h">Skim your three task folders</h3>
+                <p data-i18n="setup.s2a">There is nothing to choose today: task 01 is <strong>Inequality</strong>, task 02 is <strong>Percentages II</strong>, task 03 is <strong>Probability</strong>. Open each folder and skim one question from it so you know what the material looks like.</p>
+                <p data-i18n="setup.s2b">Do not try to read everything. Cursor reads the folder for you—the prompts already say so.</p>
+              </div>
+            </article>
+            <article class="step-card">
+              <span class="step-number">3</span>
+              <div>
+                <h3 data-i18n="setup.s3h">Open two Cursor agents and YouMind</h3>
+                <p data-i18n="setup.s3a">Press the <span class="ui-callout">+</span> at the top of Cursor’s chat panel to open a second agent tab. Tab 1 takes the tool, tab 2 takes the animation.</p>
+                <p data-i18n="setup.s3b">Then open YouMind in your browser for the comic. All three lanes now run at the same time instead of one after another.</p>
+              </div>
+            </article>
+            <article class="step-card">
+              <span class="step-number">4</span>
+              <div>
+                <h3 data-i18n="setup.s4h">Give each lane one clear request</h3>
+                <p data-i18n="setup.s4a">Copy the starter prompt from a task above and paste it into that lane as it is—the topic and the folder are already written in. Do not paste two tasks into the same tab.</p>
+                <p data-i18n="setup.s4b">Ask for changes in plain English, one at a time: “The labels overlap. Make them smaller and add more space.”</p>
+              </div>
+            </article>
+            <article class="step-card">
+              <span class="step-number">5</span>
+              <div>
+                <h3 data-i18n="setup.s5h">Open and check each result yourself</h3>
+                <p data-i18n="setup.s5a"><strong>HTML:</strong> find the file in the sidebar, right-click it, choose “Reveal in File Explorer”, then double-click it to open in a browser.</p>
+                <p data-i18n="setup.s5b"><strong>Image or video:</strong> click the file in Cursor’s sidebar to reopen its preview. Press play, and read every label.</p>
+              </div>
+            </article>
+            <article class="step-card">
+              <span class="step-number">6</span>
+              <div>
+                <h3 data-i18n="setup.s6h">Save all three, then get ready for part two</h3>
+                <p data-i18n="setup.s6a">Check the mathematics in each output. Fix the most important problem first, and keep a working version before asking for a risky change.</p>
+                <p data-i18n="setup.s6b">Stop creating when the timer ends. Each final file sits in its own task folder: <code>interactive-tool.html</code> in task 1, <code>animation.mp4</code> with <code>animation.py</code> in task 2, and <code>comic.png</code> with <code>comic-prompt.txt</code> in task 3.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="tool-guide-grid">
+          <article class="tool-guide">
+            <div class="tool-guide-icon" aria-hidden="true">C</div>
+            <h3 data-i18n="guide.cursor.h3">Using Cursor</h3>
+            <p data-i18n="guide.cursor.p">Cursor can read the teaching notes, write code, run commands and fix its own errors. You direct it with normal sentences.</p>
+            <div class="mini-steps">
+              <div class="mini-step"><b>01</b><span data-i18n="guide.cursor.1">Keep the starter kit folder open so Cursor can read each task folder itself.</span></div>
+              <div class="mini-step"><b>02</b><span data-i18n="guide.cursor.2">Use <strong>two agent tabs</strong> so the tool and the animation build at the same time.</span></div>
+              <div class="mini-step"><b>03</b><span data-i18n="guide.cursor.3">Paste the full starter prompt first, then request small changes one at a time.</span></div>
+              <div class="mini-step"><b>04</b><span data-i18n="guide.cursor.4">Approve file creation and preview commands when Cursor asks permission.</span></div>
+              <div class="mini-step"><b>05</b><span data-i18n="guide.cursor.5">If Manim cannot install in time, tell the interviewer, then hand in the Python file and a still frame—we mark the thinking, not the installation.</span></div>
+            </div>
+          </article>
+
+          <article class="tool-guide">
+            <div class="tool-guide-icon" aria-hidden="true">Y</div>
+            <h3 data-i18n="guide.youmind.h3">Using YouMind</h3>
+            <p data-i18n="guide.youmind.p">YouMind is best for planning a visual story and generating polished graphics from one detailed prompt.</p>
+            <div class="mini-steps">
+              <div class="mini-step"><b>01</b><span data-i18n="guide.youmind.1">Open <a href="https://youmind.ai/" target="_blank" rel="noopener">youmind.ai</a>, start a new creation, and choose an image or comic workflow.</span></div>
+              <div class="mini-step"><b>02</b><span data-i18n="guide.youmind.2">Open <strong>comics_Example_circumcenter.png</strong> beside it and describe that style in your prompt.</span></div>
+              <div class="mini-step"><b>03</b><span data-i18n="guide.youmind.3">Take the situation from a real question in <strong>task_3_probability_comics</strong> so the maths is genuine S3 material.</span></div>
+              <div class="mini-step"><b>04</b><span data-i18n="guide.youmind.4">Paste the prompt, then compare the result against all five requirements.</span></div>
+              <div class="mini-step"><b>05</b><span data-i18n="guide.youmind.5">Regenerate only when the mathematics, the text or the characters are clearly wrong.</span></div>
+              <div class="mini-step"><b>06</b><span data-i18n="guide.youmind.6">Download the final image, then move it from Downloads into <strong>task_3_probability_comics</strong> as <code>comic.png</code>.</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="present">
+      <div class="section-head">
+        <div>
+          <p class="section-label" data-i18n="present.label">Part two · 04 · Your demonstration</p>
+          <h2 data-i18n="present.h2">Then you demonstrate.</h2>
+        </div>
+        <p data-i18n="present.intro">
+          When the hour ends, part two begins: <strong>15 minutes in which you show all three
+          pieces</strong> and talk us through them. You are not being tested on slides—open the real
+          files and run them in front of us.
+        </p>
+      </div>
+
+      <div class="rules-grid">
+        <article class="presentation-card">
+          <h3 data-i18n="present.runh3">The 15 minutes, minute by minute</h3>
+          <p class="card-intro" data-i18n="present.runintro">Keep to this shape and everything fits.</p>
+          <ol class="presentation-list">
+            <li><div data-i18n="present.r1"><strong>1 min · Your plan</strong><span>How did you split the hour between the three tasks?</span></div></li>
+            <li><div data-i18n="present.r2"><strong>6 min · Three demonstrations</strong><span>Two minutes each. Solve a question live in the tool, play the animation, read the comic.</span></div></li>
+            <li><div data-i18n="present.r3"><strong>3 min · Your process</strong><span>Show one prompt you wrote and one correction you asked for.</span></div></li>
+            <li><div data-i18n="present.r4"><strong>2 min · Quality check</strong><span>How did you check the mathematics against the notes in each folder?</span></div></li>
+            <li><div data-i18n="present.r5"><strong>1 min · Next step</strong><span>Which of the three would you improve first, and how?</span></div></li>
+            <li><div data-i18n="present.r6"><strong>2 min · Questions</strong><span>Discuss your choices with the UniPlus team.</span></div></li>
+          </ol>
+        </article>
+
+        <article class="presentation-card">
+          <h3 data-i18n="present.openh3">Have these open at minute 0</h3>
+          <p class="card-intro" data-i18n="present.openintro">Set the screen up before you start talking—searching for files eats your 15 minutes.</p>
+          <ul class="requirement-list">
+            <li data-i18n="present.o1">A browser tab with <code>interactive-tool.html</code> already loaded.</li>
+            <li data-i18n="present.o2"><code>animation.mp4</code> open and paused at the first frame.</li>
+            <li data-i18n="present.o3"><code>comic.png</code> open at full size.</li>
+            <li data-i18n="present.o4">The Cursor chat that produced your best result, scrolled to the prompt.</li>
+          </ul>
+          <ul class="idea-list" style="margin-top: 22px">
+            <li data-i18n="present.q1"><b>Expect us to ask</b>Where in the notes did this question come from?</li>
+            <li data-i18n="present.q2"><b>Expect us to ask</b>What did the AI get wrong first, and how did you spot it?</li>
+            <li data-i18n="present.q3"><b>Expect us to ask</b>Which part of this would confuse a real S3 student?</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="assessment">
+      <div class="section-head">
+        <div>
+          <p class="section-label" data-i18n="assess.label">05 · What matters</p>
+          <h2 data-i18n="assess.h2">Show judgement, not perfection.</h2>
+        </div>
+        <p data-i18n="assess.intro">
+          We are looking for a future KOC: someone who can turn subject knowledge into useful,
+          engaging teaching material, work several lanes at once, and explain the choices behind it.
+        </p>
+      </div>
+
+      <div class="rules-grid">
+        <article class="rubric-card">
+          <h3 data-i18n="assess.rubrich3">How we assess the work</h3>
+          <p class="card-intro" data-i18n="assess.rubricintro">The three deliverables and your demonstration are marked together, out of 100.</p>
+          <div class="rubric-list">
+            <div class="rubric-row">
+              <div data-i18n="assess.row1"><strong>Learning value</strong><span>Is the mathematics accurate, and is each concept easier to understand?</span></div>
+              <span class="score">25</span>
+            </div>
+            <div class="rubric-row">
+              <div data-i18n="assess.row2"><strong>Student experience</strong><span>Is each output clear, readable, engaging and suitable for S3?</span></div>
+              <span class="score">25</span>
+            </div>
+            <div class="rubric-row">
+              <div data-i18n="assess.row3"><strong>Use of AI tools</strong><span>Did you run the lanes in parallel, then inspect, test and improve?</span></div>
+              <span class="score">20</span>
+            </div>
+            <div class="rubric-row">
+              <div data-i18n="assess.row4"><strong>Use of the given notes</strong><span>Does each piece reflect the material in its own task folder?</span></div>
+              <span class="score">10</span>
+            </div>
+            <div class="rubric-row">
+              <div data-i18n="assess.row5"><strong>Completion</strong><span>Do all three outputs exist, open correctly and meet their checklists?</span></div>
+              <span class="score">10</span>
+            </div>
+            <div class="rubric-row">
+              <div data-i18n="assess.row6"><strong>Demonstration</strong><span>Can you explain your decisions and your next improvement?</span></div>
+              <span class="score">10</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="presentation-card">
+          <h3 data-i18n="assess.noth3">What we are not marking</h3>
+          <p class="card-intro" data-i18n="assess.notintro">Three things candidates worry about that carry no marks at all.</p>
+          <ul class="idea-list">
+            <li data-i18n="assess.not1"><b>Not marked</b>Whether you can write code yourself. You are expected to direct the AI, not to type Python.</li>
+            <li data-i18n="assess.not2"><b>Not marked</b>Polish and animation flourish. A plain piece that teaches beats a beautiful one that misleads.</li>
+            <li data-i18n="assess.not3"><b>Not marked</b>Installation trouble. If Manim will not install, say so and demonstrate what you have.</li>
+          </ul>
+          <p class="workflow-hint">
+            <span aria-hidden="true">◈</span>
+            <span data-i18n="assess.unfinished">
+              <strong>Unfinished is acceptable</strong>
+              Bring an incomplete piece and explain what was left and why. A candidate who knows what
+              is wrong with their work scores better than one who does not notice.
+            </span>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section tight container" id="start">
+      <div class="ready-card">
+        <div class="ready-copy">
+          <p class="section-label" style="color: var(--lime)" data-i18n="ready.label">Ready when you are</p>
+          <h2 data-i18n="ready.h2">Three tasks. One hour. Make them teach.</h2>
+          <p data-i18n="ready.p">
+            Open the starter kit in Cursor, start two agent tabs and YouMind, paste all three
+            prompts—Inequality, Percentages II, Probability—then start the clock.
+          </p>
+          <a class="button primary" href="#tasks" data-i18n="ready.cta">Review the three tasks ↑</a>
+        </div>
+        <div class="countdown" aria-live="polite">
+          <p class="countdown-label" data-i18n="ready.timerlabel">Creation time remaining</p>
+          <div class="countdown-time" id="countdownTime">60:00</div>
+          <div class="timer-controls">
+            <button class="timer-button" id="startTimer" type="button">Start</button>
+            <button class="timer-button" id="resetTimer" type="button" data-i18n="btn.reset">Reset</button>
+          </div>
+          <p class="timer-message" id="timerMessage">Timer has not started.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span data-i18n="footer.left"><strong>UniPlus Education</strong> · KOC Creation Sprint · Hong Kong</span>
+      <span data-i18n="footer.right">Graphics tool: <a href="https://youmind.ai/" target="_blank" rel="noopener">youmind.ai ↗</a></span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      // Traditional Chinese layer. English stays in the markup and is snapshotted
+      // on load, so only the Chinese side is listed here. Inline tags inside a
+      // value must match the English markup they replace.
+      const ZH = {
+        "skip": '跳至任務內容',
+        "nav.demo": '示範作品',
+        "nav.tasks": '三項任務',
+        "nav.setup": '開始之前',
+        "nav.present": '你的示範',
+        "nav.assessment": '評分標準',
+
+        "hero.eyebrow": 'KOC 實作招聘任務',
+        "hero.h1": '讓三個概念<em>一秒明白。</em>',
+        "hero.lede": '一個關於<strong>不等式</strong>的互動教學工具、一段關於<strong>百分數 II</strong>的 Manim 動畫，以及一份關於<strong>概率</strong>的概念漫畫，全部在同一小時內完成。課題和教材都已為你準備好——我們看的是你怎樣把它們教出來。',
+        "hero.cta1": '先看示範作品',
+        "hero.cta2": '開啟 YouMind',
+        "hero.note": '我們不要求你有編程經驗。我們評估的是你如何指揮 AI，以及你能否判斷結果的好壞。',
+
+        "sheet.kicker": '創作衝刺<br>應徵者簡介',
+        "sheet.title": '三項指定任務。',
+        "sheet.subtitle": '每項任務各有指定課題，無需選擇。一小時內同步完成三份作品。',
+        "sheet.opt1": '<strong>互動工具 · 不等式</strong><small>Cursor 代理 1</small>',
+        "sheet.opt2": '<strong>Manim 動畫 · 百分數 II</strong><small>Cursor 代理 2</small>',
+        "sheet.opt3": '<strong>概念漫畫 · 概率</strong><small>YouMind</small>',
+        "sheet.stamp": '60 分鐘<br>製作',
+
+        "format.kicker": '今日流程',
+        "format.total": '兩部分，共 75 分鐘',
+        "format.1label": '項指定任務',
+        "format.1note": '不等式、百分數 II、概率。',
+        "format.2label": '分鐘 · 製作',
+        "format.2note": '第一部分。三條線同時進行。',
+        "format.3label": '分鐘 · 示範',
+        "format.3note": '第二部分。展示三份作品並講解。',
+
+        "demo.label": '第一部分 · 01 · 示範作品',
+        "demo.h2": '先看範例。',
+        "demo.intro": '以下三份完成品由現職 KOC 製作，每項任務各一份。請學習當中的<strong>水準</strong>，而非題材：每份示範刻意採用與你任務不同的課題，所以一律無法照抄交功課。',
+        "common.openfull": '開啟完整版 ↗',
+
+        "demo.tool.no": '示範 01',
+        "demo.tool.tag": '對應任務 01 · 互動工具',
+        "demo.tool.h3": '一個學生可以動手操作的工具。',
+        "demo.tool.p": '一個學生用瀏覽器打開的單一 HTML 頁面。它不會講完就停——它會要求學生做一件事，然後回應他。',
+        "demo.tool.n1": '<b>留意這幾點</b>數字由學生自己更改，所以同一個工具每次都出一條新題。',
+        "demo.tool.n2": '<b>留意這幾點</b>在任何答案出現之前，學生必須先作答。',
+        "demo.tool.n3": '<b>留意這幾點</b>回饋會說明對或錯，<em>並解釋原因</em>——同一個量由頭到尾用同一種顏色。',
+        "demo.tool.hint": '<strong>刻意採用不同課題</strong>這份示範是因式分解，而你的任務 01 是<b>不等式</b>。要學的是水準而非內容——你的作品可以比它簡單得多。',
+        "demo.tool.jump": '打開任務 01 簡介',
+        "demo.tool.caption": '示範 · 因式分解',
+        "demo.tool.note": '拖動滑桿，並在 <em>(a+b)²</em>、<em>a²−b²</em> 和十字相乘法之間切換。同一課還<a href="https://unikoc5.github.io/s3-maths/topics/factorization_polynomials/#comics" target="_blank" rel="noopener">附有漫畫</a>，但這裡只展示互動工具——那才是任務 01 的要求。',
+
+        "demo.manim.no": '示範 02',
+        "demo.manim.tag": '對應任務 02 · Manim 動畫',
+        "demo.manim.h3": '把概念一步步砌出來，而不是講出來。',
+        "demo.manim.p": '用動畫程式庫 Manim 製作。畫面上沒有任何東西是一次到齊：先畫圖形，再標示各部分，然後逐步演算。',
+        "demo.manim.n1": '<b>留意這幾點</b>每個出現的數字，都可以追溯到畫面上已有的東西。',
+        "demo.manim.n2": '<b>留意這幾點</b>標籤與它所指的部分一同出現，所以畫面永不擁擠。',
+        "demo.manim.n3": '<b>留意這幾點</b>片長很短。一段動畫只講一個概念，30 至 45 秒。',
+        "demo.manim.hint": '<strong>刻意採用不同課題</strong>這份示範是面積與體積，而你的任務 02 是<b>百分數 II</b>。要學的是概念如何一步步砌出來。',
+        "demo.manim.jump": '打開任務 02 簡介',
+        "demo.manim.caption": '示範 · 面積與體積',
+        "demo.manim.note": '按<strong>空白鍵</strong>播放該頁動畫，用方向鍵前後切換。另可參看<a href="https://unikoc5.github.io/s3-maths/slides/area_volume/solids/" target="_blank" rel="noopener">立體圖形一輯</a>，以及 <a href="https://uni-education-elearning.pages.dev/subject/math" target="_blank" rel="noopener">Uni+ 電子學習平台</a>的數學部分（需登入）。',
+
+        "demo.comic.no": '示範 03',
+        "demo.comic.tag": '對應任務 03 · 概念漫畫',
+        "demo.comic.h3": '讓數學發生在人身上。',
+        "demo.comic.p": '一頁、六格、同一批角色。數學不是故事的裝飾——故事本身就是數學如何被解開的過程。',
+        "demo.comic.n1": '<b>留意這幾點</b>第 1 格提出問題，最後一格回答同一個問題。',
+        "demo.comic.n2": '<b>留意這幾點</b>格內看得見真正的運算過程，而不只是結論。',
+        "demo.comic.n3": '<b>留意這幾點</b>標題橫幅寫明課題，結尾橫條用一句話總結概念。',
+        "demo.comic.hint": '<strong>刻意採用不同課題</strong>這份示範是三角形的心，而你的任務 03 是<b>概率</b>。沿用這套畫風，換掉數學內容。',
+        "demo.comic.jump": '打開任務 03 簡介',
+        "demo.comic.caption": '示範 · 三角形的心',
+        "demo.comic.note": '<strong>comics_Example_circumcenter.png</strong> 就在你的起始資料夾內——在 Cursor 側邊欄按一下即可放大細看，寫提示語時把它開在 YouMind 旁邊。',
+
+        "tasks.label": '第一部分 · 02 · 三項任務',
+        "tasks.h2": '現在動手做齊三份。',
+        "tasks.intro": '<strong>三項任務全部必做，課題已固定。</strong>任務 01 是不等式，任務 02 是百分數 II，任務 03 是概率——每項各有自己的筆記和課件資料夾。三條線要同時進行，不要一份做完才做下一份。',
+
+        "workflow.title": '這一小時怎樣運作',
+        "workflow.lane1": '第 1 條線',
+        "workflow.lane1h": '工具 · 不等式',
+        "workflow.lane1p": '由這裡開始。這條線最需要你親自測試，所以先分配頭幾分鐘給它。',
+        "workflow.lane2": '第 2 條線',
+        "workflow.lane2h": '動畫 · 百分數 II',
+        "workflow.lane2p": '及早開始，然後放手。安裝和輸出過程不需你看著。',
+        "workflow.lane3": '第 3 條線',
+        "workflow.lane3h": '漫畫 · 概率',
+        "workflow.lane3p": '在瀏覽器內進行，剛好填滿等 Cursor 的時間。',
+        "workflow.hint": '<strong>同時開兩個 Cursor 代理</strong>按 Cursor 對話面板頂部的 <span class="ui-callout">+</span> 開第二個代理分頁。每個分頁各自獨立處理自己的任務——分頁 1 做工具，分頁 2 做動畫，然後轉去瀏覽器做漫畫。',
+        "common.agent1": 'Cursor 代理 1',
+        "common.agent2": 'Cursor 代理 2',
+
+        "tab.tool.no": '任務 01 · 不等式',
+        "tab.tool.name": '互動<br>教學工具',
+        "tab.manim.no": '任務 02 · 百分數 II',
+        "tab.manim.name": 'Manim<br>動畫',
+        "tab.comic.no": '任務 03 · 概率',
+        "tab.comic.name": '概念<br>漫畫',
+
+        "common.subject": '中三數學',
+        "common.goal": '學習目標',
+        "common.timeline": '這一小時如何分配',
+        "common.copy": '複製提示語',
+        "common.handin": '提交：',
+        "btn.reset": '重設',
+
+        "task1.badge.topic": '課題：不等式 · 已指定',
+        "task1.badge.deliverable": '交付格式：HTML',
+        "task1.h3": '一個關於不等式的互動工具。',
+        "task1.p": '製作一個瀏覽器工具，教授不等式當中的一個概念——解一元一次不等式，並在數線上讀出答案，包括兩邊同除以負數時不等號要反轉的那一刻。學生必須可以更改某些東西、先作答，然後知道自己對或錯以及原因。',
+        "task1.goal": '用完你的工具之後，學生應該懂得解一元一次不等式，並知道不等號何時要反轉——答錯時工具會即時指正他。',
+        "task1.hint": '<strong>課題已定，教法由你決定</strong>這項任務的課題固定為不等式。至於怎樣教——數線、天秤、排序遊戲——由你決定，而這個決定正是我們評分的地方。',
+        "task1.materials": '你的教材 · 任務 01',
+        "task1.file1": '課堂課件——我們採用的教學次序',
+        "task1.file2": '複習題——真實的中三題目用語',
+        "task1.file3": '答案——用來核對你工具的答案',
+        "task1.materialsnote": '在 Cursor 側邊欄按任何檔案即可開啟。你不需要全部讀完——起始提示語已經叫 Cursor 幫你讀整個資料夾。',
+        "task1.seedemo": '查看示範 01',
+        "task1.ideas": '從以下選一個來做',
+        "task1.idea1": '<b>建議</b>逐步解題器：學生自選 <em>ax + b &gt; c</em> 當中的數字，先預測答案，然後看著每一步，並見到除以負數時不等號反轉。',
+        "task1.idea2": '<b>其他選擇</b>驗證器：給定一條不等式，學生把數值拖到數線上，工具指出哪些數值成立，以及為何端點包括或不包括在內。',
+        "task1.idea3": '<b>其他選擇</b>預算題：「我們必須用少於 $50。」學生把這句話寫成不等式，再檢查哪些購物組合可以接受。',
+        "task1.reqtitle": '你的工具必須包括',
+        "task1.req1": '至少兩樣學生可以更改的東西，不能只有一個「下一步」按鈕。',
+        "task1.req2": '一個讓學生在看到結果之前必須先作答的位置。',
+        "task1.req3": '回饋要說明對或錯，<strong>並解釋原因</strong>，用淺白文字。',
+        "task1.req4": '一個示範解題按鈕，以及一個會換新數字的「再試一次」按鈕。',
+        "task1.req5": '單一 HTML 檔案，不用外部程式庫，在筆記型電腦螢幕上清晰可讀。',
+        "task1.t1": '閱讀這份簡介和示範 01。',
+        "task1.t2": '把提示語貼進 Cursor 代理 1，讓它開始製作。',
+        "task1.t3": '親自測試每一個輸入欄；用淺白文字逐項報告問題。',
+        "task1.t4": '加入示範解題和「再試一次」按鈕。',
+        "task1.t5": '最後在瀏覽器檢查一次，然後儲存並決定示範哪部分。',
+        "task1.prompttitle": 'Cursor 代理 1 的起始提示語',
+        "task1.promptnote": '整段照樣貼上即可——課題和資料夾已經填好。提示語保持英文，不需修改。',
+
+        "task2.badge.topic": '課題：百分數 II · 已指定',
+        "task2.badge.deliverable": '交付格式：MP4 + PY',
+        "task2.h3": '一段關於百分數 II 的 Manim 動畫。',
+        "task2.p": '製作一段 30 至 45 秒的 Manim 動畫，把百分數 II 當中的一個概念在畫面上逐步砌出來，而不是直接講出結論。任何東西都不應一次到齊——學生要看著每個數字逐一出現。',
+        "task2.goal": '學生應該看著百分數變化發生，並看清每個數字的來歷，而不是被直接告知答案。',
+        "task2.hint": '<strong>課題已定，教法由你決定</strong>這項任務的課題固定為百分數 II。至於你選當中哪個概念來做動畫、怎樣鋪排，由你決定。',
+        "task2.materials": '你的教材 · 任務 02',
+        "task2.file1": '課堂課件——可以拿來做動畫的例題',
+        "task2.file2": '複習題——真實的中三題目用語',
+        "task2.file3": '答案——用來核對你的數字',
+        "task2.materialsnote": '在 Cursor 側邊欄按任何檔案即可開啟。起始提示語已經叫 Cursor 先讀這個資料夾才動筆。',
+        "task2.seedemo": '查看示範 02',
+        "task2.ideas": '從以下選一個來做動畫',
+        "task2.idea1": '<b>建議</b>一條長條先減少 20%，再增加 20%，結果落在起點以下——兩個看似相等的變化明顯不會互相抵消。',
+        "task2.idea2": '<b>其他選擇</b>盈虧：成本價和售價兩條長條並排，說明為何百分率盈利以成本價而非售價計算。',
+        "task2.idea3": '<b>其他選擇</b>連續兩次折扣「先七折再九折」，與一次過六折相比——以及兩者為何並不相同。',
+        "task2.reqtitle": '你的動畫必須包括',
+        "task2.req1": '一個清晰的圖形或圖解，每一部分都有標示。',
+        "task2.req2": '概念要逐步砌出來，不可一次全部顯示。',
+        "task2.req3": '同一個量由頭到尾用同一種顏色。',
+        "task2.req4": '一行用真實數字的完整運算，需要單位時要寫上。',
+        "task2.req5": '片長 30 至 45 秒，在手機上仍然看得清。',
+        "task2.t1": '閱讀這份簡介，並觀看示範 02。',
+        "task2.t2": '把提示語貼進 Cursor 代理 2，讓安裝及早開始。',
+        "task2.t3": '輸出過程自己會跑——先去做另一條線，之後再回來。',
+        "task2.t4": '看一遍 MP4；修正節奏、重疊和看不清的標籤。',
+        "task2.t5": '輸出最終檔案，連同 Python 原始碼一併儲存。',
+        "task2.prompttitle": 'Cursor 代理 2 的起始提示語',
+        "task2.promptnote": '整段照樣貼上即可，提示語保持英文。只有當你改用上面另一個構想時，才需要改動第二句。',
+
+        "task3.badge.topic": '課題：概率 · 已指定',
+        "task3.badge.deliverable": '交付格式：PNG',
+        "task3.h3": '一份關於概率的概念漫畫。',
+        "task3.p": '把概率當中的一個概念變成一個六格故事，沿用示範的畫風，令學生讀一次之後，因為記得角色的經歷而記得那個概念。',
+        "task3.goal": '學生應該能跟著一條概率題，由問題提出一路走到一個可以用一句話講出來的結論。',
+        "task3.hint": '<strong>課題已定，故事由你創作</strong>這項任務的課題固定為概率。角色、情境和轉折全部由你創作——只要數學正確就可以。',
+        "task3.materials": '你的教材 · 任務 03',
+        "task3.file1": '課堂課件——核心概念',
+        "task3.file2": '課堂使用的題目集',
+        "task3.file3": '複習題及答案',
+        "task3.materialsnote": '從這些檔案中選一條題目作為漫畫的情境，令當中的數學是真實的中三教材，而不是自己憑空編出來。',
+        "task3.seedemo": '查看示範 03',
+        "task3.ideas": '從以下選一個來講',
+        "task3.idea1": '<b>建議</b>一個看似公平的遊戲，直到角色列出所有可能結果，證明它其實並不公平。',
+        "task3.idea2": '<b>其他選擇</b>兩粒骰子，爭論總和 7 是否真的比總和 2 更容易出現——最後靠寫出樣本空間解決。',
+        "task3.idea3": '<b>其他選擇</b>「至少一個」的題目：計算那件事<em>不</em>發生的機會反而更容易，角色們發現了原因。',
+        "task3.reqtitle": '你的漫畫必須包括',
+        "task3.req1": '標題橫幅之下有六個編號分格，沿用示範的風格。',
+        "task3.req2": '每一格都是同一批角色，畫法一致。',
+        "task3.req3": '第 1 格提出一個問題，最後一格回答它。',
+        "task3.req4": '數學正確，至少兩格看得見運算過程。',
+        "task3.req5": '結尾一條總結橫條，用一句話講出概念。',
+        "task3.t1": '閱讀這份簡介，並細看示範 03。',
+        "task3.t2": '在 Cursor 處理第 1、2 條線時，把提示語貼進 YouMind。',
+        "task3.t3": '檢查每一格的數學，包括所有數字。',
+        "task3.t4": '只重新生成出錯或看不清的格數。',
+        "task3.t5": '下載最好的版本，連同你最終使用的提示語一併儲存。',
+        "task3.prompttitle": 'YouMind 的起始提示語',
+        "task3.promptnote": '課題那一行已固定。只需修改 STORY 那一行——那是你的創作。之後的內容用來鎖定統一畫風，提示語保持英文。',
+
+        "setup.label": '第一部分 · 03 · 開始之前',
+        "setup.h2": '每項任務一個資料夾。',
+        "setup.intro": 'Cursor 左邊的側邊欄就是檔案總管。你的筆記已經分好三個資料夾——每項任務一個——而你完成的檔案要放回原本那個資料夾。',
+        "setup.path1": '任務 01 · 不等式 · 工具',
+        "setup.path2": '任務 02 · 百分數 II · 動畫',
+        "setup.path3": '任務 03 · 概率 · 漫畫',
+        "setup.path4": '漫畫統一畫風',
+        "setup.pathnote": '以上所有路徑都在你收到的 <strong>starter_kit</strong> 資料夾內。今天電腦上其他東西一概不用理。',
+        "setup.s1h": '在 Cursor 開啟起始資料夾',
+        "setup.s1a": '選 <span class="ui-callout">File → Open Folder…</span>，選擇你收到的 <strong>starter_kit</strong> 資料夾，然後按「Select Folder」。',
+        "setup.s1b": '三個任務資料夾會在<strong>左邊側邊欄</strong>出現，每個都已放好該課題的筆記和課件。',
+        "setup.s2h": '快速瀏覽三個任務資料夾',
+        "setup.s2a": '今天沒有東西要選：任務 01 是<strong>不等式</strong>，任務 02 是<strong>百分數 II</strong>，任務 03 是<strong>概率</strong>。逐個資料夾打開，隨便看一條題目，了解教材的樣子。',
+        "setup.s2b": '不要嘗試全部讀完。Cursor 會幫你讀整個資料夾——提示語已經這樣寫。',
+        "setup.s3h": '開兩個 Cursor 代理和 YouMind',
+        "setup.s3a": '按 Cursor 對話面板頂部的 <span class="ui-callout">+</span> 開第二個代理分頁。分頁 1 負責工具，分頁 2 負責動畫。',
+        "setup.s3b": '然後在瀏覽器開 YouMind 做漫畫。三條線就會同時進行，而不是一份做完才做下一份。',
+        "setup.s4h": '給每條線一個清晰的指示',
+        "setup.s4a": '從上面任務複製起始提示語，照樣貼進那條線——課題和資料夾已經寫在裡面。不要把兩項任務貼進同一個分頁。',
+        "setup.s4b": '要修改時用淺白說法，一次講一項：「標籤重疊了。縮小一點，並加大間距。」',
+        "setup.s5h": '親自打開並檢查每個成果',
+        "setup.s5a": '<strong>HTML：</strong>在側邊欄找到檔案，右鍵選「Reveal in File Explorer」，然後雙擊在瀏覽器打開。',
+        "setup.s5b": '<strong>圖片或影片：</strong>在 Cursor 側邊欄按檔案即可重新開啟預覽。按播放，並讀清每個標籤。',
+        "setup.s6h": '儲存三份作品，然後準備第二部分',
+        "setup.s6a": '檢查每份成果的數學。先修最重要的問題，並在提出風險較高的修改之前，保留一個可用版本。',
+        "setup.s6b": '計時器一到就停手。每個最終檔案都放在自己的任務資料夾內：任務 1 的 <code>interactive-tool.html</code>、任務 2 的 <code>animation.mp4</code> 連 <code>animation.py</code>，以及任務 3 的 <code>comic.png</code> 連 <code>comic-prompt.txt</code>。',
+
+        "guide.cursor.h3": '使用 Cursor',
+        "guide.cursor.p": 'Cursor 可以讀教學筆記、寫程式、執行指令，以及修正自己的錯誤。你用平常說話的句子指揮它。',
+        "guide.cursor.1": '保持開著起始資料夾，讓 Cursor 可以自己讀每個任務資料夾。',
+        "guide.cursor.2": '用<strong>兩個代理分頁</strong>，讓工具和動畫同時進行。',
+        "guide.cursor.3": '先貼上完整的起始提示語，之後一次只提出一項小修改。',
+        "guide.cursor.4": '當 Cursor 要求權限時，批准它建立檔案和執行預覽指令。',
+        "guide.cursor.5": '如果 Manim 來不及安裝，告訴面試官，然後提交 Python 檔案和一張靜止畫面——我們評的是思路，不是安裝過程。',
+        "guide.youmind.h3": '使用 YouMind',
+        "guide.youmind.p": 'YouMind 最適合構思視覺故事，並用一段詳細提示語生成精緻圖像。',
+        "guide.youmind.1": '打開 <a href="https://youmind.ai/" target="_blank" rel="noopener">youmind.ai</a>，開新創作，選擇圖像或漫畫工作流程。',
+        "guide.youmind.2": '在旁邊打開 <strong>comics_Example_circumcenter.png</strong>，並在提示語中描述那種風格。',
+        "guide.youmind.3": '從 <strong>task_3_probability_comics</strong> 中選一條真實題目作情境，令數學是真正的中三教材。',
+        "guide.youmind.4": '貼上提示語，然後逐項對照五個要求檢查結果。',
+        "guide.youmind.5": '只在數學、文字或角色明顯出錯時才重新生成。',
+        "guide.youmind.6": '下載最終圖像，然後由「下載」資料夾移到 <strong>task_3_probability_comics</strong>，命名為 <code>comic.png</code>。',
+
+        "present.label": '第二部分 · 04 · 你的示範',
+        "present.h2": '然後由你示範。',
+        "present.intro": '一小時結束後就進入第二部分：<strong>15 分鐘展示三份作品</strong>並向我們講解。我們不是考你做簡報——請直接打開真正的檔案，在我們面前執行。',
+        "present.runh3": '15 分鐘怎樣分配',
+        "present.runintro": '按這個架構走，時間就剛剛好。',
+        "present.r1": '<strong>1 分鐘 · 你的計劃</strong><span>你如何在三項任務之間分配這一小時？</span>',
+        "present.r2": '<strong>6 分鐘 · 三份示範</strong><span>每份兩分鐘。在工具上即場解一條題、播放動畫、讀一遍漫畫。</span>',
+        "present.r3": '<strong>3 分鐘 · 你的過程</strong><span>展示你寫過的一段提示語，以及你要求過的一項修正。</span>',
+        "present.r4": '<strong>2 分鐘 · 質素檢查</strong><span>你如何對照各資料夾的筆記核對數學？</span>',
+        "present.r5": '<strong>1 分鐘 · 下一步</strong><span>三份之中你會先改善哪一份，怎樣改？</span>',
+        "present.r6": '<strong>2 分鐘 · 提問</strong><span>與 UniPlus 團隊討論你的選擇。</span>',
+        "present.openh3": '第 0 分鐘就要開好這幾樣',
+        "present.openintro": '開口之前先把畫面準備好——臨場找檔案會吃掉你的 15 分鐘。',
+        "present.o1": '一個已經載入 <code>interactive-tool.html</code> 的瀏覽器分頁。',
+        "present.o2": '<code>animation.mp4</code> 已打開並停在第一格畫面。',
+        "present.o3": '<code>comic.png</code> 以全尺寸打開。',
+        "present.o4": '產出你最佳成果的那個 Cursor 對話，並捲動到提示語的位置。',
+        "present.q1": '<b>預期我們會問</b>這條題目在筆記的哪個位置？',
+        "present.q2": '<b>預期我們會問</b>AI 最初做錯了什麼，你怎樣發現？',
+        "present.q3": '<b>預期我們會問</b>這份作品哪一部分會令真正的中三學生混淆？',
+
+        "assess.label": '05 · 我們重視什麼',
+        "assess.h2": '我們看判斷力，不看完美。',
+        "assess.intro": '我們在找一位未來的 KOC：能把學科知識變成好用、吸引的教學材料，能同時處理幾條線，並能講清背後的選擇。',
+        "assess.rubrich3": '我們如何評分',
+        "assess.rubricintro": '三份作品連同你的示範一併評分，總分 100。',
+        "assess.row1": '<strong>學習價值</strong><span>數學是否準確？每個概念是否變得更容易理解？</span>',
+        "assess.row2": '<strong>學生體驗</strong><span>每份成果是否清晰、易讀、吸引，並適合中三程度？</span>',
+        "assess.row3": '<strong>AI 工具運用</strong><span>你是否同時推進三條線，並且逐一檢視、測試和改善？</span>',
+        "assess.row4": '<strong>教材運用</strong><span>每份作品是否反映其任務資料夾內的教材？</span>',
+        "assess.row5": '<strong>完成度</strong><span>三份成果是否齊全、能正常開啟，並符合各自的檢查清單？</span>',
+        "assess.row6": '<strong>示範</strong><span>你能否解釋自己的決定，以及下一步的改善方向？</span>',
+        "assess.noth3": '我們不會評分的部分',
+        "assess.notintro": '應徵者最常擔心、但其實完全不計分的三件事。',
+        "assess.not1": '<b>不計分</b>你是否會親手寫程式。我們期望你指揮 AI，而不是自己打 Python。',
+        "assess.not2": '<b>不計分</b>畫面精緻度和動畫花巧。一份樸素但教得清楚的作品，勝過一份漂亮但誤導的作品。',
+        "assess.not3": '<b>不計分</b>安裝問題。如果 Manim 裝不成，說一聲，然後示範你手上已有的成果。',
+        "assess.unfinished": '<strong>未完成是可以接受的</strong>把未完成的作品帶來，並解釋哪部分未做以及原因。清楚知道自己作品問題所在的應徵者，得分會高於毫無察覺的人。',
+
+        "ready.label": '準備好就開始',
+        "ready.h2": '三項任務。一小時。讓它們教得到人。',
+        "ready.p": '在 Cursor 開啟起始資料夾，開兩個代理分頁和 YouMind，貼上三段提示語——不等式、百分數 II、概率——然後開始計時。',
+        "ready.cta": '重看三項任務 ↑',
+        "ready.timerlabel": '剩餘製作時間',
+
+        "footer.left": '<strong>UniPlus Education</strong> · KOC 創作衝刺 · 香港',
+        "footer.right": '圖像工具：<a href="https://youmind.ai/" target="_blank" rel="noopener">youmind.ai ↗</a>'
+      };
+
+      // Strings the script writes at runtime, so they cannot live in the markup.
+      const RUNTIME = {
+        en: {
+          "title": "UniPlus KOC · Creation Sprint",
+          "title.running": " · UniPlus KOC Sprint",
+          "chip.running": " · Running",
+          "chip.ready": " · Ready",
+          "chip.aria": "Jump to the 60 minute timer",
+          "btn.start": "Start",
+          "btn.pause": "Pause",
+          "btn.resume": "Resume",
+          "btn.restart": "Restart",
+          "btn.copied": "Copied!",
+          "msg.notstarted": "Timer has not started.",
+          "msg.inprogress": "All three lanes in progress.",
+          "msg.paused": "Timer paused.",
+          "msg.reset": "Timer reset and ready.",
+          "msg.time": "Time. Save your files and begin part two, your demonstration.",
+          "toast.done": "Creation time is complete.",
+          "toast.copied": "Starter prompt copied.",
+          "ms.half": "Half the hour gone — every lane should have a first version.",
+          "ms.ten": "Ten minutes left — save each file into its own task folder.",
+          "ms.five": "Five minutes left — stop creating and open your three files for the demonstration."
+        },
+        zh: {
+          "title": "UniPlus KOC · 創作衝刺",
+          "title.running": " · UniPlus KOC 衝刺",
+          "chip.running": " · 進行中",
+          "chip.ready": " · 準備就緒",
+          "chip.aria": "跳至 60 分鐘計時器",
+          "btn.start": "開始",
+          "btn.pause": "暫停",
+          "btn.resume": "繼續",
+          "btn.restart": "重新開始",
+          "btn.copied": "已複製！",
+          "msg.notstarted": "計時器尚未開始。",
+          "msg.inprogress": "三條線同時進行中。",
+          "msg.paused": "計時器已暫停。",
+          "msg.reset": "計時器已重設，準備就緒。",
+          "msg.time": "時間到。儲存檔案，開始第二部分：你的示範。",
+          "toast.done": "製作時間已結束。",
+          "toast.copied": "已複製起始提示語。",
+          "ms.half": "一小時已過一半——每條線都應該有第一個版本。",
+          "ms.ten": "剩十分鐘——把每個檔案存回自己的任務資料夾。",
+          "ms.five": "剩五分鐘——停止製作，打開三份作品準備示範。"
+        }
+      };
+
+      let lang = "en";
+      const englishMarkup = new Map();
+      document.querySelectorAll("[data-i18n]").forEach((el) => englishMarkup.set(el, el.innerHTML));
+
+      function t(key) {
+        return RUNTIME[lang][key] || RUNTIME.en[key];
+      }
+
+      const tabs = Array.from(document.querySelectorAll("[data-task]"));
+      const panels = Array.from(document.querySelectorAll("[data-panel]"));
+      const toast = document.getElementById("toast");
+      let toastTimeout;
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => toast.classList.remove("show"), 2200);
+      }
+
+      function selectTask(taskName, shouldFocus) {
+        tabs.forEach((tab) => {
+          const selected = tab.dataset.task === taskName;
+          tab.setAttribute("aria-selected", String(selected));
+          tab.tabIndex = selected ? 0 : -1;
+          if (selected && shouldFocus) tab.focus();
+        });
+
+        panels.forEach((panel) => {
+          const selected = panel.dataset.panel === taskName;
+          panel.classList.toggle("active", selected);
+          panel.hidden = !selected;
+        });
+      }
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => selectTask(tab.dataset.task, false));
+        tab.addEventListener("keydown", (event) => {
+          let nextIndex = null;
+          if (event.key === "ArrowRight" || event.key === "ArrowDown") nextIndex = (index + 1) % tabs.length;
+          if (event.key === "ArrowLeft" || event.key === "ArrowUp") nextIndex = (index - 1 + tabs.length) % tabs.length;
+          if (event.key === "Home") nextIndex = 0;
+          if (event.key === "End") nextIndex = tabs.length - 1;
+          if (nextIndex !== null) {
+            event.preventDefault();
+            selectTask(tabs[nextIndex].dataset.task, true);
+          }
+        });
+      });
+
+      // Links out of the demonstration part open the matching brief, since the
+      // panels are tabbed and a plain anchor would land on a hidden one.
+      document.querySelectorAll("[data-goto]").forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          selectTask(link.dataset.goto, false);
+          document.getElementById("tasks").scrollIntoView({ behavior: "smooth" });
+        });
+      });
+
+      // The cropped embeds render at a fixed logical width so the crop stays
+      // exact; this keeps them fitted to whatever width the column has.
+      const scaledEmbeds = Array.from(document.querySelectorAll("[data-scale-embed]"));
+
+      function fitScaledEmbeds() {
+        scaledEmbeds.forEach((embed) => {
+          const base = parseFloat(getComputedStyle(embed).getPropertyValue("--embed-w"));
+          if (!base || !embed.clientWidth) return;
+          embed.style.setProperty("--embed-scale", (embed.clientWidth / base).toFixed(4));
+        });
+      }
+
+      if (scaledEmbeds.length) {
+        fitScaledEmbeds();
+        if (typeof ResizeObserver === "function") {
+          const observer = new ResizeObserver(fitScaledEmbeds);
+          scaledEmbeds.forEach((embed) => observer.observe(embed));
+        } else {
+          window.addEventListener("resize", fitScaledEmbeds);
+        }
+      }
+
+      document.querySelectorAll("[data-copy]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const target = document.getElementById(button.dataset.copy);
+          const text = target.textContent.trim();
+          try {
+            await navigator.clipboard.writeText(text);
+          } catch (error) {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(target);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+              document.execCommand("copy");
+            } finally {
+              selection.removeAllRanges();
+            }
+          }
+          const oldLabel = button.textContent;
+          button.textContent = t("btn.copied");
+          showToast(t("toast.copied"));
+          setTimeout(() => { button.textContent = oldLabel; }, 1600);
+        });
+      });
+
+      const timerChip = document.getElementById("timerChip");
+      const timerChipText = document.getElementById("timerChipText");
+      const countdownTime = document.getElementById("countdownTime");
+      const startButton = document.getElementById("startTimer");
+      const resetButton = document.getElementById("resetTimer");
+      const timerMessage = document.getElementById("timerMessage");
+      const totalSeconds = 60 * 60;
+      const milestones = {
+        1800: "ms.half",
+        600: "ms.ten",
+        300: "ms.five"
+      };
+      let secondsRemaining = totalSeconds;
+      let timerId = null;
+      // Held as keys so the language toggle can re-render whatever is on screen.
+      let buttonKey = "btn.start";
+      let messageKey = "msg.notstarted";
+
+      function setButton(key) {
+        buttonKey = key;
+        startButton.textContent = t(key);
+      }
+
+      function setMessage(key) {
+        messageKey = key;
+        timerMessage.textContent = t(key);
+      }
+
+      function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainder = seconds % 60;
+        return String(minutes).padStart(2, "0") + ":" + String(remainder).padStart(2, "0");
+      }
+
+      function renderTimer() {
+        const time = formatTime(secondsRemaining);
+        countdownTime.textContent = time;
+        timerChipText.textContent = time + t(timerId ? "chip.running" : "chip.ready");
+        document.title = timerId ? time + t("title.running") : t("title");
+      }
+
+      function stopTimer() {
+        clearInterval(timerId);
+        timerId = null;
+        timerChip.classList.remove("running");
+        setButton(secondsRemaining === totalSeconds ? "btn.start" : "btn.resume");
+        renderTimer();
+      }
+
+      function startTimer() {
+        if (timerId) {
+          stopTimer();
+          setMessage("msg.paused");
+          return;
+        }
+
+        if (secondsRemaining <= 0) secondsRemaining = totalSeconds;
+        timerChip.classList.add("running");
+        setButton("btn.pause");
+        setMessage("msg.inprogress");
+
+        timerId = setInterval(() => {
+          secondsRemaining -= 1;
+          renderTimer();
+          if (milestones[secondsRemaining]) {
+            setMessage(milestones[secondsRemaining]);
+            showToast(t(milestones[secondsRemaining]));
+          }
+          if (secondsRemaining <= 0) {
+            stopTimer();
+            setButton("btn.restart");
+            setMessage("msg.time");
+            showToast(t("toast.done"));
+          }
+        }, 1000);
+
+        renderTimer();
+      }
+
+      startButton.addEventListener("click", startTimer);
+      resetButton.addEventListener("click", () => {
+        stopTimer();
+        secondsRemaining = totalSeconds;
+        setButton("btn.start");
+        setMessage("msg.reset");
+        renderTimer();
+      });
+
+      timerChip.addEventListener("click", () => {
+        document.getElementById("start").scrollIntoView({ behavior: "smooth" });
+      });
+
+      const langToggle = document.getElementById("langToggle");
+      const langToggleText = document.getElementById("langToggleText");
+
+      function applyLanguage(next) {
+        lang = next === "zh" ? "zh" : "en";
+        const chinese = lang === "zh";
+        document.documentElement.lang = chinese ? "zh-Hant" : "en";
+
+        englishMarkup.forEach((html, el) => {
+          const translated = ZH[el.dataset.i18n];
+          el.innerHTML = chinese && translated ? translated : html;
+        });
+
+        langToggleText.textContent = chinese ? "English" : "繁體中文";
+        langToggle.setAttribute("lang", chinese ? "en" : "zh-Hant");
+        langToggle.setAttribute("aria-label", chinese ? "Switch to English" : "切換至繁體中文");
+        timerChip.setAttribute("aria-label", t("chip.aria"));
+        setButton(buttonKey);
+        setMessage(messageKey);
+        renderTimer();
+
+        try {
+          localStorage.setItem("koc-lang", lang);
+        } catch (error) {
+          // Private mode or a file:// origin with storage blocked; the toggle
+          // still works for this visit.
+        }
+      }
+
+      langToggle.addEventListener("click", () => applyLanguage(lang === "zh" ? "en" : "zh"));
+
+      // ?lang=zh wins over the remembered choice, so the Chinese brief can be
+      // linked to directly.
+      let requested = null;
+      try {
+        requested = new URLSearchParams(window.location.search).get("lang");
+      } catch (error) {
+        requested = null;
+      }
+
+      if (!requested) {
+        try {
+          requested = localStorage.getItem("koc-lang");
+        } catch (error) {
+          requested = null;
+        }
+      }
+
+      applyLanguage(requested === "zh" ? "zh" : "en");
+    }());
+  </script>
+</body>
+</html>
