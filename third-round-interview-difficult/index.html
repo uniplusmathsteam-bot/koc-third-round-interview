@@ -1,0 +1,1138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="UniPlus Education KOC final round difficult task — plan an interactive tool on a one-page sheet, build it for S3 JM28 Special Lines and Centres in Triangles in 50 minutes, then demonstrate it in 15.">
+  <title>UniPlus KOC · Final Round · Difficult</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to the task</a>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="UniPlus KOC recruitment home">
+      <span class="brand-mark" aria-hidden="true"><span>U+</span></span>
+      <span class="brand-text">UniPlus Education · KOC</span>
+    </a>
+    <nav class="nav-links" aria-label="Page sections">
+      <a href="#demo" data-i18n="nav.demo">Demonstration</a>
+      <a href="#plan" data-i18n="nav.plan">The plan</a>
+      <a href="#task" data-i18n="nav.task">The task</a>
+      <a href="#setup" data-i18n="nav.setup">Getting started</a>
+      <a href="#present" data-i18n="nav.present">Your demo</a>
+      <a href="#assessment" data-i18n="nav.assessment">Assessment</a>
+    </nav>
+    <div class="topbar-actions">
+      <button class="lang-toggle" id="langToggle" type="button" lang="zh-Hant" aria-label="切換至繁體中文">
+        <span aria-hidden="true">✦</span>
+        <span id="langToggleText">繁體中文</span>
+      </button>
+      <button class="timer-chip" id="timerChip" type="button" aria-label="Jump to the 60 minute timer">
+        <span class="timer-dot" aria-hidden="true"></span>
+        <span id="timerChipText">60:00 · Ready</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="container hero" id="top">
+      <div>
+        <p class="eyebrow" data-i18n="hero.eyebrow">KOC final round · difficult version</p>
+        <h1 data-i18n="hero.h1">One harder idea, <em>built properly.</em></h1>
+        <p class="hero-lede" data-i18n="hero.lede">
+          Same hour as the similarity brief, harder mathematics. Build one interactive tool that
+          teaches <strong>Special Lines and Centres in Triangles</strong> from the S3 JM28 revision
+          set. The note is questions only — there is no answer key — so you plan it on one page,
+          build it, then show us that the geometry is actually right.
+        </p>
+        <div class="button-row">
+          <a class="button primary" href="#demo">
+            <span data-i18n="hero.cta1">See the tool we built</span>
+            <span aria-hidden="true">↓</span>
+          </a>
+          <a class="button secondary" href="https://uni-education-elearning.pages.dev/subject/math" target="_blank" rel="noopener">
+            <span data-i18n="hero.cta2">Open the Uni+ platform</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <p class="hero-note">
+          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+            <circle cx="10" cy="10" r="9" fill="none" stroke="currentColor"/>
+            <path d="M10 5v5l3 2" fill="none" stroke="currentColor" stroke-linecap="round"/>
+          </svg>
+          <span data-i18n="hero.note">No coding experience is expected. We are assessing the teaching idea, how you direct AI, and whether you can catch a wrong centre when the note will not tell you.</span>
+        </p>
+      </div>
+
+      <div class="hero-board" aria-label="Final round difficult task sheet illustration">
+        <div class="board-sheet">
+          <div class="sheet-top">
+            <span class="sheet-kicker" data-i18n="sheet.kicker">Final round<br>Difficult brief</span>
+            <span class="sheet-number difficult">D</span>
+          </div>
+          <h2 class="sheet-title" data-i18n="sheet.title">One task, three parts.</h2>
+          <p class="sheet-subtitle" data-i18n="sheet.subtitle">The topic is already assigned: Special Lines and Centres, from the S3 JM28 QUE set in your folder. Plan it, build it, demonstrate it — and check the geometry yourself.</p>
+          <div class="sheet-options">
+            <div class="sheet-option">
+              <span>✎</span>
+              <span data-i18n="sheet.opt1"><strong>Plan it · one-page sheet</strong><small>Word file · 10 min</small></span>
+              <b>01</b>
+            </div>
+            <div class="sheet-option">
+              <span>↗</span>
+              <span data-i18n="sheet.opt2"><strong>Build it · interactive tool</strong><small>Cursor · 50 min</small></span>
+              <b>02</b>
+            </div>
+            <div class="sheet-option">
+              <span>▶</span>
+              <span data-i18n="sheet.opt3"><strong>Demonstrate it · live</strong><small>In front of us · 15 min</small></span>
+              <b>03</b>
+            </div>
+          </div>
+          <div class="sheet-stamp difficult" data-i18n="sheet.stamp">QUE<br>only</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="format-strip" aria-label="Interview format">
+      <div class="container format-grid">
+        <div class="format-intro">
+          <p data-i18n="format.kicker">Today’s format</p>
+          <strong data-i18n="format.total">Three parts, 75 minutes</strong>
+        </div>
+        <div class="format-item">
+          <span>10</span>
+          <strong data-i18n="format.1label">minutes · Plan</strong>
+          <small data-i18n="format.1note">Fill in the one-page sheet by hand or on screen.</small>
+        </div>
+        <div class="format-item">
+          <span>50</span>
+          <strong data-i18n="format.2label">minutes · Build</strong>
+          <small data-i18n="format.2note">One interactive tool on JM28, in Cursor.</small>
+        </div>
+        <div class="format-item">
+          <span>15</span>
+          <strong data-i18n="format.3label">minutes · Demonstrate</strong>
+          <small data-i18n="format.3note">Teach us with it, then answer our questions.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="demo">
+      <div class="section-head">
+        <div>
+          <p class="section-label" data-i18n="demo.label">01 · Demonstration</p>
+          <h2 data-i18n="demo.h2">See it first.</h2>
+        </div>
+        <p data-i18n="demo.intro">
+          This is a real tool from the <strong>Uni+ E-learning Platform</strong>, running live below —
+          the Inequalities I lab our students use in class. Study the <strong>standard</strong>, not
+          the subject: it is deliberately a different topic from yours, so none of it can be copied
+          and handed in.
+        </p>
+      </div>
+
+      <div class="demo-stack">
+        <article class="demo-row" id="demo-tool">
+          <div class="demo-copy">
+            <div class="demo-head">
+              <span class="demo-no" data-i18n="demo.tool.no">DEMONSTRATION 01</span>
+              <span class="tool-tag cursor" data-i18n="demo.tool.tag">Live from the Uni+ platform</span>
+            </div>
+            <h3 data-i18n="demo.tool.h3">A tool the student can act on.</h3>
+            <p data-i18n="demo.tool.p">
+              A browser page a student opens in class. It does not explain and stop — it makes the
+              student build the answer themselves, then tells them exactly which part of it was
+              wrong.
+            </p>
+            <ul class="idea-list" style="margin-top: 20px">
+              <li data-i18n="demo.tool.n1"><b>What to notice</b>The answer has three separate pieces — the sign, the dot type, and later the boundary value — so the student cannot guess their way through.</li>
+              <li data-i18n="demo.tool.n2"><b>What to notice</b>Nothing is revealed until <em>Check answer</em> is pressed. The student must commit first.</li>
+              <li data-i18n="demo.tool.n3"><b>What to notice</b>When it is wrong it names the part that is wrong — “✗ Sign is incorrect” — and shows <em>Yours</em> beside <em>Correct</em> on the same number line.</li>
+              <li data-i18n="demo.tool.n4"><b>What to notice</b>Difficulty rises on purpose: 3 easy cards, then 5 where the sign flips, then 4 multi-step ones. Twelve cards, one misconception.</li>
+            </ul>
+            <p class="workflow-hint">
+              <span aria-hidden="true">◈</span>
+              <span data-i18n="demo.tool.hint">
+                <strong>Different topic on purpose</strong>
+                This tool teaches inequalities. Your task is <b>Special Lines and Centres (S3 JM28)</b>.
+                Copy the standard, not the content — and yours may be much simpler than this.
+              </span>
+            </p>
+            <a class="jump-link" href="#task"><span data-i18n="demo.tool.jump">Open your task brief</span> <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="task-visual tool-visual">
+            <div class="example-frame">
+              <div class="example-bar">
+                <span class="example-label" data-i18n="demo.tool.caption">Demonstration · Inequalities I · JM26</span>
+                <a class="example-link" href="https://unikoc5.github.io/s3-maths/topics/inequality/?tab=tools" target="_blank" rel="noopener" data-i18n="common.openfull">Open full ↗</a>
+              </div>
+              <div class="example-embed cropped ineq-tool" data-scale-embed>
+                <iframe src="https://unikoc5.github.io/s3-maths/topics/inequality/?tab=tools" title="Demonstration: the JM26 Inequalities I interactive tool" loading="lazy"></iframe>
+              </div>
+              <p class="example-note" data-i18n="demo.tool.note">
+                Drag a sign into the gap, drag a hollow or filled dot onto the number line, then press
+                <strong>Check answer</strong> — and get one wrong on purpose to see what it says. The
+                same tool sits inside the mathematics area of the
+                <a href="https://uni-education-elearning.pages.dev/subject/math" target="_blank" rel="noopener">Uni+ E-learning Platform</a>
+                (sign-in required), under <em>JM26 · Interactive Tool</em>.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="plan">
+      <div class="section-head">
+        <div>
+          <p class="section-label" data-i18n="plan.label">Part one · 02 · The plan</p>
+          <h2 data-i18n="plan.h2">Ten minutes on paper first.</h2>
+        </div>
+        <p data-i18n="plan.intro">
+          Before you open Cursor, fill in the one-page sheet in your folder. It is three questions
+          long. <strong>We read it before we look at your tool</strong>, and it is worth marks on its
+          own — a clear idea badly built scores better here than a pretty page that teaches nothing.
+        </p>
+      </div>
+
+      <div class="rules-grid">
+        <article class="presentation-card">
+          <h3 data-i18n="plan.qh3">The three questions on the sheet</h3>
+          <p class="card-intro" data-i18n="plan.qintro">Two or three sentences each. Write in English or Chinese, whichever is faster for you.</p>
+          <ol class="presentation-list">
+            <li><div data-i18n="plan.q1"><strong>1 · The idea of the tool</strong><span>In plain words: what does the student see, and what do they actually do? “The student drags…”, “the student picks…”, “then the tool…”.</span></div></li>
+            <li><div data-i18n="plan.q2"><strong>2 · The result you want</strong><span>Finish this sentence: after using this tool, a student can ______ . One specific thing about special lines or centres — not “understand centres better”.</span></div></li>
+            <li><div data-i18n="plan.q3"><strong>3 · Why it beats pen and paper</strong><span>Name the thing your tool does that a teacher with a whiteboard cannot do as well — and say why that matters for this particular topic.</span></div></li>
+          </ol>
+          <p class="workflow-hint">
+            <span aria-hidden="true">◈</span>
+            <span data-i18n="plan.hint">
+              <strong>Question 3 is the one we care most about</strong>
+              If the honest answer is “it is the same as paper, but on a screen”, then the idea is not
+              yet an interactive tool. Change the idea, not the wording.
+            </span>
+          </p>
+        </article>
+
+        <article class="presentation-card">
+          <h3 data-i18n="plan.fileh3">Filling it in</h3>
+          <p class="card-intro" data-i18n="plan.fileintro">One page, three boxes, nothing else to prepare.</p>
+          <div class="path-card">
+            <span data-i18n="plan.filelabel">The sheet · fill this in</span>
+            <code>Special Lines Tool - Planning Sheet.docx</code>
+          </div>
+          <ul class="requirement-list" style="margin-top: 22px">
+            <li data-i18n="plan.f1">Open it in Word and type into the boxes, or print it and write by hand — both are fine.</li>
+            <li data-i18n="plan.f2">Keep it to the one page. If it does not fit, the idea is still too big for 50 minutes.</li>
+            <li data-i18n="plan.f3">Fill it in <strong>before</strong> you write your first prompt, not afterwards as a tidy-up.</li>
+            <li data-i18n="plan.f4">Hand it in with your HTML file at the end, even if the tool changed along the way.</li>
+          </ul>
+          <ul class="idea-list" style="margin-top: 22px">
+            <li data-i18n="plan.weak"><b>Too vague</b>“An interactive tool to help students learn the four centres, with questions and answers, so they find it more interesting than a textbook.”</li>
+            <li data-i18n="plan.strong"><b>Specific enough to build</b>“A triangle the student can drag from acute to obtuse. They name the marked line and the centre it produces, then predict whether that centre sits inside, on or outside the triangle. The tool marks the pair, because a median does not make an orthocentre — and paper lets students mix those four names up.”</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="task">
+      <div class="section-head">
+        <div>
+          <p class="section-label" data-i18n="task.label">Part two · 03 · The task</p>
+          <h2 data-i18n="task.h2">Now build it.</h2>
+        </div>
+        <p data-i18n="task.intro">
+          <strong>The topic is fixed: Special Lines and Centres, S3 JM28.</strong> Your folder has the
+          QUE revision set we practise from — the same lines, the same centres, the same wording.
+          There is no answer booklet. How you turn one idea inside it into something a student can
+          operate is your decision, and that decision is what we mark.
+        </p>
+      </div>
+
+      <div class="workflow">
+        <p class="workflow-title" data-i18n="workflow.title">How the hour works</p>
+        <div class="workflow-grid">
+          <article class="lane">
+            <div class="lane-head">
+              <span class="lane-no" data-i18n="workflow.lane1">First 10 min</span>
+              <span class="tool-tag youmind" data-i18n="workflow.tag1">Word</span>
+            </div>
+            <h3 data-i18n="workflow.lane1h">Decide, then write it down</h3>
+            <p data-i18n="workflow.lane1p">Skim the QUE set, pick one idea, fill in the three boxes. Ten minutes is enough, and it saves you twenty later.</p>
+          </article>
+          <article class="lane">
+            <div class="lane-head">
+              <span class="lane-no" data-i18n="workflow.lane2">Next 35 min</span>
+              <span class="tool-tag cursor" data-i18n="workflow.tag2">Cursor</span>
+            </div>
+            <h3 data-i18n="workflow.lane2h">Build and correct</h3>
+            <p data-i18n="workflow.lane2p">Paste the starter prompt, then ask for changes one at a time. Expect the first version to mix a line with the wrong centre.</p>
+          </article>
+          <article class="lane">
+            <div class="lane-head">
+              <span class="lane-no" data-i18n="workflow.lane3">Last 15 min</span>
+              <span class="tool-tag manim" data-i18n="workflow.tag3">Browser</span>
+            </div>
+            <h3 data-i18n="workflow.lane3h">Test it like a student</h3>
+            <p data-i18n="workflow.lane3p">Answer wrongly on purpose. Work one QUE question by hand. Then stop and save.</p>
+          </article>
+        </div>
+        <p class="workflow-hint">
+          <span aria-hidden="true">◈</span>
+          <span data-i18n="workflow.hint">
+            <strong>One task, one agent tab</strong>
+            You do not need two agents this round. Use one Cursor chat for the whole hour so the
+            agent keeps the context of everything you have already corrected.
+          </span>
+        </p>
+      </div>
+
+      <article class="task-panel active" id="panel-tool">
+        <div class="task-hero">
+          <div class="task-copy">
+            <div class="task-badges">
+              <span class="badge" data-i18n="common.subject">S3 Mathematics</span>
+              <span class="badge" data-i18n="task.badge.topic">Topic: Special lines · set</span>
+              <span class="badge" data-i18n="task.badge.deliverable">Deliverable: HTML + DOCX</span>
+            </div>
+            <p class="difficult-chip" data-i18n="task.chip">Difficult · QUE only · no answer key</p>
+            <h3 data-i18n="task.h3">An interactive tool for the four centres.</h3>
+            <p data-i18n="task.p">
+              Build a browser tool that teaches one idea from JM28 — naming the four special lines,
+              the centre each one produces, and a property of that centre (where it sits; the 2:1
+              median; equidistant from vertices or sides; or whether three lengths can form a
+              triangle). The student must be able to change something, commit to an answer, and be
+              told whether it is right <em>and why</em>.
+            </p>
+            <div class="brief-box">
+              <strong data-i18n="common.goal">Learning goal</strong>
+              <p data-i18n="task.goal">After using your tool, a student should be able to look at a construction in a triangle, name the line and the centre — altitude → orthocentre; median → centroid; angle bisector → in-centre; perpendicular bisector → circumcentre — and say one true thing about that centre, and be corrected by the tool when they mix any part up.</p>
+            </div>
+            <p class="workflow-hint">
+              <span aria-hidden="true">◈</span>
+              <span data-i18n="task.hint">
+                <strong>The topic is set, the teaching is yours</strong>
+                JM28 is fixed. Whether you teach the four pairings, where H and O sit when the
+                triangle becomes obtuse, or the triangle-inequality questions in the QUE set is
+                your call.
+              </span>
+            </p>
+          </div>
+          <div class="task-side tool-visual">
+            <div class="materials-card">
+              <p class="materials-title" data-i18n="task.materials">Your materials</p>
+              <code class="materials-path">task_special_lines_interactive_tool\</code>
+              <ul class="materials-list">
+                <li>
+                  <span>PDF</span>
+                  <div><strong>Rev Set - JM28 Special Lines and Centres in Triangles (QUE).pdf</strong><small data-i18n="task.file1">Questions only — the wording we use, and no printed answers</small></div>
+                </li>
+                <li>
+                  <span>DOC</span>
+                  <div><strong>Special Lines Tool - Planning Sheet.docx</strong><small data-i18n="task.file2">Your one-page plan — fill this in first</small></div>
+                </li>
+              </ul>
+              <p class="materials-note" data-i18n="task.materialsnote">
+                Click either file in Cursor’s sidebar to open it. You do not have to read every
+                question — the starter prompt already tells Cursor to read the QUE set for you.
+                You still have to check the geometry yourself.
+              </p>
+            </div>
+            <a class="jump-link" href="#demo-tool"><span data-i18n="task.seedemo">See the demonstration again</span> <span aria-hidden="true">↑</span></a>
+          </div>
+        </div>
+        <div class="task-details three">
+          <div class="detail-col">
+            <p class="detail-title" data-i18n="task.ideas">Build one of these</p>
+            <ul class="idea-list">
+              <li data-i18n="task.idea1"><b>Suggested</b><strong>Which line, and which centre?</strong> A triangle appears with one construction marked. The student names the line, names the centre, then predicts inside / on / outside — and only then checks.</li>
+              <li data-i18n="task.idea2"><b>Alternative</b><strong>Drag it obtuse.</strong> The student drags a vertex from acute through right to obtuse and watches H and O move. They predict where each centre will sit <em>before</em> the tool draws it — so “always inside” becomes something they can break themselves.</li>
+              <li data-i18n="task.idea3"><b>Alternative</b><strong>Three lengths.</strong> The triangle-inequality questions, movable: three sliders for the sides. The student predicts “can form / cannot form”, then the tool writes <em>a + b ? c</em> for the two shorter sides.</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <p class="detail-title" data-i18n="task.reqtitle">Your tool must include</p>
+            <ul class="requirement-list">
+              <li data-i18n="task.req1">At least two things the student can change, not just a Next button.</li>
+              <li data-i18n="task.req2">A point where the student commits to an answer before seeing the result.</li>
+              <li data-i18n="task.req3">Feedback that says right or wrong <strong>and explains why</strong>, using the wording written in the QUE set.</li>
+              <li data-i18n="task.req4">At least one case that is <strong>not</strong> the “always inside / always yes” answer — an obtuse triangle, or three lengths that cannot form a triangle.</li>
+              <li data-i18n="task.req5">A “Show worked example” button and a “Try another” button with a fresh figure.</li>
+              <li data-i18n="task.req6">One HTML file, no external libraries, readable on a laptop screen.</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <p class="detail-title" data-i18n="common.timeline">Where this fits in the hour</p>
+            <ol class="timeline-list">
+              <li><strong>0–10 min</strong><span data-i18n="task.t1">Skim the QUE set, then fill in the one-page planning sheet.</span></li>
+              <li><strong>10–18 min</strong><span data-i18n="task.t2">Paste the starter prompt into Cursor and let it build.</span></li>
+              <li><strong>18–35 min</strong><span data-i18n="task.t3">Test every control yourself; report each problem in plain English.</span></li>
+              <li><strong>35–50 min</strong><span data-i18n="task.t4">Add the worked example and Try another, and work one QUE question by hand against the tool.</span></li>
+              <li><strong>50–60 min</strong><span data-i18n="task.t5">Final browser check, save both files, then pick what to demo.</span></li>
+            </ol>
+          </div>
+        </div>
+        <div class="prompt-wrap">
+          <div class="prompt-card">
+            <div class="prompt-head">
+              <strong data-i18n="task.prompttitle">Starter prompt for Cursor</strong>
+              <button class="copy-button" type="button" data-copy="prompt-tool" data-i18n="common.copy">Copy prompt</button>
+            </div>
+            <p class="prompt-swap">
+              <span aria-hidden="true">◈</span>
+              <span data-i18n="task.promptnote">Paste this whole prompt exactly as it is — the topic and the file name are already filled in. Edit the IDEA line only if you chose a different idea on your planning sheet.</span>
+            </p>
+            <pre class="prompt-text" id="prompt-tool">TOPIC (set): Special lines and centres in triangles — naming the four special lines (altitude, median, angle bisector, perpendicular bisector), the centre each one produces (orthocentre, centroid, in-centre, circumcentre), and one property of that centre (inside / on / outside the triangle; the centroid divides each median 2:1 from the vertex; the circumcentre is equidistant from the three vertices; the in-centre is equidistant from the three sides; or whether three lengths can form a triangle).
+IDEA: a triangle is shown with one construction marked; the student names the line and the centre, then predicts whether that centre sits inside, on or outside the triangle, before checking.
+
+Read the file "Rev Set - JM28 Special Lines and Centres in Triangles (QUE).pdf" in this folder and follow the way special lines and centres are taught and written there, including the four pairings: altitude → orthocentre, median → centroid, angle bisector → in-centre, perpendicular bisector → circumcentre. The file is questions only — there is no answer key — so you must get the mathematics right yourself and must not invent printed answers. Then create a single-file HTML teaching tool for a Hong Kong S3 student on the topic above. The tool must: (1) let the student change at least two things, for example the shape of the triangle (acute / right / obtuse) or which construction is shown; (2) make the student commit to a full answer before anything is revealed — the name of the line AND the name of the centre, and where the centre sits; (3) say clearly whether they are right or wrong AND explain why in one or two sentences, using the wording the note would use, and treating a mixed-up line/centre pair as wrong; (4) include at least one triangle where the orthocentre or circumcentre is NOT inside the triangle, and/or three lengths that cannot form a triangle, so “always inside” or “always yes” cannot be the answer; (5) have a "Show worked example" button that writes the reasoning out line by line, statement then reason in brackets; (6) have a "Try another" button that generates a fresh triangle with a different construction. Draw the triangle with inline SVG, use large readable text, keep the same colour for each type of special line throughout, write in plain English for a 14-year-old, and use no external libraries. Save it as triangle-centres-interactive-tool.html in this same folder, then open it in a browser so I can test it.</pre>
+            <div class="file-output">
+              <span aria-hidden="true">▣</span>
+              <span><span data-i18n="common.handin">Hand in:</span> <code>triangle-centres-interactive-tool.html</code> + <code>Special Lines Tool - Planning Sheet.docx</code></span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section setup-section" id="setup">
+      <div class="container">
+        <div class="setup-grid">
+          <div class="setup-sticky">
+            <p class="section-label" data-i18n="setup.label">04 · Getting started</p>
+            <h2 data-i18n="setup.h2">Everything is in one folder.</h2>
+            <p data-i18n="setup.intro">
+              Cursor’s left sidebar is a file explorer. The QUE set and the planning sheet are already
+              there, and your finished tool goes back into the same folder.
+            </p>
+            <div class="path-card">
+              <span data-i18n="setup.path1">The revision set we practise from</span>
+              <code>Rev Set - JM28 Special Lines and Centres in Triangles (QUE).pdf</code>
+            </div>
+            <div class="path-card">
+              <span data-i18n="setup.path2">Your one-page plan</span>
+              <code>Special Lines Tool - Planning Sheet.docx</code>
+            </div>
+            <div class="path-card">
+              <span data-i18n="setup.path3">What you create</span>
+              <code>triangle-centres-interactive-tool.html</code>
+            </div>
+            <p class="path-note" data-i18n="setup.pathnote">
+              All three sit inside the <strong>task_special_lines_interactive_tool</strong> folder you
+              were given. Nothing else on the computer matters today.
+            </p>
+          </div>
+
+          <div class="step-list">
+            <article class="step-card">
+              <span class="step-number">1</span>
+              <div>
+                <h3 data-i18n="setup.s1h">Open the folder in Cursor</h3>
+                <p data-i18n="setup.s1a">Choose <span class="ui-callout">File → Open Folder…</span>, select <strong>task_special_lines_interactive_tool</strong>, then choose “Select Folder”.</p>
+                <p data-i18n="setup.s1b">The QUE set and the planning sheet appear in the <strong>left sidebar</strong>. Click either one to open it.</p>
+              </div>
+            </article>
+            <article class="step-card">
+              <span class="step-number">2</span>
+              <div>
+                <h3 data-i18n="setup.s2h">Skim the QUE set, then decide</h3>
+                <p data-i18n="setup.s2a">Look at the first questions for the four special lines, the triangle-inequality questions for three lengths, and the later questions for where H and O sit. Five minutes of skimming is plenty.</p>
+                <p data-i18n="setup.s2b">Do not try to read every question. Cursor reads the PDF for you — the starter prompt already says so. There is still no answer key, so you will check one question by hand later.</p>
+              </div>
+            </article>
+            <article class="step-card">
+              <span class="step-number">3</span>
+              <div>
+                <h3 data-i18n="setup.s3h">Fill in the planning sheet</h3>
+                <p data-i18n="setup.s3a">Three boxes: the idea, the result you want, and why it beats pen and paper. Type into the Word file or write on a printout.</p>
+                <p data-i18n="setup.s3b">Do this before your first prompt. If you cannot describe the tool in three sentences, Cursor cannot build it either.</p>
+              </div>
+            </article>
+            <article class="step-card">
+              <span class="step-number">4</span>
+              <div>
+                <h3 data-i18n="setup.s4h">Give Cursor one clear request</h3>
+                <p data-i18n="setup.s4a">Copy the starter prompt above and paste it into the chat as it is — the topic and the file name are already written in.</p>
+                <p data-i18n="setup.s4b">Then ask for changes in plain English, one at a time: “The orthocentre is still drawn inside when I make the triangle obtuse. Move H outside the triangle.”</p>
+              </div>
+            </article>
+            <article class="step-card">
+              <span class="step-number">5</span>
+              <div>
+                <h3 data-i18n="setup.s5h">Open it and test it yourself</h3>
+                <p data-i18n="setup.s5a">Find <code>triangle-centres-interactive-tool.html</code> in the sidebar, right-click it, choose “Reveal in File Explorer”, then double-click to open it in a browser.</p>
+                <p data-i18n="setup.s5b">Answer <strong>wrongly on purpose</strong>, twice. A tool that praises a median as an altitude, or that keeps H inside an obtuse triangle, is not finished.</p>
+              </div>
+            </article>
+            <article class="step-card">
+              <span class="step-number">6</span>
+              <div>
+                <h3 data-i18n="setup.s6h">Check the mathematics, then save</h3>
+                <p data-i18n="setup.s6a">Take one question from the QUE set, put its figure into your tool, and work the answer by hand. The tool must agree with <em>you</em> — there is no printed key to hide behind.</p>
+                <p data-i18n="setup.s6b">Keep a working version before asking for a risky change. Stop creating when the timer ends.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="tool-guide-grid">
+          <article class="tool-guide">
+            <div class="tool-guide-icon" aria-hidden="true">C</div>
+            <h3 data-i18n="guide.cursor.h3">Using Cursor</h3>
+            <p data-i18n="guide.cursor.p">Cursor can read the QUE set, write the page, run commands and fix its own errors. You direct it with normal sentences.</p>
+            <div class="mini-steps">
+              <div class="mini-step"><b>01</b><span data-i18n="guide.cursor.1">Keep the task folder open so Cursor can read the PDF itself.</span></div>
+              <div class="mini-step"><b>02</b><span data-i18n="guide.cursor.2">Use <strong>one chat</strong> for the whole hour, so it remembers your corrections.</span></div>
+              <div class="mini-step"><b>03</b><span data-i18n="guide.cursor.3">Paste the full starter prompt first, then request small changes one at a time.</span></div>
+              <div class="mini-step"><b>04</b><span data-i18n="guide.cursor.4">Approve file creation and preview commands when Cursor asks permission.</span></div>
+              <div class="mini-step"><b>05</b><span data-i18n="guide.cursor.5">Describe the problem, not the fix: “it still calls the altitude a perpendicular bisector” works better than “change line 40”.</span></div>
+            </div>
+          </article>
+
+          <article class="tool-guide">
+            <div class="tool-guide-icon" aria-hidden="true">△</div>
+            <h3 data-i18n="guide.maths.h3">Getting the mathematics right</h3>
+            <p data-i18n="guide.maths.p">This is where the difficult version is actually difficult. AI is confident about the four centres and still swaps the pairings, or parks H inside every triangle.</p>
+            <div class="mini-steps">
+              <div class="mini-step"><b>01</b><span data-i18n="guide.maths.1">Check the four pairings: <strong>altitude → H</strong>, <strong>median → G</strong>, <strong>angle bisector → I</strong>, <strong>perpendicular bisector → O</strong>.</span></div>
+              <div class="mini-step"><b>02</b><span data-i18n="guide.maths.2">Check a right triangle: H sits at the right-angle vertex, and O is the mid-point of the hypotenuse.</span></div>
+              <div class="mini-step"><b>03</b><span data-i18n="guide.maths.3">Check an obtuse triangle: both H and O sit <strong>outside</strong>. G and I stay inside every triangle.</span></div>
+              <div class="mini-step"><b>04</b><span data-i18n="guide.maths.4">Check the 2:1 median, and the triangle inequality: the two shorter sides must add to more than the longest.</span></div>
+              <div class="mini-step"><b>05</b><span data-i18n="guide.maths.5">Work one QUE question by hand. If a figure is wrong and you cannot fix it in time, say so in the demonstration — we mark honesty higher than a hidden error.</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="present">
+      <div class="section-head">
+        <div>
+          <p class="section-label" data-i18n="present.label">Part three · 05 · Your demonstration</p>
+          <h2 data-i18n="present.h2">Then you teach with it.</h2>
+        </div>
+        <p data-i18n="present.intro">
+          When the hour ends, you get <strong>15 minutes</strong>. Open the real file and run it in
+          front of us — and for the first few minutes, treat one of us as your S3 student.
+        </p>
+      </div>
+
+      <div class="rules-grid">
+        <article class="presentation-card">
+          <h3 data-i18n="present.runh3">The 15 minutes, minute by minute</h3>
+          <p class="card-intro" data-i18n="present.runintro">Keep to this shape and everything fits.</p>
+          <ol class="presentation-list">
+            <li><div data-i18n="present.r1"><strong>2 min · Your plan</strong><span>Read us your three boxes. What was the idea, and what should the student be able to do afterwards?</span></div></li>
+            <li><div data-i18n="present.r2"><strong>5 min · Teach us</strong><span>Use the tool on one of us as if we were the student. Let us get one wrong.</span></div></li>
+            <li><div data-i18n="present.r3"><strong>3 min · Your process</strong><span>Show one prompt you wrote and one correction you had to ask for.</span></div></li>
+            <li><div data-i18n="present.r4"><strong>2 min · Quality check</strong><span>How did you check your tool when the QUE set has no answers?</span></div></li>
+            <li><div data-i18n="present.r5"><strong>1 min · Next step</strong><span>What would you change first if you had another hour?</span></div></li>
+            <li><div data-i18n="present.r6"><strong>2 min · Questions</strong><span>Discuss your choices with the UniPlus team.</span></div></li>
+          </ol>
+        </article>
+
+        <article class="presentation-card">
+          <h3 data-i18n="present.openh3">Have these open at minute 0</h3>
+          <p class="card-intro" data-i18n="present.openintro">Set the screen up before you start talking — searching for files eats your 15 minutes.</p>
+          <ul class="requirement-list">
+            <li data-i18n="present.o1">A browser tab with <code>triangle-centres-interactive-tool.html</code> already loaded.</li>
+            <li data-i18n="present.o2">Your completed <code>Special Lines Tool - Planning Sheet.docx</code>, on screen or on paper.</li>
+            <li data-i18n="present.o3">The QUE set open at the question your tool is based on.</li>
+            <li data-i18n="present.o4">The Cursor chat that produced it, scrolled to your first prompt.</li>
+          </ul>
+          <ul class="idea-list" style="margin-top: 22px">
+            <li data-i18n="present.q1"><b>Expect us to ask</b>Which question in the QUE set did this come from?</li>
+            <li data-i18n="present.q2"><b>Expect us to ask</b>What did the AI mix up first — the line or the centre — and how did you spot it?</li>
+            <li data-i18n="present.q3"><b>Expect us to ask</b>Which part of this would confuse a real S3 student?</li>
+            <li data-i18n="present.q4"><b>Expect us to ask</b>Show me your tool marking a wrong line/centre pair — and an obtuse triangle where H is outside.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="assessment">
+      <div class="section-head">
+        <div>
+          <p class="section-label" data-i18n="assess.label">06 · What matters</p>
+          <h2 data-i18n="assess.h2">Show judgement, not perfection.</h2>
+        </div>
+        <p data-i18n="assess.intro">
+          We are looking for a future KOC: someone who can turn a page of questions into teaching
+          material a student will actually use, and explain the choices behind it — even when nobody
+          printed the answers.
+        </p>
+      </div>
+
+      <div class="rules-grid">
+        <article class="rubric-card">
+          <h3 data-i18n="assess.rubrich3">How we assess the work</h3>
+          <p class="card-intro" data-i18n="assess.rubricintro">The planning sheet, the tool and your demonstration are marked together, out of 100.</p>
+          <div class="rubric-list">
+            <div class="rubric-row">
+              <div data-i18n="assess.row1"><strong>Learning value</strong><span>Is the mathematics accurate, and are the four lines and four centres genuinely easier to tell apart afterwards?</span></div>
+              <span class="score">25</span>
+            </div>
+            <div class="rubric-row">
+              <div data-i18n="assess.row2"><strong>Student experience</strong><span>Is it clear, readable, engaging and suitable for S3?</span></div>
+              <span class="score">20</span>
+            </div>
+            <div class="rubric-row">
+              <div data-i18n="assess.row3"><strong>The planning sheet</strong><span>Is the idea specific, is the result concrete, and does it really beat pen and paper?</span></div>
+              <span class="score">15</span>
+            </div>
+            <div class="rubric-row">
+              <div data-i18n="assess.row4"><strong>Use of AI tools</strong><span>Did you direct, inspect, test and improve — or accept the first version?</span></div>
+              <span class="score">20</span>
+            </div>
+            <div class="rubric-row">
+              <div data-i18n="assess.row5"><strong>Use of the given note</strong><span>Does the tool reflect JM28 — its four pairings, its wording, its QUE questions — even without an answer key?</span></div>
+              <span class="score">10</span>
+            </div>
+            <div class="rubric-row">
+              <div data-i18n="assess.row6"><strong>Demonstration</strong><span>Can you teach with it, explain your decisions, and name your next improvement?</span></div>
+              <span class="score">10</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="presentation-card">
+          <h3 data-i18n="assess.noth3">What we are not marking</h3>
+          <p class="card-intro" data-i18n="assess.notintro">Three things candidates worry about that carry no marks at all.</p>
+          <ul class="idea-list">
+            <li data-i18n="assess.not1"><b>Not marked</b>Whether you can write code yourself. You are expected to direct the AI, not to type JavaScript.</li>
+            <li data-i18n="assess.not2"><b>Not marked</b>Polish and animation flourish. A plain tool that teaches beats a beautiful one that parks H in the wrong place.</li>
+            <li data-i18n="assess.not3"><b>Not marked</b>How many features you fit in. One idea done properly is the whole point of this round.</li>
+          </ul>
+          <p class="workflow-hint">
+            <span aria-hidden="true">◈</span>
+            <span data-i18n="assess.unfinished">
+              <strong>Unfinished is acceptable</strong>
+              Bring an incomplete tool and explain what was left and why. A candidate who knows what is
+              wrong with their work scores better than one who does not notice.
+            </span>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section tight container" id="start">
+      <div class="ready-card">
+        <div class="ready-copy">
+          <p class="section-label" style="color: var(--lime)" data-i18n="ready.label">Ready when you are</p>
+          <h2 data-i18n="ready.h2">One tool. One hour. Make the geometry hold.</h2>
+          <p data-i18n="ready.p">
+            Open the task folder in Cursor, fill in the three boxes on the planning sheet, paste the
+            starter prompt — then start the clock.
+          </p>
+          <a class="button primary" href="#task" data-i18n="ready.cta">Review the task ↑</a>
+        </div>
+        <div class="countdown" aria-live="polite">
+          <p class="countdown-label" data-i18n="ready.timerlabel">Plan and build time remaining</p>
+          <div class="countdown-time" id="countdownTime">60:00</div>
+          <div class="timer-controls">
+            <button class="timer-button" id="startTimer" type="button">Start</button>
+            <button class="timer-button" id="resetTimer" type="button" data-i18n="btn.reset">Reset</button>
+          </div>
+          <p class="timer-message" id="timerMessage">Timer has not started.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span data-i18n="footer.left"><strong>UniPlus Education</strong> · KOC Final Round · Difficult · Hong Kong</span>
+      <span data-i18n="footer.right">Demonstration tool: <a href="https://uni-education-elearning.pages.dev/subject/math" target="_blank" rel="noopener">Uni+ E-learning Platform ↗</a></span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      // Traditional Chinese layer. English stays in the markup and is snapshotted
+      // on load, so only the Chinese side is listed here. Inline tags inside a
+      // value must match the English markup they replace.
+      const ZH = {
+        "skip": '跳至任務內容',
+        "nav.demo": '示範作品',
+        "nav.plan": '構思計劃',
+        "nav.task": '任務簡介',
+        "nav.setup": '開始之前',
+        "nav.present": '你的示範',
+        "nav.assessment": '評分標準',
+
+        "hero.eyebrow": 'KOC 最終面試 · 困難版',
+        "hero.h1": '一個更難的概念，<em>做得徹底。</em>',
+        "hero.lede": '時間與相似形那份簡介相同，數學更難。做一個教<strong>三角形的特殊線與心</strong>的互動工具，課題取自中三 JM28 溫習卷。這份筆記只有題目、沒有答案——所以你要先用一頁紙寫清構思，然後動手做，最後向我們證明幾何是對的。',
+        "hero.cta1": '先看我們做的工具',
+        "hero.cta2": '開啟 Uni+ 平台',
+        "hero.note": '我們不要求你有編程經驗。我們評估的是教學構思、你如何指揮 AI，以及筆記不給答案時，你能否抓出畫錯的「心」。',
+
+        "sheet.kicker": '最終面試<br>困難版簡介',
+        "sheet.title": '一項任務，三個部分。',
+        "sheet.subtitle": '課題已經指定：特殊線與心，取自你資料夾內的中三 JM28 QUE 溫習卷。先構思，再製作，最後示範——幾何要自己核對。',
+        "sheet.opt1": '<strong>構思 · 一頁計劃紙</strong><small>Word 檔案 · 10 分鐘</small>',
+        "sheet.opt2": '<strong>製作 · 互動工具</strong><small>Cursor · 50 分鐘</small>',
+        "sheet.opt3": '<strong>示範 · 現場演示</strong><small>在我們面前 · 15 分鐘</small>',
+        "sheet.stamp": '只有<br>題目',
+
+        "format.kicker": '今日流程',
+        "format.total": '三個部分，共 75 分鐘',
+        "format.1label": '分鐘 · 構思',
+        "format.1note": '在一頁計劃紙上填寫，手寫或打字皆可。',
+        "format.2label": '分鐘 · 製作',
+        "format.2note": '用 Cursor 做一個關於 JM28 的互動工具。',
+        "format.3label": '分鐘 · 示範',
+        "format.3note": '用你的工具教我們，然後回答提問。',
+
+        "demo.label": '01 · 示範作品',
+        "demo.h2": '先看範例。',
+        "demo.intro": '以下是<strong>Uni+ 電子學習平台</strong>上一個真實的工具，正在下方運行——我們學生上課用的「一次不等式」實驗室。請學習當中的<strong>水準</strong>，而非題材：它刻意採用與你任務不同的課題，所以一律無法照抄交功課。',
+        "common.openfull": '開啟完整版 ↗',
+
+        "demo.tool.no": '示範 01',
+        "demo.tool.tag": 'Uni+ 平台實時載入',
+        "demo.tool.h3": '一個學生可以動手操作的工具。',
+        "demo.tool.p": '一個學生在課堂上打開的網頁。它不會講完就停——它要求學生自己把答案砌出來，然後準確指出哪一部分做錯了。',
+        "demo.tool.n1": '<b>留意這幾點</b>答案由三個獨立部分組成——不等號、實心或空心點，以及後段的端點數值——所以學生不可能靠猜蒙過去。',
+        "demo.tool.n2": '<b>留意這幾點</b>按下<em>「Check answer」</em>之前，什麼都不會顯示。學生必須先作答。',
+        "demo.tool.n3": '<b>留意這幾點</b>答錯時它會指名錯在哪一部分——「✗ Sign is incorrect」——並在同一條數線上把<em>你的答案</em>與<em>正確答案</em>並列。',
+        "demo.tool.n4": '<b>留意這幾點</b>難度刻意遞升：先 3 條簡單題，再 5 條要反轉不等號，最後 4 條多步驟題。十二張卡，只針對一個迷思概念。',
+        "demo.tool.hint": '<strong>刻意採用不同課題</strong>這個工具教不等式，而你的任務是<b>特殊線與心（中三 JM28）</b>。要學的是水準而非內容——你的作品可以比它簡單得多。',
+        "demo.tool.jump": '打開你的任務簡介',
+        "demo.tool.caption": '示範 · 一次不等式 · JM26',
+        "demo.tool.note": '把不等號拖進空位，把空心或實心點拖到數線上，然後按 <strong>Check answer</strong>——並故意答錯一次，看看它會說什麼。同一個工具就放在 <a href="https://uni-education-elearning.pages.dev/subject/math" target="_blank" rel="noopener">Uni+ 電子學習平台</a>的數學部分（需登入），位置是 <em>JM26 · Interactive Tool</em>。',
+
+        "plan.label": '第一部分 · 02 · 構思計劃',
+        "plan.h2": '先用十分鐘寫在紙上。',
+        "plan.intro": '打開 Cursor 之前，先填好資料夾內那一頁計劃紙。只有三條問題。<strong>我們會先讀它，才看你的工具</strong>，而它本身也佔分數——在這一輪，構思清晰但做得粗糙，分數高於做得漂亮但教不到人。',
+        "plan.qh3": '計劃紙上的三條問題',
+        "plan.qintro": '每條答兩三句就夠。用中文或英文都可以，哪個快就用哪個。',
+        "plan.q1": '<strong>1 · 工具的構思</strong><span>用最淺白的話說：學生看見什麼，又實際做什麼？「學生把……拖到……」、「學生選……」、「然後工具……」。</span>',
+        "plan.q2": '<strong>2 · 你想達到的結果</strong><span>把這句補完：用完這個工具之後，學生能夠 ______ 。要具體講出特殊線或某個「心」的一件事，而不是「更明白四個心」。</span>',
+        "plan.q3": '<strong>3 · 為何勝過紙筆</strong><span>指出你的工具能做到、而老師拿著白板做不到（或做得沒那麼好）的那一件事——並說明為何這件事對這個課題特別重要。</span>',
+        "plan.hint": '<strong>第 3 條是我們最看重的</strong>如果誠實的答案是「跟紙筆一樣，只不過搬上螢幕」，那這個構思還不算一個互動工具。要改的是構思，不是措辭。',
+        "plan.fileh3": '怎樣填寫',
+        "plan.fileintro": '一頁紙，三個框，沒有其他東西要準備。',
+        "plan.filelabel": '計劃紙 · 請填寫這份',
+        "plan.f1": '用 Word 打開直接打字，或列印出來手寫——兩者都接受。',
+        "plan.f2": '保持一頁。如果寫不完，說明構思對 50 分鐘來說仍然太大。',
+        "plan.f3": '要在寫第一個提示語<strong>之前</strong>填好，不是事後補寫。',
+        "plan.f4": '最後連同 HTML 檔案一併提交，即使工具在過程中改動過也要交。',
+        "plan.weak": '<b>太空泛</b>「一個互動工具，幫學生學四個心，有問題有答案，令他們覺得比課本有趣。」',
+        "plan.strong": '<b>具體到可以動手做</b>「一個三角形，學生可以從銳角拖成鈍角。他們先說出畫了哪一條特殊線、對應哪個心，再預測這個心在形內、邊上還是形外。工具會批改這組配對，因為中線對應的不是垂心——而這正是紙筆容許學生把四個名稱混在一起的地方。」',
+
+        "task.label": '第二部分 · 03 · 任務簡介',
+        "task.h2": '現在動手做。',
+        "task.intro": '<strong>課題已固定：特殊線與心，中三 JM28。</strong>你的資料夾內有我們用來操練的 QUE 溫習卷——同樣的線、同樣的心、同樣的用語。沒有答案冊。至於你怎樣把當中一個概念變成學生可以操作的東西，由你決定，而這個決定正是我們評分的地方。',
+
+        "workflow.title": '這一小時怎樣運作',
+        "workflow.lane1": '頭 10 分鐘',
+        "workflow.tag1": 'Word',
+        "workflow.lane1h": '先決定，再寫下來',
+        "workflow.lane1p": '快速翻閱 QUE 卷，選定一個概念，填好三個框。十分鐘已足夠，而且能為你省下之後二十分鐘。',
+        "workflow.lane2": '接著 35 分鐘',
+        "workflow.tag2": 'Cursor',
+        "workflow.lane2h": '製作並修正',
+        "workflow.lane2p": '貼上起始提示語，然後一次提出一項修改。要預期第一個版本會把線配錯心。',
+        "workflow.lane3": '最後 15 分鐘',
+        "workflow.tag3": '瀏覽器',
+        "workflow.lane3h": '用學生的方式測試',
+        "workflow.lane3p": '故意答錯。親手做一條 QUE 題。然後停手儲存。',
+        "workflow.hint": '<strong>一項任務，一個代理分頁</strong>這一輪不需要開兩個代理。整個小時用同一個 Cursor 對話，讓它記得你之前修正過的所有內容。',
+
+        "common.subject": '中三數學',
+        "common.goal": '學習目標',
+        "common.timeline": '這一小時如何分配',
+        "common.copy": '複製提示語',
+        "common.handin": '提交：',
+        "btn.reset": '重設',
+
+        "task.badge.topic": '課題：特殊線與心 · 已指定',
+        "task.badge.deliverable": '交付格式：HTML + DOCX',
+        "task.chip": '困難版 · 只有 QUE · 沒有答案',
+        "task.h3": '一個關於四個心的互動工具。',
+        "task.p": '製作一個瀏覽器工具，教授 JM28 當中的一個概念——說出四條特殊線、各自對應的心，以及這個心的一個性質（位置；中線 2:1；到三頂點或三邊等距；或三條長度能否組成三角形）。學生必須可以更改某些東西、先作答，然後知道自己對或錯<em>以及原因</em>。',
+        "task.goal": '用完你的工具之後，學生應該能看著三角形上的一條作圖線，說出那是哪一條特殊線、對應哪個心——高線 → 垂心；中線 → 形心；角平分線 → 內心；垂直平分線 → 外心——並講出關於這個心的一句真話；任何一部分配錯，工具都會即時指正。',
+        "task.hint": '<strong>課題已定，教法由你決定</strong>JM28 是固定的。至於你透過四組配對、把三角形拖成鈍角時 H 和 O 的位置，還是 QUE 卷裡的三角形不等式題目來教，由你決定。',
+        "task.materials": '你的教材',
+        "task.file1": '只有題目——我們使用的用語，沒有印好的答案',
+        "task.file2": '你的一頁計劃紙——先填這份',
+        "task.materialsnote": '在 Cursor 側邊欄按任何檔案即可開啟。你不需要讀完每一條題目——起始提示語已經叫 Cursor 幫你讀那份 QUE 卷。幾何仍然要你自己核對。',
+        "task.seedemo": '再看一次示範作品',
+        "task.ideas": '從以下選一個來做',
+        "task.idea1": '<b>建議</b><strong>哪一條線？哪一個心？</strong>畫出一個三角形，標示一條作圖線。學生先說出線的名稱、心的名稱，再預測在形內／邊上／形外，之後才可以核對。',
+        "task.idea2": '<b>其他選擇</b><strong>拖成鈍角。</strong>學生把一個頂點從銳角拖過直角再到鈍角，看著 H 和 O 移動。他們要先預測每個心會停在哪裡，工具才畫出來——於是「永遠在形內」變成學生可以親手打破的說法。',
+        "task.idea3": '<b>其他選擇</b><strong>三條長度。</strong>把三角形不等式題變成可以移動：三條邊各有一條滑桿。學生先預測「可以組成／不可以組成」，然後工具寫出較短兩邊的 <em>a + b ? c</em>。',
+        "task.reqtitle": '你的工具必須包括',
+        "task.req1": '至少兩樣學生可以更改的東西，不能只有一個「下一步」按鈕。',
+        "task.req2": '一個讓學生在看到結果之前必須先作答的位置。',
+        "task.req3": '回饋要說明對或錯，<strong>並解釋原因</strong>，用 QUE 卷上所寫的用語。',
+        "task.req4": '至少一個<strong>並非</strong>「永遠在形內／永遠可以」的例子——一個鈍角三角形，或三條不能組成三角形的長度。',
+        "task.req5": '一個「示範解題」按鈕，以及一個會換新圖形的「再試一次」按鈕。',
+        "task.req6": '單一 HTML 檔案，不用外部程式庫，在筆記型電腦螢幕上清晰可讀。',
+        "task.t1": '快速翻閱 QUE 卷，然後填好一頁計劃紙。',
+        "task.t2": '把起始提示語貼進 Cursor，讓它開始製作。',
+        "task.t3": '親自測試每一個控制項；用淺白文字逐項報告問題。',
+        "task.t4": '加入示範解題和「再試一次」，並親手做一條 QUE 題核對你的工具。',
+        "task.t5": '最後在瀏覽器檢查一次，儲存兩個檔案，然後決定示範哪部分。',
+        "task.prompttitle": 'Cursor 的起始提示語',
+        "task.promptnote": '整段照樣貼上即可——課題和檔案名稱已經填好，提示語保持英文。只有當你在計劃紙上選了另一個構思時，才需要改動 IDEA 那一行。',
+
+        "setup.label": '04 · 開始之前',
+        "setup.h2": '所有東西都在同一個資料夾。',
+        "setup.intro": 'Cursor 左邊的側邊欄就是檔案總管。QUE 卷和計劃紙已經放好，而你完成的工具也要存回同一個資料夾。',
+        "setup.path1": '我們用來操練的溫習卷',
+        "setup.path2": '你的一頁計劃紙',
+        "setup.path3": '你要做出來的東西',
+        "setup.pathnote": '以上三份都在你收到的 <strong>task_special_lines_interactive_tool</strong> 資料夾內。今天電腦上其他東西一概不用理。',
+        "setup.s1h": '在 Cursor 開啟資料夾',
+        "setup.s1a": '選 <span class="ui-callout">File → Open Folder…</span>，選擇 <strong>task_special_lines_interactive_tool</strong>，然後按「Select Folder」。',
+        "setup.s1b": 'QUE 卷和計劃紙會在<strong>左邊側邊欄</strong>出現，按任何一份即可打開。',
+        "setup.s2h": '翻閱 QUE 卷，然後決定',
+        "setup.s2a": '看開頭幾題了解四條特殊線、三角形不等式的三邊題，以及後面關於 H 和 O 位置的題目。翻五分鐘已經足夠。',
+        "setup.s2b": '不要嘗試讀完每一條題目。Cursor 會幫你讀那份 PDF——提示語已經這樣寫。仍然沒有答案，所以稍後你要親手核對一題。',
+        "setup.s3h": '填好計劃紙',
+        "setup.s3a": '三個框：構思、你想達到的結果，以及為何勝過紙筆。在 Word 檔內打字，或在列印本上手寫。',
+        "setup.s3b": '要在寫第一個提示語之前完成。如果你無法用三句話說清這個工具，Cursor 同樣做不出來。',
+        "setup.s4h": '給 Cursor 一個清晰的指示',
+        "setup.s4a": '複製上面的起始提示語，照樣貼進對話——課題和檔案名稱已經寫在裡面。',
+        "setup.s4b": '之後用淺白說法提出修改，一次講一項：「我把三角形拖成鈍角，垂心仍然畫在形內。把 H 移到三角形外面。」',
+        "setup.s5h": '親自打開並測試',
+        "setup.s5a": '在側邊欄找到 <code>triangle-centres-interactive-tool.html</code>，右鍵選「Reveal in File Explorer」，然後雙擊在瀏覽器打開。',
+        "setup.s5b": '<strong>故意答錯</strong>兩次。一個會把中線當成高線、或鈍角三角形仍把 H 留在形內的工具，並未完成。',
+        "setup.s6h": '核對數學，然後儲存',
+        "setup.s6a": '從 QUE 卷選一條題目，把它的圖形套進你的工具，親手算出答案。工具必須與<em>你</em>一致——沒有印好的答案可以躲。',
+        "setup.s6b": '在提出風險較高的修改之前，先保留一個可用版本。計時器一到就停手。',
+
+        "guide.cursor.h3": '使用 Cursor',
+        "guide.cursor.p": 'Cursor 可以讀 QUE 卷、寫網頁、執行指令，以及修正自己的錯誤。你用平常說話的句子指揮它。',
+        "guide.cursor.1": '保持開著任務資料夾，讓 Cursor 可以自己讀那份 PDF。',
+        "guide.cursor.2": '整個小時只用<strong>一個對話</strong>，它才會記得你的修正。',
+        "guide.cursor.3": '先貼上完整的起始提示語，之後一次只提出一項小修改。',
+        "guide.cursor.4": '當 Cursor 要求權限時，批准它建立檔案和執行預覽指令。',
+        "guide.cursor.5": '描述問題而不是解法：「它仍然把高線叫做垂直平分線」比「改第 40 行」有效得多。',
+        "guide.maths.h3": '把數學做對',
+        "guide.maths.p": '困難版真正難的地方在這裡。AI 談四個心時語氣十分肯定，卻經常配錯線，或把 H 永遠畫在形內。',
+        "guide.maths.1": '檢查四組配對：<strong>高線 → H</strong>、<strong>中線 → G</strong>、<strong>角平分線 → I</strong>、<strong>垂直平分線 → O</strong>。',
+        "guide.maths.2": '檢查直角三角形：H 在直角頂點，O 是斜邊中點。',
+        "guide.maths.3": '檢查鈍角三角形：H 和 O 都在<strong>形外</strong>。G 和 I 永遠在形內。',
+        "guide.maths.4": '檢查中線 2:1，以及三角形不等式：較短兩邊之和必須大於最長邊。',
+        "guide.maths.5": '親手做一條 QUE 題。如果圖形畫錯而你來不及修好，就在示範時說出來——我們給誠實的分數，高於一個被隱藏的錯誤。',
+
+        "present.label": '第三部分 · 05 · 你的示範',
+        "present.h2": '然後用它來教。',
+        "present.intro": '一小時結束後，你有 <strong>15 分鐘</strong>。請直接打開真正的檔案，在我們面前執行——而頭幾分鐘，請把我們其中一人當成你的中三學生。',
+        "present.runh3": '15 分鐘怎樣分配',
+        "present.runintro": '按這個架構走，時間就剛剛好。',
+        "present.r1": '<strong>2 分鐘 · 你的構思</strong><span>把三個框讀給我們聽。構思是什麼？學生用完之後應該做得到什麼？</span>',
+        "present.r2": '<strong>5 分鐘 · 教我們</strong><span>把我們其中一人當學生，用你的工具教一次。讓我們答錯一次。</span>',
+        "present.r3": '<strong>3 分鐘 · 你的過程</strong><span>展示你寫過的一段提示語，以及你不得不要求的一項修正。</span>',
+        "present.r4": '<strong>2 分鐘 · 質素檢查</strong><span>QUE 卷沒有答案，你怎樣核對你的工具？</span>',
+        "present.r5": '<strong>1 分鐘 · 下一步</strong><span>如果再多一小時，你會先改哪一部分？</span>',
+        "present.r6": '<strong>2 分鐘 · 提問</strong><span>與 UniPlus 團隊討論你的選擇。</span>',
+        "present.openh3": '第 0 分鐘就要開好這幾樣',
+        "present.openintro": '開口之前先把畫面準備好——臨場找檔案會吃掉你的 15 分鐘。',
+        "present.o1": '一個已經載入 <code>triangle-centres-interactive-tool.html</code> 的瀏覽器分頁。',
+        "present.o2": '已填好的 <code>Special Lines Tool - Planning Sheet.docx</code>，螢幕上或紙本都可以。',
+        "present.o3": 'QUE 卷已翻到你的工具所依據的那一條題目。',
+        "present.o4": '產出這份作品的 Cursor 對話，並捲動到你的第一個提示語。',
+        "present.q1": '<b>預期我們會問</b>這個構思來自 QUE 卷的哪一條題目？',
+        "present.q2": '<b>預期我們會問</b>AI 最初配錯的是線還是心，你怎樣發現？',
+        "present.q3": '<b>預期我們會問</b>這份作品哪一部分會令真正的中三學生混淆？',
+        "present.q4": '<b>預期我們會問</b>示範你的工具如何批改錯誤的線／心配對——以及鈍角三角形中 H 在形外的情況。',
+
+        "assess.label": '06 · 我們重視什麼',
+        "assess.h2": '我們看判斷力，不看完美。',
+        "assess.intro": '我們在找一位未來的 KOC：能把一頁題目變成學生真的會用的教學材料，並能講清背後的選擇——即使沒有人印出答案。',
+        "assess.rubrich3": '我們如何評分',
+        "assess.rubricintro": '計劃紙、工具連同你的示範一併評分，總分 100。',
+        "assess.row1": '<strong>學習價值</strong><span>數學是否準確？用完之後四條線和四個心是否真的更容易分辨？</span>',
+        "assess.row2": '<strong>學生體驗</strong><span>是否清晰、易讀、吸引，並適合中三程度？</span>',
+        "assess.row3": '<strong>計劃紙</strong><span>構思是否具體？結果是否明確？是否真的勝過紙筆？</span>',
+        "assess.row4": '<strong>AI 工具運用</strong><span>你是否主動指揮、檢視、測試和改善——還是接受了第一個版本？</span>',
+        "assess.row5": '<strong>教材運用</strong><span>工具是否反映 JM28——四組配對、用語和 QUE 題目——即使沒有答案？</span>',
+        "assess.row6": '<strong>示範</strong><span>你能否用它來教、解釋自己的決定，並說出下一步的改善方向？</span>',
+        "assess.noth3": '我們不會評分的部分',
+        "assess.notintro": '應徵者最常擔心、但其實完全不計分的三件事。',
+        "assess.not1": '<b>不計分</b>你是否會親手寫程式。我們期望你指揮 AI，而不是自己打 JavaScript。',
+        "assess.not2": '<b>不計分</b>畫面精緻度和動畫花巧。一個樸素但教得清楚的工具，勝過一個漂亮卻把 H 畫錯位置的工具。',
+        "assess.not3": '<b>不計分</b>你塞了多少功能進去。把一個概念做好，正是這一輪的全部重點。',
+        "assess.unfinished": '<strong>未完成是可以接受的</strong>把未完成的工具帶來，並解釋哪部分未做以及原因。清楚知道自己作品問題所在的應徵者，得分會高於毫無察覺的人。',
+
+        "ready.label": '準備好就開始',
+        "ready.h2": '一個工具。一小時。讓幾何站得住。',
+        "ready.p": '在 Cursor 開啟任務資料夾，填好計劃紙上的三個框，貼上起始提示語——然後開始計時。',
+        "ready.cta": '重看任務簡介 ↑',
+        "ready.timerlabel": '剩餘構思及製作時間',
+
+        "footer.left": '<strong>UniPlus Education</strong> · KOC 最終面試 · 困難版 · 香港',
+        "footer.right": '示範工具：<a href="https://uni-education-elearning.pages.dev/subject/math" target="_blank" rel="noopener">Uni+ 電子學習平台 ↗</a>'
+      };
+
+      // Strings the script writes at runtime, so they cannot live in the markup.
+      const RUNTIME = {
+        en: {
+          "title": "UniPlus KOC · Final Round · Difficult",
+          "title.running": " · UniPlus KOC Difficult",
+          "chip.running": " · Running",
+          "chip.ready": " · Ready",
+          "chip.aria": "Jump to the 60 minute timer",
+          "btn.start": "Start",
+          "btn.pause": "Pause",
+          "btn.resume": "Resume",
+          "btn.restart": "Restart",
+          "btn.copied": "Copied!",
+          "msg.notstarted": "Timer has not started.",
+          "msg.inprogress": "Planning time — fill in the one-page sheet first.",
+          "msg.paused": "Timer paused.",
+          "msg.reset": "Timer reset and ready.",
+          "msg.time": "Time. Save both files and begin part three, your demonstration.",
+          "toast.done": "Plan and build time is complete.",
+          "toast.copied": "Starter prompt copied.",
+          "ms.plan": "Ten minutes gone — the planning sheet should be filled in. Open Cursor now.",
+          "ms.half": "Half the hour gone — you should have a first version to test.",
+          "ms.ten": "Ten minutes left — work one QUE question by hand against your tool.",
+          "ms.five": "Five minutes left — stop building, save both files and open them for the demonstration."
+        },
+        zh: {
+          "title": "UniPlus KOC · 最終面試 · 困難版",
+          "title.running": " · UniPlus KOC 困難版",
+          "chip.running": " · 進行中",
+          "chip.ready": " · 準備就緒",
+          "chip.aria": "跳至 60 分鐘計時器",
+          "btn.start": "開始",
+          "btn.pause": "暫停",
+          "btn.resume": "繼續",
+          "btn.restart": "重新開始",
+          "btn.copied": "已複製！",
+          "msg.notstarted": "計時器尚未開始。",
+          "msg.inprogress": "構思時間——先填好那一頁計劃紙。",
+          "msg.paused": "計時器已暫停。",
+          "msg.reset": "計時器已重設，準備就緒。",
+          "msg.time": "時間到。儲存兩個檔案，開始第三部分：你的示範。",
+          "toast.done": "構思及製作時間已結束。",
+          "toast.copied": "已複製起始提示語。",
+          "ms.plan": "已過十分鐘——計劃紙應該填好了。現在打開 Cursor。",
+          "ms.half": "一小時已過一半——你應該有第一個版本可以測試。",
+          "ms.ten": "剩十分鐘——從 QUE 卷選一條題目，親手核對你的工具。",
+          "ms.five": "剩五分鐘——停止製作，儲存兩個檔案並打開它們準備示範。"
+        }
+      };
+
+      let lang = "en";
+      const englishMarkup = new Map();
+      document.querySelectorAll("[data-i18n]").forEach((el) => englishMarkup.set(el, el.innerHTML));
+
+      function t(key) {
+        return RUNTIME[lang][key] || RUNTIME.en[key];
+      }
+
+      const toast = document.getElementById("toast");
+      let toastTimeout;
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => toast.classList.remove("show"), 2200);
+      }
+
+      // The cropped embed renders at a fixed logical width so the crop stays
+      // exact; this keeps it fitted to whatever width the column has.
+      const scaledEmbeds = Array.from(document.querySelectorAll("[data-scale-embed]"));
+
+      function fitScaledEmbeds() {
+        scaledEmbeds.forEach((embed) => {
+          const base = parseFloat(getComputedStyle(embed).getPropertyValue("--embed-w"));
+          if (!base || !embed.clientWidth) return;
+          embed.style.setProperty("--embed-scale", (embed.clientWidth / base).toFixed(4));
+        });
+      }
+
+      if (scaledEmbeds.length) {
+        fitScaledEmbeds();
+        if (typeof ResizeObserver === "function") {
+          const observer = new ResizeObserver(fitScaledEmbeds);
+          scaledEmbeds.forEach((embed) => observer.observe(embed));
+        } else {
+          window.addEventListener("resize", fitScaledEmbeds);
+        }
+      }
+
+      document.querySelectorAll("[data-copy]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const target = document.getElementById(button.dataset.copy);
+          const text = target.textContent.trim();
+          try {
+            await navigator.clipboard.writeText(text);
+          } catch (error) {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(target);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+              document.execCommand("copy");
+            } finally {
+              selection.removeAllRanges();
+            }
+          }
+          const oldLabel = button.textContent;
+          button.textContent = t("btn.copied");
+          showToast(t("toast.copied"));
+          setTimeout(() => { button.textContent = oldLabel; }, 1600);
+        });
+      });
+
+      const timerChip = document.getElementById("timerChip");
+      const timerChipText = document.getElementById("timerChipText");
+      const countdownTime = document.getElementById("countdownTime");
+      const startButton = document.getElementById("startTimer");
+      const resetButton = document.getElementById("resetTimer");
+      const timerMessage = document.getElementById("timerMessage");
+      const totalSeconds = 60 * 60;
+      const milestones = {
+        3000: "ms.plan",
+        1800: "ms.half",
+        600: "ms.ten",
+        300: "ms.five"
+      };
+      let secondsRemaining = totalSeconds;
+      let timerId = null;
+      // Held as keys so the language toggle can re-render whatever is on screen.
+      let buttonKey = "btn.start";
+      let messageKey = "msg.notstarted";
+
+      function setButton(key) {
+        buttonKey = key;
+        startButton.textContent = t(key);
+      }
+
+      function setMessage(key) {
+        messageKey = key;
+        timerMessage.textContent = t(key);
+      }
+
+      function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainder = seconds % 60;
+        return String(minutes).padStart(2, "0") + ":" + String(remainder).padStart(2, "0");
+      }
+
+      function renderTimer() {
+        const time = formatTime(secondsRemaining);
+        countdownTime.textContent = time;
+        timerChipText.textContent = time + t(timerId ? "chip.running" : "chip.ready");
+        document.title = timerId ? time + t("title.running") : t("title");
+      }
+
+      function stopTimer() {
+        clearInterval(timerId);
+        timerId = null;
+        timerChip.classList.remove("running");
+        setButton(secondsRemaining === totalSeconds ? "btn.start" : "btn.resume");
+        renderTimer();
+      }
+
+      function startTimer() {
+        if (timerId) {
+          stopTimer();
+          setMessage("msg.paused");
+          return;
+        }
+
+        if (secondsRemaining <= 0) secondsRemaining = totalSeconds;
+        timerChip.classList.add("running");
+        setButton("btn.pause");
+        setMessage("msg.inprogress");
+
+        timerId = setInterval(() => {
+          secondsRemaining -= 1;
+          renderTimer();
+          if (milestones[secondsRemaining]) {
+            setMessage(milestones[secondsRemaining]);
+            showToast(t(milestones[secondsRemaining]));
+          }
+          if (secondsRemaining <= 0) {
+            stopTimer();
+            setButton("btn.restart");
+            setMessage("msg.time");
+            showToast(t("toast.done"));
+          }
+        }, 1000);
+
+        renderTimer();
+      }
+
+      startButton.addEventListener("click", startTimer);
+      resetButton.addEventListener("click", () => {
+        stopTimer();
+        secondsRemaining = totalSeconds;
+        setButton("btn.start");
+        setMessage("msg.reset");
+        renderTimer();
+      });
+
+      timerChip.addEventListener("click", () => {
+        document.getElementById("start").scrollIntoView({ behavior: "smooth" });
+      });
+
+      const langToggle = document.getElementById("langToggle");
+      const langToggleText = document.getElementById("langToggleText");
+
+      function applyLanguage(next) {
+        lang = next === "zh" ? "zh" : "en";
+        const chinese = lang === "zh";
+        document.documentElement.lang = chinese ? "zh-Hant" : "en";
+
+        englishMarkup.forEach((html, el) => {
+          const translated = ZH[el.dataset.i18n];
+          el.innerHTML = chinese && translated ? translated : html;
+        });
+
+        langToggleText.textContent = chinese ? "English" : "繁體中文";
+        langToggle.setAttribute("lang", chinese ? "en" : "zh-Hant");
+        langToggle.setAttribute("aria-label", chinese ? "Switch to English" : "切換至繁體中文");
+        timerChip.setAttribute("aria-label", t("chip.aria"));
+        setButton(buttonKey);
+        setMessage(messageKey);
+        renderTimer();
+
+        try {
+          localStorage.setItem("koc-lang-difficult", lang);
+        } catch (error) {
+          // Private mode or a file:// origin with storage blocked; the toggle
+          // still works for this visit.
+        }
+      }
+
+      langToggle.addEventListener("click", () => applyLanguage(lang === "zh" ? "en" : "zh"));
+
+      // ?lang=zh wins over the remembered choice, so the Chinese brief can be
+      // linked to directly.
+      let requested = null;
+      try {
+        requested = new URLSearchParams(window.location.search).get("lang");
+      } catch (error) {
+        requested = null;
+      }
+
+      if (!requested) {
+        try {
+          requested = localStorage.getItem("koc-lang-difficult");
+        } catch (error) {
+          requested = null;
+        }
+      }
+
+      applyLanguage(requested === "zh" ? "zh" : "en");
+    }());
+  </script>
+</body>
+</html>
