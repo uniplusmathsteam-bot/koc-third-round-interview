@@ -1,0 +1,3165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rate &amp; Ratio | Pre S2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"></script>
+  <style>
+    :root {
+      --ink: #1e2a32;
+      --muted: #5a6b74;
+      --paper: #f7f4ee;
+      --cream: #fffaf3;
+      --teal: #0f7a7a;
+      --teal-deep: #0a5555;
+      --coral: #e85d4c;
+      --amber: #e8a83a;
+      --blue: #3d7eb8;
+      --line: rgba(30, 42, 50, 0.12);
+      --shadow: 0 12px 32px rgba(30, 50, 60, 0.12);
+      --font-display: "Baloo 2", "Nunito", sans-serif;
+      --font-body: "Nunito", sans-serif;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-body);
+      background:
+        radial-gradient(ellipse 70% 45% at 8% -5%, #cfece8 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 95% 0%, #ffe2c4 0%, transparent 50%),
+        linear-gradient(165deg, #e8f3f2 0%, var(--paper) 48%, #eef2ea 100%);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      width: min(1040px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 1.25rem 0 3.5rem;
+    }
+
+    .brand {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--teal-deep);
+      margin: 0 0 0.35rem;
+    }
+    .brand span { display: block; color: var(--coral); }
+    .tagline {
+      margin: 0 0 1.25rem;
+      max-width: 34rem;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    .mode-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.35rem;
+      flex-wrap: wrap;
+    }
+    .mode-tab {
+      appearance: none;
+      border: 2px solid rgba(15, 122, 122, 0.22);
+      background: rgba(255,255,255,0.7);
+      color: var(--teal-deep);
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 0.7rem 1.35rem;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, transform 0.15s, color 0.15s;
+    }
+    .mode-tab:hover { transform: translateY(-1px); }
+    .mode-tab.active {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #fff;
+      box-shadow: 0 6px 0 var(--teal-deep);
+    }
+
+    .panel { display: none; }
+    .panel.active { display: block; animation: riseIn 0.35s ease both; }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      color: var(--teal-deep);
+      margin: 0 0 0.35rem;
+    }
+    .section-lead {
+      margin: 0 0 1.1rem;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 40rem;
+    }
+
+    .concept-grid {
+      display: grid;
+      gap: 0.85rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-bottom: 1.75rem;
+    }
+
+    .concept-carousel {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-template-rows: 1fr auto;
+      gap: 0.65rem 0.5rem;
+      align-items: center;
+      margin-bottom: 1.75rem;
+    }
+    .carousel-viewport {
+      grid-column: 2;
+      grid-row: 1;
+      overflow: hidden;
+      min-height: 9.5rem;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.35s ease;
+      will-change: transform;
+    }
+    .carousel-track .concept-card {
+      flex: 0 0 100%;
+      min-width: 100%;
+      box-sizing: border-box;
+    }
+    .carousel-nav {
+      appearance: none;
+      width: 2.6rem;
+      height: 2.6rem;
+      border-radius: 50%;
+      border: 2px solid rgba(15, 122, 122, 0.25);
+      background: rgba(255,255,255,0.9);
+      color: var(--teal-deep);
+      font-size: 1.45rem;
+      font-weight: 800;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(30,50,60,0.1);
+      transition: background 0.15s, transform 0.15s, border-color 0.15s;
+    }
+    .carousel-nav:hover {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #fff;
+      transform: scale(1.05);
+    }
+    .carousel-nav:disabled {
+      opacity: 0.35;
+      cursor: default;
+      transform: none;
+      background: rgba(255,255,255,0.7);
+      color: var(--muted);
+    }
+    .carousel-nav.prev { grid-column: 1; grid-row: 1; }
+    .carousel-nav.next { grid-column: 3; grid-row: 1; }
+    .carousel-dots {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      display: flex;
+      justify-content: center;
+      gap: 0.4rem;
+      align-items: center;
+    }
+    .carousel-dot {
+      appearance: none;
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 50%;
+      border: none;
+      padding: 0;
+      background: rgba(15, 122, 122, 0.25);
+      cursor: pointer;
+    }
+    .carousel-dot.active {
+      background: var(--teal);
+      transform: scale(1.25);
+    }
+    .carousel-step {
+      margin-left: 0.55rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .concept-card {
+      background: rgba(255,255,255,0.78);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1rem 1.1rem 1.15rem;
+      box-shadow: var(--shadow);
+      border-left: 5px solid var(--teal);
+    }
+    .concept-card:nth-child(2) { border-left-color: var(--coral); }
+    .concept-card:nth-child(3) { border-left-color: var(--amber); }
+    .concept-card:nth-child(4) { border-left-color: var(--blue); }
+    .concept-card:nth-child(5) { border-left-color: #7a5cff; }
+    .concept-card h3 {
+      margin: 0 0 0.4rem;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--ink);
+    }
+    .concept-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .concept-card .formula {
+      margin-top: 0.65rem;
+      font-size: 1.15rem;
+      color: var(--teal-deep);
+      overflow-x: auto;
+    }
+    .concept-card .formula .katex { font-size: 1.15em; }
+    .compare-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+      margin-top: 0.7rem;
+    }
+    @media (max-width: 560px) {
+      .compare-row { grid-template-columns: 1fr; }
+    }
+    .compare-box {
+      padding: 0.55rem 0.65rem;
+      border-radius: 12px;
+      background: rgba(15, 122, 122, 0.07);
+      border: 1px solid rgba(15, 122, 122, 0.15);
+    }
+    .compare-box.no {
+      background: rgba(232, 93, 76, 0.08);
+      border-color: rgba(232, 93, 76, 0.2);
+    }
+    .compare-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--teal-deep);
+      margin-bottom: 0.25rem;
+    }
+    .compare-box.no .compare-label { color: #a13a30; }
+    .compare-box .formula { margin-top: 0.25rem; font-size: 1rem; }
+    .compare-box p {
+      margin-top: 0.35rem !important;
+      font-size: 0.82rem !important;
+    }
+    .parts-visual {
+      margin: 0.7rem 0 0.35rem;
+      padding: 0.65rem 0.7rem;
+      border-radius: 12px;
+      background: rgba(15, 122, 122, 0.07);
+    }
+    .parts-visual .parts-caption {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+    .parts-strip {
+      display: flex;
+      gap: 0.28rem;
+      flex-wrap: wrap;
+    }
+    .parts-strip .part {
+      width: 2.1rem;
+      height: 2.1rem;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: #fff;
+      box-shadow: inset 0 -2px 0 rgba(0,0,0,0.12);
+    }
+    .parts-strip .part.red { background: var(--coral); }
+    .parts-strip .part.blue { background: var(--blue); }
+    .parts-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .parts-legend span::before {
+      content: "";
+      display: inline-block;
+      width: 0.7rem;
+      height: 0.7rem;
+      border-radius: 3px;
+      margin-right: 0.3rem;
+      vertical-align: -0.05rem;
+    }
+    .parts-legend .lg-red::before { background: var(--coral); }
+    .parts-legend .lg-blue::before { background: var(--blue); }
+    .parts-legend .lg-all::before {
+      background: linear-gradient(90deg, var(--coral) 40%, var(--blue) 40%);
+    }
+    .stat.result .formula-line .katex { font-size: 0.95em; }
+    .mom-bubble .math .katex { font-size: 0.95em; color: var(--teal-deep); }
+    .speed-pill[data-speed="custom"] {
+      /* hidden in challenge via .challenge-hide-custom */
+    }
+    body.challenge-mode .speed-pill[data-speed="custom"],
+    body.challenge-mode #customSpeedWrap {
+      display: none !important;
+    }
+    .mom-face.angry svg .mom-calm { display: none; }
+    .mom-face.angry svg .mom-mad { display: inline !important; }
+    .mom-bubble:empty { display: none; }
+    .joke {
+      display: inline-block;
+      margin-top: 0.45rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 8px;
+      background: rgba(232, 168, 58, 0.2);
+      color: #8a5a10;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .journey-section {
+      margin-top: 0.5rem;
+      scroll-margin-top: 1rem;
+    }
+    .journey-board {
+      position: relative;
+      border-radius: calc(var(--radius) + 8px);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 2px solid rgba(255,255,255,0.85);
+      background: #fff;
+    }
+
+    .sky {
+      position: absolute;
+      inset: 0;
+      transition: background 0.8s linear;
+      z-index: 0;
+    }
+
+    .clock {
+      position: absolute;
+      top: 0.9rem;
+      left: 0.9rem;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.55rem 0.85rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(255,255,255,0.95);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      font-family: var(--font-display);
+      font-weight: 800;
+      color: var(--ink);
+    }
+    .clock-face {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 3px solid var(--teal-deep);
+      position: relative;
+      background: #fff;
+      flex: none;
+    }
+    .clock-hand {
+      position: absolute;
+      left: 50%;
+      bottom: 50%;
+      width: 2px;
+      background: var(--ink);
+      transform-origin: bottom center;
+      border-radius: 2px;
+    }
+    .clock-hand.hour { height: 9px; margin-left: -1px; }
+    .clock-hand.minute { height: 12px; margin-left: -1px; background: var(--coral); }
+    .clock-time { font-size: 1.15rem; line-height: 1.1; }
+    .clock-label { font-size: 0.72rem; color: var(--muted); font-weight: 700; font-family: var(--font-body); }
+
+    .scene-wrap {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: min(420px, 58vw);
+      min-height: 280px;
+    }
+    #scene {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .speech {
+      position: absolute;
+      z-index: 6;
+      max-width: 180px;
+      padding: 0.55rem 0.75rem;
+      border-radius: 14px;
+      background: #fff;
+      border: 2px solid var(--ink);
+      font-weight: 800;
+      font-size: 0.9rem;
+      line-height: 1.25;
+      color: var(--ink);
+      box-shadow: 0 6px 0 rgba(0,0,0,0.12);
+      opacity: 0;
+      transform: translate(-50%, 8px) scale(0.95);
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .speech.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+    .speech.late { border-color: var(--coral); color: #a13a30; }
+    .speech.happy { border-color: var(--teal); color: var(--teal-deep); }
+    .speech::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -7px;
+      width: 12px;
+      height: 12px;
+      margin-left: -6px;
+      background: #fff;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    .controls {
+      position: relative;
+      z-index: 2;
+      padding: 1rem 1.1rem 1.2rem;
+      background: rgba(255,255,255,0.92);
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 1rem;
+    }
+
+    /* Sky only behind the mountain scene — not over mom / controls */
+    .journey-board > .sky {
+      bottom: auto;
+      height: min(420px, 58vw);
+      min-height: 280px;
+    }
+
+    .control-row {
+      display: grid;
+      gap: 0.85rem;
+      grid-template-columns: 1.2fr 1fr;
+    }
+    @media (max-width: 720px) {
+      .control-row { grid-template-columns: 1fr; }
+    }
+
+    .control-block h4 {
+      margin: 0 0 0.45rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+
+    .slider-wrap {
+      display: grid;
+      gap: 0.35rem;
+    }
+    .slider-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-weight: 800;
+      font-family: var(--font-display);
+    }
+    .slider-meta .val { color: var(--teal-deep); font-size: 1.2rem; }
+    .slider-meta .hint { color: var(--muted); font-size: 0.85rem; font-family: var(--font-body); font-weight: 600; }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--teal);
+      height: 1.4rem;
+      cursor: pointer;
+    }
+
+    .speed-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .play-modes {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.85rem;
+    }
+    .play-mode {
+      appearance: none;
+      border: 2px solid rgba(15, 122, 122, 0.22);
+      background: rgba(255,255,255,0.75);
+      color: var(--teal-deep);
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 0.92rem;
+      padding: 0.5rem 0.95rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .play-mode.active {
+      background: var(--coral);
+      border-color: var(--coral);
+      color: #fff;
+    }
+
+    .custom-speed {
+      display: none;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+    .custom-speed.show { display: flex; }
+    .custom-speed input {
+      width: 5.5rem;
+      padding: 0.4rem 0.5rem;
+      border: 2px solid rgba(15, 122, 122, 0.25);
+      border-radius: 10px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--teal-deep);
+    }
+    .custom-speed span {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .challenge-note {
+      display: none;
+      margin: 0;
+      padding: 0.55rem 0.75rem;
+      border-radius: 12px;
+      background: rgba(232, 93, 76, 0.1);
+      color: #8a3a30;
+      font-size: 0.9rem;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+    .challenge-note.show { display: block; }
+
+    .mom-bar {
+      display: none;
+      position: relative;
+      z-index: 2;
+      gap: 0.65rem;
+      align-items: flex-end;
+      padding: 0.75rem 1rem 0.85rem;
+      background: rgba(255,250,245,0.95);
+      border-top: 1px dashed rgba(30,42,50,0.12);
+    }
+    .mom-bar.show { display: flex; }
+    .mom-btn {
+      appearance: none;
+      border: 2px solid #c45c4a;
+      background: #fff5f2;
+      color: #8a3a30;
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 0.88rem;
+      padding: 0.55rem 0.85rem;
+      border-radius: 12px;
+      cursor: pointer;
+      flex: none;
+    }
+    .mom-btn:hover { background: #ffe4dc; }
+    .mom-stage {
+      display: none;
+      align-items: flex-end;
+      gap: 0.65rem;
+      flex: 1;
+      min-width: 0;
+    }
+    .mom-stage.show { display: flex; }
+    .mom-face {
+      width: 72px;
+      height: 80px;
+      flex: none;
+      position: relative;
+    }
+    .mom-face svg { width: 100%; height: 100%; display: block; }
+    .mom-bubble {
+      position: relative;
+      max-width: 28rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: 14px;
+      background: #fff;
+      border: 2px solid #c45c4a;
+      font-weight: 800;
+      font-size: 0.92rem;
+      line-height: 1.35;
+      color: #8a3a30;
+      box-shadow: 0 5px 0 rgba(196, 92, 74, 0.2);
+    }
+    .mom-bubble .math {
+      display: block;
+      margin-top: 0.35rem;
+      color: var(--teal-deep);
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+    }
+
+    #distanceSlider:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+    .speed-pill {
+      appearance: none;
+      border: 2px solid rgba(15, 122, 122, 0.2);
+      background: #fff;
+      color: var(--teal-deep);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 0.5rem 0.85rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
+    }
+    .speed-pill:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .play-mode:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    .mom-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    .speed-pill.active {
+      background: var(--coral);
+      border-color: var(--coral);
+      color: #fff;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.4fr auto auto;
+      gap: 0.55rem;
+      align-items: stretch;
+    }
+    .stat {
+      padding: 0.55rem 0.7rem;
+      border-radius: 12px;
+      background: rgba(15, 122, 122, 0.08);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.25;
+    }
+    .stat strong { color: var(--teal-deep); font-family: var(--font-display); font-size: 1.02rem; }
+    .stat.result {
+      display: none;
+      flex-direction: column;
+      gap: 0.15rem;
+      font-size: 0.82rem;
+    }
+    .stat.result.show { display: flex; }
+    .stat.result .formula-line {
+      font-family: var(--font-display);
+      font-weight: 800;
+      color: var(--teal-deep);
+      font-size: 0.9rem;
+    }
+    .stat.result.late { background: rgba(232, 93, 76, 0.14); }
+    .stat.result.late strong { color: var(--coral); }
+    .stat.result.ok { background: rgba(15, 122, 122, 0.14); }
+
+    .actions {
+      display: contents;
+    }
+    .actions .btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.2;
+      padding: 0.55rem 0.65rem;
+      font-size: 0.88rem;
+      white-space: nowrap;
+    }
+    @media (max-width: 720px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 0.7rem 1.15rem;
+      border-radius: 12px;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--teal);
+      color: #fff;
+      box-shadow: 0 5px 0 var(--teal-deep);
+    }
+    .btn-ghost {
+      background: rgba(255,255,255,0.9);
+      color: var(--teal-deep);
+      border: 2px solid rgba(15, 122, 122, 0.25);
+    }
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .proof {
+      margin-top: 0.65rem;
+      padding: 0.65rem 0.75rem;
+      border-radius: 12px;
+      background: rgba(15, 122, 122, 0.08);
+      color: var(--ink);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+    .proof-title {
+      font-weight: 800;
+      color: var(--teal-deep);
+      margin: 0 0 0.35rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .proof .tex { display: inline-block; margin: 0.15rem 0; }
+    .cn-tip {
+      display: inline-block;
+      margin: 0.35rem 0 0.5rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 8px;
+      background: rgba(232, 93, 76, 0.12);
+      color: #8a3a30;
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    /* Ratio panel */
+    .ratio-grid {
+      display: grid;
+      gap: 0.85rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      margin-bottom: 1.25rem;
+    }
+    .ratio-demo {
+      background: rgba(255,255,255,0.78);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.1rem;
+      box-shadow: var(--shadow);
+    }
+    .ratio-demo h3 {
+      margin: 0 0 0.35rem;
+      font-family: var(--font-display);
+      color: var(--teal-deep);
+      font-size: 1.35rem;
+    }
+    .cake-lead {
+      margin: 0 0 0.85rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+    .cake-step-label {
+      display: block;
+      margin: 0.75rem 0 0.4rem;
+      font-weight: 800;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .cake-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .cake-pill {
+      appearance: none;
+      border: 2px solid rgba(15, 122, 122, 0.25);
+      background: #fff;
+      color: var(--teal-deep);
+      font: inherit;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
+    }
+    .cake-pill:hover { transform: translateY(-1px); border-color: var(--teal); }
+    .cake-pill.active {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #fff;
+    }
+    .cake-who {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.15rem;
+    }
+    .cake-who-btn {
+      appearance: none;
+      flex: 1 1 140px;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      border: 2px solid var(--line);
+      background: #fff;
+      border-radius: 14px;
+      padding: 0.55rem 0.75rem;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 800;
+      color: var(--ink);
+      transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+    }
+    .cake-who-btn:hover { transform: translateY(-1px); }
+    .cake-who-btn .avatar {
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 1.05rem;
+      flex: none;
+    }
+    .cake-who-btn.amy .avatar { background: var(--coral); }
+    .cake-who-btn.billy .avatar { background: var(--blue); }
+    .cake-who-btn.amy.active {
+      border-color: var(--coral);
+      box-shadow: 0 0 0 3px rgba(232, 93, 76, 0.2);
+    }
+    .cake-who-btn.billy.active {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(61, 126, 184, 0.22);
+    }
+    .cake-who-btn .count {
+      margin-left: auto;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--muted);
+    }
+    .cake-who-btn.amy.active .count { color: var(--coral); }
+    .cake-who-btn.billy.active .count { color: var(--blue); }
+    .cake-board {
+      margin-top: 0.9rem;
+      display: grid;
+      justify-items: center;
+      gap: 0.65rem;
+    }
+    .cake-svg {
+      width: min(100%, 320px);
+      height: auto;
+      filter: drop-shadow(0 8px 18px rgba(30, 50, 60, 0.12));
+      touch-action: manipulation;
+    }
+    .cake-slice {
+      cursor: pointer;
+      stroke: #fff;
+      stroke-width: 2.5;
+      transition: filter 0.15s, opacity 0.15s;
+    }
+    .cake-slice:hover { filter: brightness(1.06); }
+    .cake-slice.free { fill: #f3e2b8; }
+    .cake-slice.amy { fill: var(--coral); }
+    .cake-slice.billy { fill: var(--blue); }
+    .cake-slice.locked { cursor: default; }
+    .cake-hint {
+      margin: 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.4;
+      min-height: 1.4em;
+    }
+    .cake-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 0.35rem;
+    }
+    .cake-results {
+      margin-top: 0.9rem;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      background: rgba(15, 122, 122, 0.08);
+      display: none;
+    }
+    .cake-results.show { display: block; }
+    .cake-results .summary {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 0.55rem;
+    }
+    .cake-results .summary .amy-c { color: var(--coral); }
+    .cake-results .summary .billy-c { color: var(--blue); }
+    .cake-results .lines {
+      display: grid;
+      gap: 0.35rem;
+      font-size: 1.05rem;
+      color: var(--teal-deep);
+      font-weight: 700;
+    }
+
+    /* a:b:c section */
+    .abc-section {
+      margin-top: 1.25rem;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.1rem;
+      box-shadow: var(--shadow);
+      border-left: 5px solid #7a5cff;
+    }
+    .abc-section h3 {
+      margin: 0 0 0.35rem;
+      font-family: var(--font-display);
+      color: var(--teal-deep);
+      font-size: 1.35rem;
+    }
+    .abc-method {
+      margin-top: 0.5rem;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      background: rgba(15, 122, 122, 0.07);
+    }
+    .abc-method .lcm-badge {
+      display: inline-block;
+      margin: 0.35rem 0 0.55rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 8px;
+      background: rgba(61, 126, 184, 0.18);
+      color: #245a8a;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+    .abc-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.45rem 0.75rem;
+      margin: 0.35rem 0;
+      font-size: 1.05rem;
+    }
+    .abc-row .mul {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .hl-b { color: var(--coral); font-weight: 800; }
+    .hl-b2 { color: #c9a227; font-weight: 800; }
+    .abc-match {
+      display: inline-block;
+      margin-top: 0.25rem;
+      padding: 0.15rem 0.45rem;
+      border: 2px solid var(--blue);
+      border-radius: 8px;
+    }
+    .abc-final {
+      margin-top: 0.65rem;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--teal-deep);
+    }
+    .dual-cakes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-top: 0.75rem;
+    }
+    @media (max-width: 720px) {
+      .dual-cakes { grid-template-columns: 1fr; }
+    }
+    .mini-cake {
+      background: rgba(15, 122, 122, 0.05);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 0.75rem;
+    }
+    .mini-cake h4 {
+      margin: 0 0 0.45rem;
+      font-size: 1rem;
+      font-family: var(--font-display);
+      color: var(--ink);
+    }
+    .mini-cake .cake-svg { width: min(100%, 240px); }
+    .cake-slice.chloe { fill: #2f9e6b; }
+    .cake-who-btn.chloe .avatar { background: #2f9e6b; }
+    .cake-who-btn.chloe.active {
+      border-color: #2f9e6b;
+      box-shadow: 0 0 0 3px rgba(47, 158, 107, 0.25);
+    }
+    .cake-who-btn.chloe.active .count { color: #2f9e6b; }
+    .dual-compare {
+      margin-top: 0.85rem;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      background: rgba(232, 168, 58, 0.12);
+      border: 1px solid rgba(232, 168, 58, 0.35);
+      display: none;
+    }
+    .dual-compare.show { display: block; }
+    .dual-compare h4 {
+      margin: 0 0 0.4rem;
+      font-size: 0.95rem;
+      color: #8a5a10;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .dual-compare p {
+      margin: 0.3rem 0;
+      color: var(--ink);
+      font-size: 0.98rem;
+      line-height: 1.45;
+    }
+    .dual-compare .verdict {
+      margin-top: 0.55rem;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--teal-deep);
+    }
+    .dual-compare .verdict.no { color: #a13a30; }
+    .amount-grid {
+      display: grid;
+      gap: 0.45rem;
+      margin: 0.5rem 0 0.35rem;
+    }
+    .amount-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.35rem 0.65rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .amount-row .who-amy { color: var(--coral); }
+    .amount-row .who-billy { color: var(--blue); }
+    .amount-row .who-chloe { color: #2f9e6b; }
+    .amount-row .detail {
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .abc-wrong {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.65rem 0 0.85rem;
+    }
+    .abc-wrong .wrong-label {
+      width: 100%;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .abc-wrong .wrong-eq {
+      padding: 0.4rem 0.7rem;
+      border-radius: 10px;
+      background: rgba(232, 93, 76, 0.12);
+      color: #a13a30;
+      font-weight: 800;
+      font-size: 1.05rem;
+      font-family: var(--font-display);
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+      text-decoration-color: #a13a30;
+    }
+
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes bounceHappy {
+      0%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-18px); }
+      70% { transform: translateY(-6px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1 class="brand">Rate &amp; Ratio<span>Pre S2 Maths</span></h1>
+    <p class="tagline">Rates link amounts to time. Ratios compare like with like — and the colon “:” simply means divide.</p>
+
+    <div class="mode-tabs" role="tablist">
+      <button class="mode-tab active" type="button" data-mode="rate" role="tab">Rate</button>
+      <button class="mode-tab" type="button" data-mode="ratio" role="tab">Ratio</button>
+    </div>
+
+    <!-- RATE -->
+    <section class="panel active" id="panel-rate">
+      <h2 class="section-title">What is a rate?</h2>
+      <p class="section-lead">A rate compares two quantities with <strong>different units</strong> — often something that happens over time.</p>
+
+      <div class="concept-carousel" id="rateConcepts">
+        <button class="carousel-nav prev" type="button" id="conceptPrev" aria-label="Previous">‹</button>
+        <div class="carousel-viewport">
+          <div class="carousel-track" id="conceptTrack">
+            <article class="concept-card">
+              <h3>1. Rate = “how fast”</h3>
+              <p>If you eat <strong>3 buns in 1 minute</strong>, your eating rate is <span class="tex">3\ \text{buns}/\text{min}</span>. Rate always ties an amount to time (or another different unit).</p>
+            </article>
+            <article class="concept-card">
+              <h3>2. Travel rates</h3>
+              <p>In this lesson, rate usually means <strong>how far you move in a given time</strong> — walking, cycling, driving…</p>
+              <div class="formula tex">\mathrm{speed}=\dfrac{\mathrm{distance}}{\mathrm{time}}</div>
+            </article>
+            <article class="concept-card">
+              <h3>3. Units look like fractions</h3>
+              <p>Write the distance unit over the time unit with a slash — just like a fraction bar:</p>
+              <div class="formula tex">\mathrm{km/hr}\quad\cdot\quad\mathrm{m/s}</div>
+            </article>
+            <article class="concept-card">
+              <h3>4. Convert time first</h3>
+              <p>1 minute = 60 seconds → <span class="tex">3\ \text{buns}/\text{min}=\dfrac{1}{20}\ \text{bun}/\text{s}</span>.<br />1 hour = 60 minutes → <span class="tex">3\ \text{buns}/\text{min}=180\ \text{buns}/\text{hr}</span>.</p>
+              <span class="joke">180 buns/hr… stuffed! xp</span>
+            </article>
+            <article class="concept-card">
+              <h3>5. km/hr ↔ m/s</h3>
+              <p><span class="tex">1\ \mathrm{km}=1000\ \mathrm{m}</span> and <span class="tex">1\ \mathrm{hr}=3600\ \mathrm{s}</span>, so:</p>
+              <div class="formula tex">\div 3.6\quad\text{or}\quad\times 3.6</div>
+              <p style="margin-top:0.45rem"><span class="tex">\mathrm{km/hr}\to\mathrm{m/s}:\ \div 3.6</span><br /><span class="tex">\mathrm{m/s}\to\mathrm{km/hr}:\ \times 3.6</span></p>
+            </article>
+          </div>
+        </div>
+        <button class="carousel-nav next" type="button" id="conceptNext" aria-label="Next">›</button>
+        <div class="carousel-dots" id="conceptDots"></div>
+      </div>
+
+      <div class="journey-section">
+        <h2 class="section-title">Mountain school run</h2>
+        <p class="section-lead">Home sits on the leftmost peak. School sits on the rightmost peak. Change the distance and speed — then race the clock.</p>
+
+        <div class="play-modes" role="tablist" aria-label="Play mode">
+          <button class="play-mode active" type="button" data-play="free">Free mode</button>
+          <button class="play-mode" type="button" data-play="challenge">Challenge</button>
+        </div>
+        <p class="challenge-note" id="challengeNote">Wake-up time and distance are random. Pick a speed so you arrive by the 8:00 AM bell.</p>
+
+        <div class="journey-board">
+          <div class="sky" id="sky"></div>
+          <div class="clock" aria-live="polite">
+            <div class="clock-face" aria-hidden="true">
+              <div class="clock-hand hour" id="handHour"></div>
+              <div class="clock-hand minute" id="handMinute"></div>
+            </div>
+            <div>
+              <div class="clock-time" id="clockText">6:00 AM</div>
+              <div class="clock-label" id="skyLabel">Dawn</div>
+            </div>
+          </div>
+          <div class="scene-wrap">
+            <canvas id="scene" width="1000" height="420"></canvas>
+            <div class="speech" id="speech"></div>
+          </div>
+          <div class="mom-bar" id="momBar">
+            <button class="mom-btn" type="button" id="momBtn">Ask Mom</button>
+            <div class="mom-stage" id="momStage">
+              <div class="mom-face angry" id="momFace" aria-hidden="true">
+                <svg viewBox="0 0 72 80" xmlns="http://www.w3.org/2000/svg">
+                  <g fill="#5a2e1a">
+                    <circle cx="20" cy="30" r="9"/>
+                    <circle cx="14" cy="42" r="8"/>
+                    <circle cx="52" cy="30" r="9"/>
+                    <circle cx="58" cy="42" r="8"/>
+                    <circle cx="28" cy="18" r="8"/>
+                    <circle cx="44" cy="18" r="8"/>
+                    <circle cx="36" cy="14" r="9"/>
+                    <circle cx="16" cy="52" r="7"/>
+                    <circle cx="56" cy="52" r="7"/>
+                    <circle cx="36" cy="24" r="12"/>
+                  </g>
+                  <ellipse cx="36" cy="46" rx="16" ry="18" fill="#f3c29a"/>
+                  <!-- soft angry brows -->
+                  <path d="M24 41 L31 44" stroke="#2a1810" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                  <path d="M48 41 L41 44" stroke="#2a1810" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                  <!-- simple eyes -->
+                  <circle cx="29" cy="48" r="1.7" fill="#1e2a32"/>
+                  <circle cx="43" cy="48" r="1.7" fill="#1e2a32"/>
+                  <!-- 扁嘴：向下撇的扁嘴 -->
+                  <path d="M29 58 Q36 54 43 58" stroke="#8a3a30" stroke-width="2" fill="none" stroke-linecap="round"/>
+                  <circle cx="22" cy="52" r="2.4" fill="#f0a0a0" opacity="0.55"/>
+                  <circle cx="50" cy="52" r="2.4" fill="#f0a0a0" opacity="0.55"/>
+                </svg>
+              </div>
+              <div class="mom-bubble" id="momBubble" hidden></div>
+            </div>
+          </div>
+          <div class="controls">
+            <div class="control-row">
+              <div class="control-block">
+                <h4>Distance (mountains)</h4>
+                <div class="slider-wrap">
+                  <div class="slider-meta">
+                    <span class="val"><span id="peakCount">2</span> peaks</span>
+                    <span class="hint">home → school: <strong id="distanceKm">10</strong> km</span>
+                  </div>
+                  <input type="range" id="distanceSlider" min="2" max="10" step="1" value="2" />
+                </div>
+              </div>
+              <div class="control-block">
+                <h4>Speed (km/hr)</h4>
+                <div class="speed-pills" id="speedPills"></div>
+                <div class="custom-speed" id="customSpeedWrap">
+                  <input type="number" id="customSpeed" min="1" max="400" step="1" value="10" />
+                  <span>km/hr · vehicle follows your speed</span>
+                </div>
+              </div>
+            </div>
+            <div class="stats">
+              <div class="stat">Wake-up: <strong id="wakeText">6:00 AM</strong></div>
+              <div class="stat">School bell: <strong>8:00 AM</strong></div>
+              <div class="stat result" id="arrivalStat"></div>
+              <div class="actions">
+                <button class="btn btn-ghost" type="button" id="resetBtn">Another school day</button>
+                <button class="btn btn-primary" type="button" id="goBtn">Go!</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RATIO -->
+    <section class="panel" id="panel-ratio">
+      <h2 class="section-title">What is a ratio?</h2>
+      <p class="section-lead">A ratio compares two quantities of the <strong>same kind</strong> (same units). For Hong Kong F2, remember: the colon is just division.</p>
+
+      <div class="concept-carousel" id="ratioConcepts">
+        <button class="carousel-nav prev" type="button" id="ratioPrev" aria-label="Previous">‹</button>
+        <div class="carousel-viewport">
+          <div class="carousel-track" id="ratioTrack">
+            <article class="concept-card">
+              <h3>1. “:” means ÷</h3>
+              <p>The ratio symbol is division written in another outfit:</p>
+              <div class="formula tex">a:b=\dfrac{a}{b}</div>
+              <p style="margin-top:0.5rem">Examples:</p>
+              <div class="formula tex">2:3=\dfrac{2}{3}</div>
+              <div class="formula tex">5:8=\dfrac{5}{8}</div>
+              <p style="margin-top:0.45rem">Read aloud: “2 to 3” = “2 divided by 3”.</p>
+            </article>
+
+            <article class="concept-card">
+              <h3>2. Same kind only</h3>
+              <p>Ratios need matching units — boys to girls, red paint to blue paint, cm to cm.</p>
+              <p style="margin-top:0.45rem"><strong>Rate</strong> mixes different units. <strong>Ratio</strong> stays same-to-same — the units cancel and leave a pure number:</p>
+              <div class="compare-row">
+                <div class="compare-box">
+                  <span class="compare-label">Ratio ✓ same unit</span>
+                  <div class="formula tex">\dfrac{12\,\cancel{\mathrm{cm}}}{5\,\cancel{\mathrm{cm}}}=\dfrac{12}{5}</div>
+                  <p>Units cancel → no unit left.</p>
+                </div>
+                <div class="compare-box no">
+                  <span class="compare-label">Rate · different units</span>
+                  <div class="formula tex">\dfrac{60\,\mathrm{km}}{2\,\mathrm{hr}}=30\,\mathrm{km/hr}</div>
+                  <p>Units stay → this is a rate.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="concept-card">
+              <h3>3. Equivalent ratios</h3>
+              <p>Multiply or divide both parts by the same non-zero number:</p>
+              <div class="formula tex">2:3=4:6=6:9=\dfrac{2}{3}</div>
+              <p style="margin-top:0.45rem">Always simplify when you can — F2 papers love lowest terms.</p>
+            </article>
+
+            <article class="concept-card">
+              <h3>4. 外項之積 = 內項之積</h3>
+              <span class="cn-tip">兩個比例相等：外項 × 外項 = 內項 × 內項</span>
+              <p>If <span class="tex">a:b=c:d</span>, then <span class="tex">a,d</span> are the extremes (外項) and <span class="tex">b,c</span> are the means (內項):</p>
+              <div class="formula tex">a\cdot d=b\cdot c</div>
+              <div class="proof">
+                <p class="proof-title">Proof</p>
+                <p><span class="tex">a:b=c:d</span></p>
+                <p><span class="tex">\Rightarrow\ \dfrac{a}{b}=\dfrac{c}{d}</span></p>
+                <p><span class="tex">\Rightarrow\ \dfrac{a}{b}\cdot(bd)=\dfrac{c}{d}\cdot(bd)</span></p>
+                <p style="margin:0.15rem 0 0;font-size:0.85rem;color:var(--muted)">(multiply both sides by <span class="tex">bd</span>)</p>
+                <p><span class="tex">\Rightarrow\ \dfrac{a}{\cancel{b}}\cdot(\cancel{b}\,d)=\dfrac{c}{\cancel{d}}\cdot(b\,\cancel{d})</span></p>
+                <p><span class="tex">\Rightarrow\ a\cdot d=b\cdot c</span></p>
+              </div>
+            </article>
+
+            <article class="concept-card">
+              <h3>5. Numbers flip</h3>
+              <p>From a coefficient equation, the ratio flips the numbers:</p>
+              <div class="formula tex">3a=2b\quad\Rightarrow\quad a:b=2:3</div>
+              <div class="proof">
+                <p class="proof-title">Proof</p>
+                <p><span class="tex">3a=2b</span></p>
+                <p><span class="tex">\Rightarrow\ \dfrac{3a}{3b}=\dfrac{2b}{3b}</span></p>
+                <p style="margin:0.15rem 0 0;font-size:0.85rem;color:var(--muted)">(divide both sides by <span class="tex">3b</span>)</p>
+                <p><span class="tex">\Rightarrow\ \dfrac{\cancel{3}a}{\cancel{3}b}=\dfrac{2\cancel{b}}{3\cancel{b}}</span></p>
+                <p><span class="tex">\Rightarrow\ \dfrac{a}{b}=\dfrac{2}{3}</span></p>
+                <p><span class="tex">\Rightarrow\ a:b=2:3</span></p>
+              </div>
+              <p style="margin-top:0.45rem">Memory trick: coefficients swap places into the ratio.</p>
+            </article>
+
+            <article class="concept-card">
+              <h3>6. Part–whole</h3>
+              <p>If red : blue = <span class="tex">2:3</span>, first find total parts:</p>
+              <div class="formula tex">2+3=5\quad\text{(total parts)}</div>
+              <div class="parts-visual">
+                <div class="parts-caption">5 equal parts of the mix</div>
+                <div class="parts-strip" aria-hidden="true">
+                  <span class="part red">1</span>
+                  <span class="part red">2</span>
+                  <span class="part blue">3</span>
+                  <span class="part blue">4</span>
+                  <span class="part blue">5</span>
+                </div>
+                <div class="parts-legend">
+                  <span class="lg-red">red = 2 parts</span>
+                  <span class="lg-blue">blue = 3 parts</span>
+                  <span class="lg-all">whole = 5</span>
+                </div>
+              </div>
+              <div class="formula tex">\text{red}=\dfrac{2}{5},\quad\text{blue}=\dfrac{3}{5}\quad\text{of the mix}</div>
+              <p style="margin-top:0.45rem">Example: mix <span class="tex">10\,\mathrm{L}</span> → red gets <span class="tex">\dfrac{2}{5}\times 10=4\,\mathrm{L}</span>, blue gets <span class="tex">6\,\mathrm{L}</span>.</p>
+              <p style="margin-top:0.35rem">Share / mixture questions always start from “total parts”.</p>
+            </article>
+          </div>
+        </div>
+        <button class="carousel-nav next" type="button" id="ratioNext" aria-label="Next">›</button>
+        <div class="carousel-dots" id="ratioDots"></div>
+      </div>
+
+      <div class="ratio-demo" id="cakeGame">
+        <h3>How much cake do you want them to get?</h3>
+        <p class="cake-lead">Amy (red) and Billy (blue) share one cake. Pick how many slices, choose a person, tap slices, then Confirm to see the ratios.</p>
+
+        <span class="cake-step-label">1 · How many slices?</span>
+        <div class="cake-pills" id="cakeParts" role="group" aria-label="Number of slices"></div>
+
+        <span class="cake-step-label">2 · Pick who, then tap slices</span>
+        <div class="cake-who">
+          <button type="button" class="cake-who-btn amy active" id="pickAmy" data-who="amy">
+            <span class="avatar" aria-hidden="true">A</span>
+            <span>Amy</span>
+            <span class="count" id="amyCount">0</span>
+          </button>
+          <button type="button" class="cake-who-btn billy" id="pickBilly" data-who="billy">
+            <span class="avatar" aria-hidden="true">B</span>
+            <span>Billy</span>
+            <span class="count" id="billyCount">0</span>
+          </button>
+        </div>
+
+        <div class="cake-board">
+          <svg class="cake-svg" id="cakeSvg" viewBox="0 0 220 220" role="img" aria-label="Cake slices"></svg>
+          <p class="cake-hint" id="cakeHint">Select Amy or Billy, then tap cake slices to give them. You don’t have to use every slice.</p>
+          <div class="cake-actions">
+            <button class="btn btn-ghost" type="button" id="cakeReset">Reset</button>
+            <button class="btn btn-primary" type="button" id="cakeConfirm">Confirm</button>
+          </div>
+        </div>
+
+        <div class="cake-results" id="cakeResults" aria-live="polite">
+          <p class="summary" id="cakeSummary"></p>
+          <div class="lines">
+            <div class="tex" id="cakeAB"></div>
+            <div class="tex" id="cakeAW"></div>
+            <div class="tex" id="cakeBW"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="abc-section" id="abcSection">
+        <h3>Joining ratios · <span class="tex">a:b:c</span></h3>
+        <p class="cake-lead">Given two ratios that share a letter, you <strong>cannot</strong> just stick the numbers together.</p>
+        <p style="margin:0 0 0.35rem;font-weight:700">Example:</p>
+        <div class="abc-row">
+          <span>a : b = 2 : <span class="hl-b">5</span></span>
+          <span>b : c = <span class="hl-b2">3</span> : 7</span>
+        </div>
+        <div class="abc-wrong">
+          <span class="wrong-label">Common mistakes — do not write:</span>
+          <span class="wrong-eq">a : b : c ≠ 2 : 5 : 7</span>
+          <span class="wrong-eq">a : b : c ≠ 2 : 3 : 7</span>
+        </div>
+        <p class="cake-lead" style="margin-bottom:0.4rem">Why? The middle letter <span class="tex">b</span> is <strong>5</strong> in the first ratio but <strong>3</strong> in the second — different “unit size”. Match <span class="tex">b</span> with the LCM first:</p>
+
+        <div class="abc-method">
+          <span class="cn-tip" style="margin:0 0 0.45rem">最小公倍數 · LCM</span>
+          <div class="lcm-badge">LCM of <span class="hl-b">5</span> and <span class="hl-b2">3</span> = 15</div>
+          <div class="abc-row">
+            <span class="tex">a:b=2:5</span>
+            <span class="mul">× 3 →</span>
+            <span>a : b = 6 : <span class="hl-b">15</span></span>
+          </div>
+          <div class="abc-row">
+            <span class="tex">b:c=3:7</span>
+            <span class="mul">× 5 →</span>
+            <span>b : c = <span class="hl-b2">15</span> : 35</span>
+          </div>
+          <p style="margin:0.45rem 0 0;font-size:0.92rem;color:var(--muted)">Now both ratios use the same <span class="abc-match">b = 15</span>, so join them:</p>
+          <div class="abc-final tex">a:b:c=6:15:35</div>
+        </div>
+
+        <span class="cake-step-label" style="margin-top:1.1rem">Try it · three people, two cakes</span>
+        <p class="cake-lead">Same free play as above: choose slices, pick a person, tap pieces. Cake 1 is Amy &amp; Billy; Cake 2 is Amy &amp; Chloe. Each whole cake counts as <strong>1 cake</strong>. Confirm to see how much cake each person got, then the three-person ratio.</p>
+
+        <div class="dual-cakes">
+          <div class="mini-cake" id="cakeABPanel">
+            <h4>Cake 1 · Amy &amp; Billy</h4>
+            <div class="cake-pills" id="abParts" role="group" aria-label="Cake 1 slices"></div>
+            <div class="cake-who" style="margin-top:0.5rem">
+              <button type="button" class="cake-who-btn amy active" data-dual="ab" data-who="amy">
+                <span class="avatar" aria-hidden="true">A</span><span>Amy</span><span class="count" id="abAmyN">0</span>
+              </button>
+              <button type="button" class="cake-who-btn billy" data-dual="ab" data-who="billy">
+                <span class="avatar" aria-hidden="true">B</span><span>Billy</span><span class="count" id="abBillyN">0</span>
+              </button>
+            </div>
+            <div class="cake-board">
+              <svg class="cake-svg" id="abSvg" viewBox="0 0 220 220" role="img" aria-label="Amy and Billy cake"></svg>
+            </div>
+          </div>
+
+          <div class="mini-cake" id="cakeACPanel">
+            <h4>Cake 2 · Amy &amp; Chloe</h4>
+            <div class="cake-pills" id="acParts" role="group" aria-label="Cake 2 slices"></div>
+            <div class="cake-who" style="margin-top:0.5rem">
+              <button type="button" class="cake-who-btn amy active" data-dual="ac" data-who="amy">
+                <span class="avatar" aria-hidden="true">A</span><span>Amy</span><span class="count" id="acAmyN">0</span>
+              </button>
+              <button type="button" class="cake-who-btn chloe" data-dual="ac" data-who="chloe">
+                <span class="avatar" aria-hidden="true">C</span><span>Chloe</span><span class="count" id="acChloeN">0</span>
+              </button>
+            </div>
+            <div class="cake-board">
+              <svg class="cake-svg" id="acSvg" viewBox="0 0 220 220" role="img" aria-label="Amy and Chloe cake"></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="cake-actions" style="margin-top:0.75rem">
+          <button class="btn btn-ghost" type="button" id="dualReset">Reset</button>
+          <button class="btn btn-primary" type="button" id="dualConfirm">Confirm</button>
+        </div>
+
+        <div class="dual-compare cake-results" id="dualCompare" aria-live="polite">
+          <h4>How much cake did each person get?</h4>
+          <div class="amount-grid" id="dualAmounts"></div>
+          <p class="verdict" id="dualVerdict" style="display:none"></p>
+          <h4 style="margin-top:0.85rem">Three-person ratio</h4>
+          <div class="lines">
+            <div class="tex" id="dualABC"></div>
+            <div class="tex" id="dualABCDetail"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>Pre S2 · <span class="tex">a:b=\dfrac{a}{b}</span> · <span class="tex">\mathrm{rate}=\dfrac{\mathrm{distance}}{\mathrm{time}}</span></footer>
+  </div>
+
+  <script>
+    const $ = (s, el = document) => el.querySelector(s);
+
+    /* ——— tabs ——— */
+    document.querySelectorAll(".mode-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".mode-tab").forEach((t) => t.classList.toggle("active", t === tab));
+        document.querySelectorAll(".panel").forEach((p) => {
+          p.classList.toggle("active", p.id === `panel-${tab.dataset.mode}`);
+        });
+        renderAllTex();
+      });
+    });
+
+    /* ——— concept carousels ——— */
+    function initCarousel({ trackId, dotsId, prevId, nextId }) {
+      const track = $(trackId);
+      const dotsWrap = $(dotsId);
+      const prev = $(prevId);
+      const next = $(nextId);
+      if (!track) return;
+      const cards = [...track.querySelectorAll(".concept-card")];
+      let index = 0;
+
+      const stepLabel = document.createElement("span");
+      stepLabel.className = "carousel-step";
+      dotsWrap.appendChild(stepLabel);
+
+      cards.forEach((_, i) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "carousel-dot" + (i === 0 ? " active" : "");
+        dot.setAttribute("aria-label", `Card ${i + 1}`);
+        dot.addEventListener("click", () => go(i));
+        dotsWrap.insertBefore(dot, stepLabel);
+      });
+
+      function go(i) {
+        index = Math.max(0, Math.min(cards.length - 1, i));
+        track.style.transform = `translateX(-${index * 100}%)`;
+        dotsWrap.querySelectorAll(".carousel-dot").forEach((d, di) => {
+          d.classList.toggle("active", di === index);
+        });
+        stepLabel.textContent = `${index + 1} / ${cards.length}`;
+        prev.disabled = index === 0;
+        next.disabled = index === cards.length - 1;
+      }
+
+      prev.addEventListener("click", () => go(index - 1));
+      next.addEventListener("click", () => go(index + 1));
+      go(0);
+    }
+
+    initCarousel({
+      trackId: "#conceptTrack",
+      dotsId: "#conceptDots",
+      prevId: "#conceptPrev",
+      nextId: "#conceptNext"
+    });
+    initCarousel({
+      trackId: "#ratioTrack",
+      dotsId: "#ratioDots",
+      prevId: "#ratioPrev",
+      nextId: "#ratioNext"
+    });
+
+    /* ——— Amy & Billy cake ratio game ——— */
+    const CAKE_PART_OPTIONS = [2, 3, 4, 5, 6, 8, 12];
+    const cakeState = {
+      parts: 8,
+      who: "amy", // amy | billy
+      owners: [], // null | "amy" | "billy"
+      confirmed: false
+    };
+
+    function polar(cx, cy, r, deg) {
+      const rad = ((deg - 90) * Math.PI) / 180;
+      return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
+    }
+
+    function slicePath(cx, cy, r, startDeg, endDeg) {
+      const large = endDeg - startDeg > 180 ? 1 : 0;
+      const [x1, y1] = polar(cx, cy, r, startDeg);
+      const [x2, y2] = polar(cx, cy, r, endDeg);
+      if (Math.abs(endDeg - startDeg - 360) < 0.01) {
+        return `M ${cx} ${cy - r} A ${r} ${r} 0 1 1 ${cx - 0.01} ${cy - r} A ${r} ${r} 0 1 1 ${cx} ${cy - r} Z`;
+      }
+      return `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z`;
+    }
+
+    function cakeCounts() {
+      let amy = 0;
+      let billy = 0;
+      cakeState.owners.forEach((o) => {
+        if (o === "amy") amy += 1;
+        else if (o === "billy") billy += 1;
+      });
+      return { amy, billy, total: cakeState.parts };
+    }
+
+    function updateCakeCountsUI() {
+      const { amy, billy } = cakeCounts();
+      $("#amyCount").textContent = amy;
+      $("#billyCount").textContent = billy;
+    }
+
+    function hideCakeResults() {
+      cakeState.confirmed = false;
+      $("#cakeResults").classList.remove("show");
+    }
+
+    function renderCake() {
+      const svg = $("#cakeSvg");
+      const n = cakeState.parts;
+      if (cakeState.owners.length !== n) {
+        cakeState.owners = Array.from({ length: n }, () => null);
+      }
+      const step = 360 / n;
+      const cx = 110;
+      const cy = 110;
+      const r = 96;
+      svg.innerHTML = "";
+
+      // plate ring
+      const plate = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      plate.setAttribute("cx", cx);
+      plate.setAttribute("cy", cy);
+      plate.setAttribute("r", r + 8);
+      plate.setAttribute("fill", "#e8d9b0");
+      plate.setAttribute("stroke", "#cbb48a");
+      plate.setAttribute("stroke-width", "3");
+      svg.appendChild(plate);
+
+      for (let i = 0; i < n; i++) {
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", slicePath(cx, cy, r, i * step, (i + 1) * step));
+        const owner = cakeState.owners[i];
+        path.classList.add("cake-slice", owner || "free");
+        path.dataset.index = String(i);
+        path.setAttribute("role", "button");
+        path.setAttribute(
+          "aria-label",
+          `Slice ${i + 1}` + (owner ? `, ${owner}` : ", free")
+        );
+        path.addEventListener("click", () => {
+          const idx = Number(path.dataset.index);
+          if (cakeState.owners[idx] === cakeState.who) {
+            cakeState.owners[idx] = null;
+          } else {
+            cakeState.owners[idx] = cakeState.who;
+          }
+          hideCakeResults();
+          renderCake();
+        });
+        svg.appendChild(path);
+      }
+
+      // centre nub
+      const nub = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      nub.setAttribute("cx", cx);
+      nub.setAttribute("cy", cy);
+      nub.setAttribute("r", 7);
+      nub.setAttribute("fill", "#fff8e8");
+      nub.setAttribute("stroke", "#d4c09a");
+      nub.setAttribute("stroke-width", "2");
+      nub.style.pointerEvents = "none";
+      svg.appendChild(nub);
+
+      updateCakeCountsUI();
+      const whoName = cakeState.who === "amy" ? "Amy (red)" : "Billy (blue)";
+      $("#cakeHint").textContent =
+        `${whoName} is selected — tap slices to give them (tap again to undo). You don’t have to use every slice.`;
+    }
+
+    function confirmCake() {
+      const { amy, billy, total } = cakeCounts();
+      const results = $("#cakeResults");
+      results.classList.add("show");
+      cakeState.confirmed = true;
+
+      $("#cakeSummary").innerHTML =
+        `Amy <span class="amy-c">${amy}</span>　Billy <span class="billy-c">${billy}</span>` +
+        (amy + billy < total
+          ? `　<span style="color:var(--muted);font-size:0.92rem">(${total - amy - billy} unshared)</span>`
+          : "");
+
+      const ab = $("#cakeAB");
+      const aw = $("#cakeAW");
+      const bw = $("#cakeBW");
+      if (amy > 0 && billy > 0) {
+        renderTex(ab, `A:B=${amy}:${billy}`, false);
+      } else if (amy > 0 && billy === 0) {
+        renderTex(ab, `A:B=${amy}:0\\ \\text{(Billy has none yet)}`, false);
+      } else if (billy > 0 && amy === 0) {
+        renderTex(ab, `A:B=0:${billy}\\ \\text{(Amy has none yet)}`, false);
+      } else {
+        renderTex(ab, `A:B=\\text{—}\\ \\text{(neither has a slice yet)}`, false);
+      }
+      renderTex(aw, `\\text{Amy}:\\text{Whole}=${amy}:${total}`, false);
+      renderTex(bw, `\\text{Billy}:\\text{Whole}=${billy}:${total}`, false);
+    }
+
+    function resetCake(keepParts = true) {
+      const n = keepParts ? cakeState.parts : 8;
+      cakeState.parts = n;
+      cakeState.owners = Array.from({ length: n }, () => null);
+      hideCakeResults();
+      document.querySelectorAll("#cakeParts .cake-pill").forEach((btn) => {
+        btn.classList.toggle("active", Number(btn.dataset.parts) === n);
+      });
+      renderCake();
+    }
+
+    function initCakeGame() {
+      const wrap = $("#cakeParts");
+      wrap.innerHTML = "";
+      CAKE_PART_OPTIONS.forEach((n) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "cake-pill" + (n === cakeState.parts ? " active" : "");
+        btn.dataset.parts = String(n);
+        btn.textContent = n + " slices";
+        btn.addEventListener("click", () => {
+          cakeState.parts = n;
+          cakeState.owners = Array.from({ length: n }, () => null);
+          hideCakeResults();
+          wrap.querySelectorAll(".cake-pill").forEach((b) => {
+            b.classList.toggle("active", b === btn);
+          });
+          renderCake();
+        });
+        wrap.appendChild(btn);
+      });
+
+      $("#pickAmy").addEventListener("click", () => {
+        cakeState.who = "amy";
+        $("#pickAmy").classList.add("active");
+        $("#pickBilly").classList.remove("active");
+        renderCake();
+      });
+      $("#pickBilly").addEventListener("click", () => {
+        cakeState.who = "billy";
+        $("#pickBilly").classList.add("active");
+        $("#pickAmy").classList.remove("active");
+        renderCake();
+      });
+      $("#cakeReset").addEventListener("click", () => resetCake(true));
+      $("#cakeConfirm").addEventListener("click", confirmCake);
+      renderCake();
+    }
+
+    /* ——— a:b:c dual cakes (Amy–Billy & Amy–Chloe) ——— */
+    const dualCakes = {
+      ab: {
+        parts: 5,
+        who: "amy",
+        owners: [],
+        people: ["amy", "billy"],
+        svgId: "#abSvg",
+        partsId: "#abParts",
+        countIds: { amy: "#abAmyN", billy: "#abBillyN" }
+      },
+      ac: {
+        parts: 8,
+        who: "amy",
+        owners: [],
+        people: ["amy", "chloe"],
+        svgId: "#acSvg",
+        partsId: "#acParts",
+        countIds: { amy: "#acAmyN", chloe: "#acChloeN" }
+      }
+    };
+
+    function gcd(a, b) {
+      a = Math.abs(a);
+      b = Math.abs(b);
+      while (b) {
+        const t = b;
+        b = a % b;
+        a = t;
+      }
+      return a || 1;
+    }
+
+    function renderDualCake(key) {
+      const state = dualCakes[key];
+      const svg = $(state.svgId);
+      const n = state.parts;
+      if (state.owners.length !== n) {
+        state.owners = Array.from({ length: n }, () => null);
+      }
+      const step = 360 / n;
+      const cx = 110;
+      const cy = 110;
+      const r = 92;
+      svg.innerHTML = "";
+
+      const plate = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      plate.setAttribute("cx", cx);
+      plate.setAttribute("cy", cy);
+      plate.setAttribute("r", r + 7);
+      plate.setAttribute("fill", "#e8d9b0");
+      plate.setAttribute("stroke", "#cbb48a");
+      plate.setAttribute("stroke-width", "3");
+      svg.appendChild(plate);
+
+      for (let i = 0; i < n; i++) {
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", slicePath(cx, cy, r, i * step, (i + 1) * step));
+        const owner = state.owners[i];
+        path.classList.add("cake-slice", owner || "free");
+        path.addEventListener("click", () => {
+          if (state.owners[i] === state.who) state.owners[i] = null;
+          else state.owners[i] = state.who;
+          hideDualResults();
+          renderDualCake(key);
+        });
+        svg.appendChild(path);
+      }
+
+      const nub = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      nub.setAttribute("cx", cx);
+      nub.setAttribute("cy", cy);
+      nub.setAttribute("r", 6);
+      nub.setAttribute("fill", "#fff8e8");
+      nub.setAttribute("stroke", "#d4c09a");
+      nub.setAttribute("stroke-width", "2");
+      nub.style.pointerEvents = "none";
+      svg.appendChild(nub);
+
+      const counts = {};
+      state.people.forEach((p) => { counts[p] = 0; });
+      state.owners.forEach((o) => {
+        if (o && counts[o] !== undefined) counts[o] += 1;
+      });
+      state.people.forEach((p) => {
+        const el = $(state.countIds[p]);
+        if (el) el.textContent = counts[p];
+      });
+    }
+
+    function countOwner(owners, who) {
+      return owners.filter((o) => o === who).length;
+    }
+
+    function simplifyTriple(a, b, c) {
+      const g = gcd(gcd(a, b), c);
+      return [a / g, b / g, c / g];
+    }
+
+    function fracTex(num, den) {
+      if (num === 0) return "0";
+      const g = gcd(num, den);
+      num /= g;
+      den /= g;
+      if (den === 1) return String(num);
+      return `\\dfrac{${num}}{${den}}`;
+    }
+
+    function hideDualResults() {
+      $("#dualCompare").classList.remove("show");
+    }
+
+    function confirmDualCakes() {
+      const ab = dualCakes.ab;
+      const ac = dualCakes.ac;
+      const n1 = ab.parts;
+      const n2 = ac.parts;
+      const amy1 = countOwner(ab.owners, "amy");
+      const billy = countOwner(ab.owners, "billy");
+      const amy2 = countOwner(ac.owners, "amy");
+      const chloe = countOwner(ac.owners, "chloe");
+
+      // Each whole cake = 1. Amy may eat from both cakes.
+      // Amy = amy1/n1 + amy2/n2 = (amy1*n2 + amy2*n1)/(n1*n2)
+      // Billy = billy/n1 = (billy*n2)/(n1*n2)
+      // Chloe = chloe/n2 = (chloe*n1)/(n1*n2)
+      const den = n1 * n2;
+      const amyNum = amy1 * n2 + amy2 * n1;
+      const billyNum = billy * n2;
+      const chloeNum = chloe * n1;
+
+      const wrap = $("#dualAmounts");
+      wrap.innerHTML = "";
+
+      function addAmountRow(whoClass, label, slicesNote, texSrc) {
+        const row = document.createElement("div");
+        row.className = "amount-row";
+        const name = document.createElement("span");
+        name.className = whoClass;
+        name.textContent = label;
+        const eq = document.createElement("span");
+        eq.textContent = "=";
+        const math = document.createElement("span");
+        math.className = "tex";
+        const detail = document.createElement("span");
+        detail.className = "detail";
+        detail.textContent = slicesNote;
+        row.appendChild(name);
+        row.appendChild(eq);
+        row.appendChild(math);
+        row.appendChild(document.createTextNode(" cake"));
+        row.appendChild(detail);
+        wrap.appendChild(row);
+        renderTex(math, texSrc, false);
+      }
+
+      const amyParts = [];
+      if (amy1 > 0) amyParts.push(`${amy1}/${n1} from cake 1`);
+      if (amy2 > 0) amyParts.push(`${amy2}/${n2} from cake 2`);
+      addAmountRow(
+        "who-amy",
+        "Amy",
+        amyParts.length ? `(${amyParts.join(" + ")})` : "(no slices yet)",
+        fracTex(amyNum, den)
+      );
+      addAmountRow(
+        "who-billy",
+        "Billy",
+        billy > 0 ? `(${billy} of ${n1} slices on cake 1)` : "(no slices yet)",
+        fracTex(billyNum, den)
+      );
+      addAmountRow(
+        "who-chloe",
+        "Chloe",
+        chloe > 0 ? `(${chloe} of ${n2} slices on cake 2)` : "(no slices yet)",
+        fracTex(chloeNum, den)
+      );
+
+      const verdict = $("#dualVerdict");
+      if (amy1 > 0 && amy2 > 0 && amy1 === amy2 && n1 !== n2) {
+        verdict.style.display = "block";
+        verdict.className = "verdict no";
+        verdict.textContent =
+          `Notice: Amy has ${amy1} slices on both cakes, but ${amy1}/${n1} ≠ ${amy2}/${n2} — same slice count ≠ same cake amount.`;
+      } else {
+        verdict.style.display = "none";
+      }
+
+      const abcEl = $("#dualABC");
+      const detailEl = $("#dualABCDetail");
+      if (amyNum === 0 && billyNum === 0 && chloeNum === 0) {
+        renderTex(abcEl, `\\text{Amy}:\\text{Billy}:\\text{Chloe}=\\text{—}`, false);
+        renderTex(detailEl, `\\text{(give someone a slice first)}`, false);
+      } else {
+        const [A, B, C] = simplifyTriple(amyNum, billyNum, chloeNum);
+        renderTex(abcEl, `\\text{Amy}:\\text{Billy}:\\text{Chloe}=${A}:${B}:${C}`, false);
+        renderTex(
+          detailEl,
+          `\\dfrac{${amyNum}}{${den}}:\\dfrac{${billyNum}}{${den}}:\\dfrac{${chloeNum}}{${den}}=${A}:${B}:${C}`,
+          false
+        );
+      }
+
+      $("#dualCompare").classList.add("show");
+    }
+
+    function resetDualCakes() {
+      Object.keys(dualCakes).forEach((key) => {
+        const state = dualCakes[key];
+        state.owners = Array.from({ length: state.parts }, () => null);
+        renderDualCake(key);
+      });
+      hideDualResults();
+    }
+
+    function initDualCakes() {
+      Object.keys(dualCakes).forEach((key) => {
+        const state = dualCakes[key];
+        const wrap = $(state.partsId);
+        wrap.innerHTML = "";
+        CAKE_PART_OPTIONS.forEach((n) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "cake-pill" + (n === state.parts ? " active" : "");
+          btn.textContent = n + " slices";
+          btn.addEventListener("click", () => {
+            state.parts = n;
+            state.owners = Array.from({ length: n }, () => null);
+            wrap.querySelectorAll(".cake-pill").forEach((b) => {
+              b.classList.toggle("active", b === btn);
+            });
+            hideDualResults();
+            renderDualCake(key);
+          });
+          wrap.appendChild(btn);
+        });
+
+        document.querySelectorAll(`.cake-who-btn[data-dual="${key}"]`).forEach((btn) => {
+          btn.addEventListener("click", () => {
+            state.who = btn.dataset.who;
+            document.querySelectorAll(`.cake-who-btn[data-dual="${key}"]`).forEach((b) => {
+              b.classList.toggle("active", b === btn);
+            });
+          });
+        });
+
+        renderDualCake(key);
+      });
+
+      $("#dualReset").addEventListener("click", resetDualCakes);
+      $("#dualConfirm").addEventListener("click", confirmDualCakes);
+      hideDualResults();
+    }
+
+    /* ——— journey state ——— */
+    const SPEEDS = [
+      { kmh: 5, key: "walk", cost: 1 },
+      { kmh: 15, key: "bike", cost: 2 },
+      { kmh: 40, key: "truck", cost: 3 },
+      { kmh: 200, key: "heli", cost: 4 }
+    ];
+    const BELL_MINUTES = 8 * 60;
+    const FREE_WAKE = 6 * 60; // 6:00 AM — 2 peaks (10 km) on foot arrives at 8:00
+
+    let playMode = "free"; // free | challenge
+    let peaks = 2;
+    let speedKmh = 5;
+    let speedKey = "walk";
+    let customMode = false;
+    let departMinutes = FREE_WAKE;
+    let clockMinutes = departMinutes;
+    let animating = false;
+    let arrived = false;
+    let animId = null;
+    let progress = 0;
+    let pathPoints = [];
+    let ridgePoints = [];
+    let peakPositions = [];
+
+    const canvas = $("#scene");
+    const ctx = canvas.getContext("2d");
+    const speech = $("#speech");
+
+    function renderTex(el, tex, displayMode = false) {
+      if (!el) return;
+      el.setAttribute("data-tex", tex);
+      if (typeof katex === "undefined") {
+        el.textContent = tex;
+        return;
+      }
+      katex.render(tex, el, { throwOnError: false, displayMode });
+    }
+
+    function renderAllTex(root = document) {
+      root.querySelectorAll(".tex").forEach((el) => {
+        // Prefer stored source. Never re-parse already-rendered KaTeX as TeX.
+        let tex = el.getAttribute("data-tex");
+        if (!tex) {
+          if (el.querySelector(".katex")) return;
+          tex = el.textContent.trim();
+          if (!tex) return;
+        }
+        renderTex(el, tex, el.classList.contains("formula"));
+      });
+    }
+
+    function setMomAngry() {
+      /* mom is always angry — curly-haired nag */
+      const face = $("#momFace");
+      if (face) face.classList.add("angry");
+    }
+
+    function showMomSpeech(line, tex) {
+      const stage = $("#momStage");
+      const bubble = $("#momBubble");
+      setMomAngry();
+      stage.classList.add("show");
+      bubble.hidden = false;
+      if (tex) {
+        bubble.innerHTML = `${line}<span class="math tex"></span>`;
+        renderTex(bubble.querySelector(".math"), tex, false);
+      } else {
+        bubble.textContent = line;
+      }
+    }
+
+    function hideMom() {
+      $("#momStage").classList.remove("show");
+      const bubble = $("#momBubble");
+      bubble.innerHTML = "";
+      bubble.hidden = true;
+    }
+
+    function vehicleFromSpeed(kmh) {
+      // 1–5 walk · 5–20 bike · 21–100 truck · 100+ heli
+      if (kmh <= 5) return "walk";
+      if (kmh <= 20) return "bike";
+      if (kmh <= 100) return "truck";
+      return "heli";
+    }
+
+    function syncVehicle() {
+      speedKey = vehicleFromSpeed(speedKmh);
+    }
+
+    function formatDuration(hours) {
+      const mins = Math.round(hours * 60);
+      const hPart = Math.floor(mins / 60);
+      const mPart = mins % 60;
+      if (hPart <= 0) return `${mPart} min`;
+      if (mPart === 0) return `${hPart} hr`;
+      return `${hPart} hr ${mPart} min`;
+    }
+
+    function formatClock(mins) {
+      let m = ((mins % (24 * 60)) + 24 * 60) % (24 * 60);
+      let h24 = Math.floor(m / 60);
+      const mm = Math.floor(m % 60);
+      const ampm = h24 >= 12 ? "PM" : "AM";
+      let h12 = h24 % 12;
+      if (h12 === 0) h12 = 12;
+      return {
+        text: `${h12}:${String(mm).padStart(2, "0")} ${ampm}`,
+        h24,
+        mm,
+        total: m
+      };
+    }
+
+    function skyColor(mins) {
+      const m = ((mins % (24 * 60)) + 24 * 60) % (24 * 60);
+      const h = m / 60;
+
+      const day = [248, 250, 252];       // near white
+      const orange = [255, 140, 70];
+      const night = [18, 32, 72];        // deep blue
+
+      function lerp(a, b, t) {
+        return a.map((v, i) => Math.round(v + (b[i] - v) * t));
+      }
+      function css(c) {
+        return `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
+      }
+
+      function pack(c, label) {
+        const lum = (c[0] + c[1] + c[2]) / 3;
+        return { bg: css(c), label, rgb: c, dark: lum < 150 };
+      }
+
+      // 5–7: night → day
+      if (h >= 5 && h < 7) {
+        const t = (h - 5) / 2;
+        return pack(lerp(night, day, t), "Dawn");
+      }
+      // 7–17: day
+      if (h >= 7 && h < 17) {
+        return pack(day, "Daytime");
+      }
+      // 17–19: day → orange → night
+      if (h >= 17 && h < 19) {
+        const t = (h - 17) / 2;
+        if (t < 0.5) return pack(lerp(day, orange, t * 2), "Sunset");
+        return pack(lerp(orange, night, (t - 0.5) * 2), "Dusk");
+      }
+      // 19–5: night
+      return pack(night, "Night");
+    }
+
+    function updateClockUI() {
+      const c = formatClock(clockMinutes);
+      $("#clockText").textContent = c.text;
+      const sky = skyColor(clockMinutes);
+      $("#sky").style.background = sky.bg;
+      $("#skyLabel").textContent = sky.label;
+
+      const hourAngle = ((c.h24 % 12) + c.mm / 60) * 30;
+      const minuteAngle = c.mm * 6;
+      $("#handHour").style.transform = `rotate(${hourAngle}deg)`;
+      $("#handMinute").style.transform = `rotate(${minuteAngle}deg)`;
+    }
+
+    function distanceKm() {
+      return (peaks - 1) * 10;
+    }
+
+    function travelHours() {
+      return distanceKm() / speedKmh;
+    }
+
+    function controlsLocked() {
+      return animating || arrived;
+    }
+
+    function syncControlsLock() {
+      const locked = controlsLocked();
+      $("#distanceSlider").disabled = locked || playMode === "challenge";
+      $("#customSpeed").disabled = locked || playMode === "challenge";
+      const momBtn = $("#momBtn");
+      if (momBtn) momBtn.disabled = locked || playMode !== "challenge";
+      // Free / Challenge mode tabs stay clickable
+      $("#speedPills").querySelectorAll(".speed-pill").forEach((b) => {
+        b.disabled = locked;
+      });
+    }
+
+    function updateStats() {
+      $("#peakCount").textContent = String(peaks);
+      $("#distanceKm").textContent = String(distanceKm());
+      $("#wakeText").textContent = formatClock(departMinutes).text;
+      $("#distanceSlider").value = String(peaks);
+      syncControlsLock();
+    }
+
+    function hideArrival() {
+      const el = $("#arrivalStat");
+      el.className = "stat result";
+      el.innerHTML = "";
+    }
+
+    function vehicleSpeakName(key) {
+      if (key === "walk") return "walking";
+      if (key === "bike") return "the bike";
+      if (key === "truck") return "the pickup";
+      return "the helicopter";
+    }
+
+    function cheapestOnTimeOption() {
+      const remainHr = (BELL_MINUTES - departMinutes) / 60;
+      if (remainHr <= 0) return null;
+      const minSpeed = distanceKm() / remainHr;
+      const suitable = SPEEDS.filter((s) => s.kmh + 1e-9 >= minSpeed);
+      if (!suitable.length) return SPEEDS[SPEEDS.length - 1];
+      return suitable.slice().sort((a, b) => a.cost - b.cost)[0];
+    }
+
+    function showArrival(late, arriveMins) {
+      const el = $("#arrivalStat");
+      const t = formatClock(arriveMins).text;
+      const d = distanceKm();
+      const remainMin = BELL_MINUTES - departMinutes;
+      const remainHr = remainMin / 60;
+      const minSpeed = remainHr > 0 ? d / remainHr : Infinity;
+      const minLabel = !Number.isFinite(minSpeed)
+        ? "\\infty"
+        : (minSpeed >= 10
+          ? String(Math.ceil(minSpeed * 10) / 10)
+          : String(Math.ceil(minSpeed * 100) / 100));
+      const timeTex = remainHr >= 1
+        ? `${Math.round(remainHr * 100) / 100}\\ \\mathrm{hr}`
+        : `${remainMin}\\ \\mathrm{min}`;
+
+      el.className = "stat result show " + (late ? "late" : "ok");
+      el.innerHTML =
+        `<span>Arrived <strong>${t}</strong> · <strong>${late ? "Late" : "On time"}</strong></span>` +
+        `<span class="formula-line tex"></span>`;
+      renderTex(
+        el.querySelector(".formula-line"),
+        `\\mathrm{min\\ speed}=v_{\\min}=\\dfrac{d}{t}=\\dfrac{${d}}{${timeTex}}\\approx ${minLabel}\\ \\mathrm{km/hr}`,
+        false
+      );
+
+      if (playMode !== "challenge") return;
+
+      if (late) {
+        showMomSpeech(
+          "You are late!",
+          `\\mathrm{min\\ speed}=v_{\\min}=\\dfrac{d}{t}=\\dfrac{${d}}{${timeTex}}\\approx ${minLabel}\\ \\mathrm{km/hr}`
+        );
+        return;
+      }
+
+      // On time — but scold if not the cheapest suitable transport
+      const best = cheapestOnTimeOption();
+      const used = SPEEDS.find((s) => s.key === speedKey) || SPEEDS[SPEEDS.length - 1];
+      if (best && used.cost > best.cost) {
+        showMomSpeech(`Why did you take ${vehicleSpeakName(used.key)}? Wasting money!`);
+      } else {
+        hideMom();
+      }
+    }
+
+    function askMom() {
+      if (playMode !== "challenge" || controlsLocked()) return;
+      const remainMin = BELL_MINUTES - departMinutes;
+      const remainHr = remainMin / 60;
+      const d = distanceKm();
+
+      if (remainHr <= 0) {
+        showMomSpeech("The bell already rang!");
+        return;
+      }
+
+      const pick = cheapestOnTimeOption();
+      if (!pick) {
+        showMomSpeech("The bell already rang!");
+        return;
+      }
+
+      setSpeedChoice(pick.kmh, false);
+
+      let line;
+      if (pick.key === "walk") {
+        line = "Walk to school! Save money and go green!";
+      } else if (pick.key === "bike") {
+        line = "Bike to school! Save money and go green!";
+      } else {
+        line = "You're almost late! Get to school right now!";
+      }
+
+      const minSpeed = d / remainHr;
+      const minLabel = minSpeed >= 10
+        ? String(Math.ceil(minSpeed * 10) / 10)
+        : (Math.ceil(minSpeed * 100) / 100).toString();
+      const remainTex = `${Math.round(remainHr * 100) / 100}`;
+
+      showMomSpeech(
+        line,
+        `\\mathrm{min\\ speed}=v_{\\min}=\\dfrac{d}{t}=\\dfrac{${d}}{${remainTex}\\ \\mathrm{hr}}\\approx ${minLabel}\\ \\mathrm{km/hr}\\ \\Rightarrow\\ ${pick.kmh}\\ \\mathrm{km/hr}`
+      );
+    }
+
+    function setSpeedChoice(kmh, isCustom) {
+      if (playMode === "challenge") isCustom = false;
+      customMode = !!isCustom;
+      speedKmh = Math.max(1, Number(kmh) || 1);
+      syncVehicle();
+      const pills = $("#speedPills");
+      pills.querySelectorAll(".speed-pill").forEach((b) => {
+        const v = b.dataset.speed;
+        if (v === "custom") b.classList.toggle("active", customMode);
+        else b.classList.toggle("active", !customMode && Number(v) === speedKmh);
+      });
+      const showCustom = customMode && playMode === "free";
+      $("#customSpeedWrap").classList.toggle("show", showCustom);
+      if (showCustom) $("#customSpeed").value = String(speedKmh);
+      syncControlsLock();
+      drawMountains();
+    }
+
+    function challengeSolvable(wakeMin, peakCount) {
+      const remainHr = (BELL_MINUTES - wakeMin) / 60;
+      if (remainHr <= 0) return false;
+      const dist = (peakCount - 1) * 10;
+      return dist / remainHr <= 200 + 1e-9; // at least helicopter can make it
+    }
+
+    function rollChallenge() {
+      const wakeOptions = [];
+      for (let m = 4 * 60; m <= 7 * 60 + 45; m += 15) wakeOptions.push(m);
+
+      let wake = wakeOptions[Math.floor(Math.random() * wakeOptions.length)];
+      let peakPick = 2 + Math.floor(Math.random() * 9); // 2..10
+      let tries = 0;
+      while (!challengeSolvable(wake, peakPick) && tries < 50) {
+        wake = wakeOptions[Math.floor(Math.random() * wakeOptions.length)];
+        peakPick = 2 + Math.floor(Math.random() * 9);
+        tries++;
+      }
+      if (!challengeSolvable(wake, peakPick)) {
+        // Force a solvable pair: keep wake, shrink distance
+        const remainHr = Math.max((BELL_MINUTES - wake) / 60, 15 / 60);
+        const maxSteps = Math.max(1, Math.floor((200 * remainHr) / 10)); // peaks-1
+        peakPick = Math.min(10, Math.max(2, maxSteps + 1));
+        if (!challengeSolvable(wake, peakPick)) {
+          wake = 6 * 60; // 6:00 fallback
+          peakPick = 2;
+        }
+      }
+
+      peaks = peakPick;
+      departMinutes = wake;
+      clockMinutes = departMinutes;
+      progress = 0;
+      hideSpeech();
+      hideMom();
+      updateStats();
+      rebuildPath();           // must rebuild before any draw (peaks changed)
+      setSpeedChoice(5, false); // draws character on the new path
+      updateClockUI();
+    }
+
+    function setPlayMode(mode) {
+      if (animating) return; // mid-flight only — switching after arrival is OK
+      playMode = mode;
+      arrived = false;
+      $("#goBtn").disabled = false;
+      document.body.classList.toggle("challenge-mode", mode === "challenge");
+      document.querySelectorAll(".play-mode").forEach((b) => {
+        b.classList.toggle("active", b.dataset.play === mode);
+      });
+      $("#challengeNote").classList.toggle("show", mode === "challenge");
+      $("#momBar").classList.toggle("show", mode === "challenge");
+      hideMom();
+      hideSpeech();
+      progress = 0;
+      if (mode === "challenge") {
+        customMode = false;
+        rollChallenge();
+      } else {
+        departMinutes = FREE_WAKE;
+        clockMinutes = departMinutes;
+        peaks = 2;
+        customMode = false;
+        updateStats();
+        rebuildPath();
+        setSpeedChoice(5, false);
+        updateClockUI();
+      }
+    }
+
+    /* path generation — smooth upward hills (soft cosine arches) */
+    function rebuildPath() {
+      const W = canvas.width;
+      const H = canvas.height;
+      const padX = 64;
+      const usable = W - padX * 2;
+      const baseY = H * 0.90;
+      const amplitude = H * 0.46;
+      const spacing = peaks > 1 ? usable / (peaks - 1) : usable;
+      const halfW = spacing * 0.72;
+
+      peakPositions = [];
+      for (let i = 0; i < peaks; i++) {
+        const x = padX + spacing * i;
+        peakPositions.push({ x, y: baseY - amplitude });
+      }
+
+      function groundY(x) {
+        let height = 0;
+        for (let i = 0; i < peaks; i++) {
+          const dx = Math.abs(x - peakPositions[i].x) / halfW;
+          if (dx >= 1) continue;
+          const h = amplitude * (0.5 + 0.5 * Math.cos(dx * Math.PI));
+          if (h > height) height = h;
+        }
+        return baseY - height;
+      }
+
+      // Full-width ridge for drawing (fills to canvas edges — no cliffs)
+      ridgePoints = [];
+      const ridgeSamples = Math.max(400, peaks * 160);
+      for (let s = 0; s <= ridgeSamples; s++) {
+        const x = (W * s) / ridgeSamples;
+        ridgePoints.push({ x, y: groundY(x) });
+      }
+
+      peakPositions.forEach((pk) => {
+        pk.y = groundY(pk.x);
+      });
+
+      // Walk path: home peak → school peak
+      pathPoints = [];
+      const walkSamples = Math.max(240, peaks * 100);
+      const homeX = peakPositions[0].x;
+      const schoolX = peakPositions[peaks - 1].x;
+      for (let s = 0; s <= walkSamples; s++) {
+        const t = s / walkSamples;
+        const x = homeX + (schoolX - homeX) * t;
+        pathPoints.push({ x, y: groundY(x), t });
+      }
+
+      let total = 0;
+      pathPoints[0].s = 0;
+      for (let i = 1; i < pathPoints.length; i++) {
+        const dx = pathPoints[i].x - pathPoints[i - 1].x;
+        const dy = pathPoints[i].y - pathPoints[i - 1].y;
+        total += Math.hypot(dx, dy);
+        pathPoints[i].s = total;
+      }
+      pathPoints.totalLen = total;
+    }
+
+    function pointAtProgress(p) {
+      if (!pathPoints.length) return null;
+      if (speedKey === "heli") {
+        const a = peakPositions[0];
+        const b = peakPositions[peakPositions.length - 1];
+        if (!a || !b) return null;
+        const x = a.x + (b.x - a.x) * p;
+        const y = a.y - 55 - Math.sin(p * Math.PI) * 40;
+        return { x, y };
+      }
+      const total = pathPoints.totalLen || 0;
+      if (total <= 0) return pathPoints[0];
+      const target = p * total;
+      for (let i = 1; i < pathPoints.length; i++) {
+        if (pathPoints[i].s >= target) {
+          const a = pathPoints[i - 1];
+          const b = pathPoints[i];
+          const u = (target - a.s) / (b.s - a.s || 1);
+          return {
+            x: a.x + (b.x - a.x) * u,
+            y: a.y + (b.y - a.y) * u
+          };
+        }
+      }
+      return pathPoints[pathPoints.length - 1];
+    }
+
+    function drawMountains() {
+      const W = canvas.width;
+      const H = canvas.height;
+      if (!W || !H || !peakPositions.length || !pathPoints.length) return;
+
+      const sky = skyColor(clockMinutes);
+      const mTod = ((clockMinutes % (24 * 60)) + 24 * 60) % (24 * 60);
+      const hTod = mTod / 60;
+      // white distance text before 6:00 and from 5 PM; black from 6:00 in daytime
+      const lightText = hTod < 6 || hTod >= 17;
+      const nightLook = sky.label === "Night";
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Full-width ground (no cliff cutoffs at home / school)
+      const ridge = ridgePoints.length ? ridgePoints : pathPoints;
+      ctx.beginPath();
+      ctx.moveTo(0, H);
+      ctx.lineTo(0, ridge[0].y);
+      ridge.forEach((pt) => ctx.lineTo(pt.x, pt.y));
+      ctx.lineTo(W, ridge[ridge.length - 1].y);
+      ctx.lineTo(W, H);
+      ctx.closePath();
+      const grass = ctx.createLinearGradient(0, H * 0.35, 0, H);
+      grass.addColorStop(0, "#8fd48a");
+      grass.addColorStop(1, "#4fa85a");
+      ctx.fillStyle = grass;
+      ctx.fill();
+
+      // soft ridge outline
+      ctx.beginPath();
+      ridge.forEach((pt, i) => {
+        if (i === 0) ctx.moveTo(pt.x, pt.y);
+        else ctx.lineTo(pt.x, pt.y);
+      });
+      ctx.strokeStyle = "rgba(40, 110, 55, 0.45)";
+      ctx.lineWidth = 2.5;
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+      ctx.stroke();
+
+      const home = peakPositions[0];
+      const school = peakPositions[peakPositions.length - 1];
+      drawHouse(home.x, home.y - 6, nightLook);
+      drawSchool(school.x, school.y - 6, nightLook);
+
+      // distance guide
+      ctx.setLineDash([6, 6]);
+      ctx.beginPath();
+      ctx.moveTo(home.x, home.y - 36);
+      ctx.lineTo(school.x, school.y - 36);
+      ctx.strokeStyle = lightText ? "rgba(255,255,255,0.55)" : "rgba(30,42,50,0.35)";
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = lightText ? "rgba(255,255,255,0.95)" : "rgba(30,42,50,0.75)";
+      ctx.font = "700 13px Nunito, sans-serif";
+      ctx.textAlign = "center";
+      ctx.shadowColor = lightText ? "rgba(0,0,0,0.55)" : "rgba(255,255,255,0.7)";
+      ctx.shadowBlur = 4;
+      ctx.fillText(`${distanceKm()} km`, (home.x + school.x) / 2, home.y - 44);
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = "transparent";
+
+      const pos = pointAtProgress(progress);
+      if (pos) drawCharacter(pos.x, pos.y, speedKey, nightLook);
+    }
+
+    function drawHouse(x, y, night) {
+      ctx.fillStyle = night ? "#c4a574" : "#e8b86d";
+      ctx.fillRect(x - 16, y - 22, 32, 22);
+      ctx.beginPath();
+      ctx.moveTo(x - 20, y - 22);
+      ctx.lineTo(x, y - 40);
+      ctx.lineTo(x + 20, y - 22);
+      ctx.closePath();
+      ctx.fillStyle = night ? "#8b3a3a" : "#c94c4c";
+      ctx.fill();
+      ctx.fillStyle = night ? "#ffe08a" : "#5a3a1a";
+      ctx.fillRect(x - 5, y - 16, 10, 16);
+      ctx.font = "800 11px Nunito";
+      ctx.fillStyle = night ? "#fff" : "#1e2a32";
+      ctx.textAlign = "center";
+      ctx.fillText("HOME", x, y + 14);
+    }
+
+    function drawSchool(x, y, night) {
+      ctx.fillStyle = night ? "#6a8fb8" : "#5b8def";
+      ctx.fillRect(x - 20, y - 28, 40, 28);
+      ctx.fillStyle = night ? "#c9a227" : "#f0c040";
+      ctx.fillRect(x - 24, y - 34, 48, 8);
+      ctx.fillStyle = night ? "#ffe08a" : "#fff8d6";
+      ctx.fillRect(x - 12, y - 22, 8, 8);
+      ctx.fillRect(x + 4, y - 22, 8, 8);
+      ctx.fillStyle = "#3a2a1a";
+      ctx.fillRect(x - 5, y - 14, 10, 14);
+      ctx.strokeStyle = "#333";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x + 18, y - 34);
+      ctx.lineTo(x + 18, y - 52);
+      ctx.stroke();
+      ctx.fillStyle = "#e85d4c";
+      ctx.beginPath();
+      ctx.moveTo(x + 18, y - 52);
+      ctx.lineTo(x + 30, y - 48);
+      ctx.lineTo(x + 18, y - 44);
+      ctx.fill();
+      ctx.font = "800 11px Nunito, sans-serif";
+      ctx.fillStyle = night ? "#fff" : "#1e2a32";
+      ctx.textAlign = "center";
+      ctx.fillText("SCHOOL", x, y + 14);
+    }
+
+    let arrivalState = null; // null | "late" | "happy"
+
+    function fillRoundRect(x, y, w, h, r) {
+      const rr = Math.min(r, w / 2, h / 2);
+      ctx.beginPath();
+      ctx.moveTo(x + rr, y);
+      ctx.arcTo(x + w, y, x + w, y + h, rr);
+      ctx.arcTo(x + w, y + h, x, y + h, rr);
+      ctx.arcTo(x, y + h, x, y, rr);
+      ctx.arcTo(x, y, x + w, y, rr);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function drawBoyFace(mood) {
+      // mood: "normal" | "happy" | "late"
+      ctx.fillStyle = "#f3c29a";
+      ctx.beginPath();
+      ctx.arc(0, -26, 9, 0, Math.PI * 2);
+      ctx.fill();
+
+      // hair
+      ctx.fillStyle = "#3a2a1c";
+      ctx.beginPath();
+      ctx.ellipse(0, -31, 9.5, 6.5, 0, Math.PI, 0);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(-6.5, -28, 3.2, 0, Math.PI * 2);
+      ctx.arc(0, -33, 3.5, 0, Math.PI * 2);
+      ctx.arc(6.5, -28, 3.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // eyes
+      if (mood === "happy") {
+        ctx.lineWidth = 1.6;
+        ctx.strokeStyle = "#1e2a32";
+        ctx.beginPath();
+        ctx.arc(-3.2, -26.5, 2.2, Math.PI * 1.15, Math.PI * 1.85);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(3.2, -26.5, 2.2, Math.PI * 1.15, Math.PI * 1.85);
+        ctx.stroke();
+      } else if (mood === "late") {
+        // sad brows + teary eyes
+        ctx.strokeStyle = "#1e2a32";
+        ctx.lineWidth = 1.5;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(-5.5, -28.5);
+        ctx.lineTo(-1.5, -27);
+        ctx.moveTo(5.5, -28.5);
+        ctx.lineTo(1.5, -27);
+        ctx.stroke();
+        ctx.fillStyle = "#1e2a32";
+        ctx.beginPath();
+        ctx.arc(-3.2, -26.2, 1.3, 0, Math.PI * 2);
+        ctx.arc(3.2, -26.2, 1.3, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.fillStyle = "#1e2a32";
+        ctx.beginPath();
+        ctx.arc(-3.2, -26.5, 1.35, 0, Math.PI * 2);
+        ctx.arc(3.2, -26.5, 1.35, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#fff";
+        ctx.beginPath();
+        ctx.arc(-2.7, -27, 0.45, 0, Math.PI * 2);
+        ctx.arc(3.7, -27, 0.45, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // mouth / tears
+      if (mood === "late") {
+        // frown (∩), not a smile
+        ctx.strokeStyle = "#1e2a32";
+        ctx.lineWidth = 1.6;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.arc(0, -19.5, 2.6, Math.PI * 1.15, Math.PI * 1.85);
+        ctx.stroke();
+        ctx.fillStyle = "#6ec8ff";
+        ctx.beginPath();
+        ctx.ellipse(-5.5, -24, 1.15, 2.6, 0.1, 0, Math.PI * 2);
+        ctx.ellipse(5.5, -24, 1.15, 2.6, -0.1, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (mood === "happy") {
+        ctx.strokeStyle = "#1e2a32";
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.arc(0, -22.5, 3.2, 0.12 * Math.PI, 0.88 * Math.PI, false);
+        ctx.stroke();
+      } else {
+        ctx.strokeStyle = "#b07a5a";
+        ctx.lineWidth = 1.4;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(-2.2, -21.5);
+        ctx.quadraticCurveTo(0, -19.8, 2.2, -21.5);
+        ctx.stroke();
+      }
+    }
+
+    function drawBoyBody(phase) {
+      // backpack
+      ctx.fillStyle = "#e8a83a";
+      fillRoundRect(3, -18, 9, 12, 2);
+
+      // shirt
+      ctx.fillStyle = "#3d7eb8";
+      fillRoundRect(-7, -18, 14, 14, 4);
+
+      // arms
+      ctx.strokeStyle = "#f3c29a";
+      ctx.lineWidth = 3.2;
+      ctx.lineCap = "round";
+      const arm = Math.sin(phase) * 7;
+      ctx.beginPath();
+      ctx.moveTo(-6, -14);
+      ctx.lineTo(-11, -4 + arm * 0.35);
+      ctx.moveTo(6, -14);
+      ctx.lineTo(11, -4 - arm * 0.35);
+      ctx.stroke();
+
+      // legs / pants
+      ctx.strokeStyle = "#2f4a6a";
+      ctx.lineWidth = 3.6;
+      ctx.beginPath();
+      ctx.moveTo(-3, -4);
+      ctx.lineTo(-5, 10 + arm * 0.25);
+      ctx.moveTo(3, -4);
+      ctx.lineTo(5, 10 - arm * 0.25);
+      ctx.stroke();
+
+      // shoes
+      ctx.fillStyle = "#1e2a32";
+      ctx.beginPath();
+      ctx.ellipse(-5, 11 + arm * 0.25, 3.2, 1.6, 0, 0, Math.PI * 2);
+      ctx.ellipse(5, 11 - arm * 0.25, 3.2, 1.6, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function drawCharacter(x, y, mode, night) {
+      ctx.save();
+      let bounce = 0;
+      if (arrivalState === "happy") {
+        bounce = Math.abs(Math.sin(performance.now() / 180)) * 16;
+      }
+      ctx.translate(x, y - 8 - bounce);
+
+      const mood = arrivalState === "late" ? "late" : arrivalState === "happy" ? "happy" : "normal";
+      const phase = animating ? progress * pathPoints.totalLen * 0.22 : 0;
+
+      if (mode === "heli") {
+        // Faces RIGHT (travel direction): nose left← no — nose on the RIGHT, tail on the LEFT
+        // Cabin body
+        ctx.fillStyle = "#5aa0d4";
+        fillRoundRect(-16, -14, 34, 18, 6);
+        // cockpit glass at the FRONT (right)
+        ctx.fillStyle = night ? "rgba(200,230,255,0.4)" : "rgba(170,215,255,0.7)";
+        fillRoundRect(2, -11, 14, 12, 4);
+        // tail boom to the LEFT (rear)
+        ctx.fillStyle = "#3d7eb8";
+        ctx.fillRect(-36, -6, 22, 5);
+        ctx.beginPath();
+        ctx.moveTo(-36, -8);
+        ctx.lineTo(-44, -14);
+        ctx.lineTo(-44, -2);
+        ctx.closePath();
+        ctx.fill();
+        // skids
+        ctx.strokeStyle = "#333";
+        ctx.lineWidth = 2;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(-12, 6);
+        ctx.lineTo(-12, 12);
+        ctx.lineTo(14, 12);
+        ctx.lineTo(14, 6);
+        ctx.stroke();
+        // boy INSIDE the light-blue cockpit (clip to window)
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(2, -11, 14, 12);
+        ctx.clip();
+        ctx.translate(9, 8);
+        ctx.scale(0.48, 0.48);
+        drawBoyFace(mood);
+        ctx.restore();
+        // mast + rotor ABOVE cabin
+        ctx.strokeStyle = "#2a4a60";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(2, -14);
+        ctx.lineTo(2, -22);
+        ctx.stroke();
+        const spin = performance.now() / 28;
+        ctx.strokeStyle = night ? "rgba(230,230,240,0.85)" : "rgba(40,50,60,0.7)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(2 + Math.cos(spin) * 26, -22 + Math.sin(spin) * 2);
+        ctx.lineTo(2 + Math.cos(spin + Math.PI) * 26, -22 + Math.sin(spin + Math.PI) * 2);
+        ctx.moveTo(2 + Math.cos(spin + Math.PI / 2) * 18, -22);
+        ctx.lineTo(2 + Math.cos(spin + Math.PI * 1.5) * 18, -22);
+        ctx.stroke();
+      } else if (mode === "truck") {
+        // Blue pickup facing RIGHT: open bed (rear) on left, cab + hood on right
+        const blue = "#3d7eb8";
+        const blueDeep = "#2a5a8a";
+
+        // open cargo bed / tray (露天兜)
+        ctx.fillStyle = blueDeep;
+        fillRoundRect(-30, -6, 24, 12, 2);
+        ctx.fillStyle = blue;
+        ctx.fillRect(-30, -11, 2.2, 9);
+        ctx.fillRect(-8.2, -11, 2.2, 9);
+        ctx.fillRect(-30, -11, 24, 2.2);
+        ctx.fillStyle = "#6a8060";
+        ctx.fillRect(-27, 0, 18, 3);
+
+        // cabin
+        ctx.fillStyle = blue;
+        fillRoundRect(-8, -16, 20, 20, 3);
+        // windshield — boy clipped inside
+        ctx.fillStyle = night ? "rgba(180,210,240,0.45)" : "rgba(160,210,255,0.7)";
+        fillRoundRect(0, -13, 10, 11, 2);
+        ctx.fillStyle = night ? "rgba(180,210,240,0.25)" : "rgba(160,210,255,0.35)";
+        fillRoundRect(-6, -13, 5, 9, 1.5);
+        // hood / nose
+        ctx.fillStyle = blueDeep;
+        fillRoundRect(10, -5, 14, 11, 2);
+        ctx.fillStyle = "#1e2a32";
+        ctx.fillRect(22, -2, 2, 6);
+        ctx.fillStyle = "#c0c8d0";
+        ctx.fillRect(24, 1, 4, 4);
+
+        // wheels
+        ctx.fillStyle = "#222";
+        ctx.beginPath();
+        ctx.arc(-20, 9, 5.5, 0, Math.PI * 2);
+        ctx.arc(12, 9, 5.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#999";
+        ctx.beginPath();
+        ctx.arc(-20, 9, 2.2, 0, Math.PI * 2);
+        ctx.arc(12, 9, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // boy inside windshield only
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, -13, 10, 11);
+        ctx.clip();
+        ctx.translate(5, 6);
+        ctx.scale(0.42, 0.42);
+        drawBoyFace(mood);
+        ctx.restore();
+      } else if (mode === "bike") {
+        const ped = Math.sin(phase) * 5;
+
+        // wheels
+        ctx.strokeStyle = "#1e2a32";
+        ctx.lineWidth = 2.4;
+        ctx.beginPath();
+        ctx.arc(-12, 6, 8, 0, Math.PI * 2);
+        ctx.arc(12, 6, 8, 0, Math.PI * 2);
+        ctx.stroke();
+        // hubs
+        ctx.fillStyle = "#1e2a32";
+        ctx.beginPath();
+        ctx.arc(-12, 6, 1.8, 0, Math.PI * 2);
+        ctx.arc(12, 6, 1.8, 0, Math.PI * 2);
+        ctx.fill();
+
+        // frame
+        ctx.strokeStyle = "#0f7a7a";
+        ctx.lineWidth = 2.6;
+        ctx.lineJoin = "round";
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(-12, 6);
+        ctx.lineTo(-2, -6);   // seat tube area
+        ctx.lineTo(10, -2);   // top tube to head
+        ctx.lineTo(12, 6);    // fork
+        ctx.moveTo(-2, -6);
+        ctx.lineTo(4, 6);     // down / chain stay hint
+        ctx.moveTo(4, 6);
+        ctx.lineTo(-12, 6);
+        ctx.stroke();
+
+        // handlebars
+        ctx.beginPath();
+        ctx.moveTo(10, -2);
+        ctx.lineTo(10, -10);
+        ctx.moveTo(6, -10);
+        ctx.lineTo(14, -10);
+        ctx.stroke();
+
+        // seat
+        ctx.fillStyle = "#1e2a32";
+        ctx.beginPath();
+        ctx.ellipse(-2, -8, 5, 2, -0.2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // legs on pedals
+        ctx.strokeStyle = "#2f4a6a";
+        ctx.lineWidth = 3.2;
+        ctx.beginPath();
+        ctx.moveTo(-2, -4);
+        ctx.lineTo(-6, 2 + ped * 0.4);
+        ctx.lineTo(-2, 8 + ped);
+        ctx.moveTo(-2, -4);
+        ctx.lineTo(4, 2 - ped * 0.4);
+        ctx.lineTo(8, 8 - ped);
+        ctx.stroke();
+        // shoes on pedals
+        ctx.fillStyle = "#1e2a32";
+        ctx.beginPath();
+        ctx.ellipse(-2, 9 + ped, 3, 1.5, 0, 0, Math.PI * 2);
+        ctx.ellipse(8, 9 - ped, 3, 1.5, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // torso
+        ctx.fillStyle = "#3d7eb8";
+        fillRoundRect(-7, -18, 12, 12, 3);
+
+        // arms to handlebars
+        ctx.strokeStyle = "#f3c29a";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(-5, -14);
+        ctx.lineTo(6, -10);
+        ctx.moveTo(3, -14);
+        ctx.lineTo(12, -10);
+        ctx.stroke();
+
+        // head
+        ctx.save();
+        ctx.translate(0, -2);
+        ctx.scale(0.82, 0.82);
+        drawBoyFace(mood);
+        ctx.restore();
+      } else {
+        drawBoyFace(mood);
+        drawBoyBody(phase);
+      }
+
+      ctx.restore();
+    }
+
+    function placeSpeech(late) {
+      arrivalState = late ? "late" : "happy";
+      const pos = pointAtProgress(1) || peakPositions[peakPositions.length - 1];
+      if (!pos) return;
+      speech.className = "speech show " + (late ? "late" : "happy");
+      speech.textContent = late ? "I'm late" : "I made it!";
+      const wrap = canvas.parentElement.getBoundingClientRect();
+      const scaleX = wrap.width / canvas.width;
+      const scaleY = wrap.height / canvas.height;
+      // center bubble above the boy (transform: translate(-50%, 0))
+      speech.style.left = `${pos.x * scaleX}px`;
+      speech.style.top = `${Math.max(8, pos.y * scaleY - 95)}px`;
+      showArrival(late, clockMinutes);
+      drawMountains(); // refresh face mood immediately
+    }
+
+    function hideSpeech() {
+      speech.className = "speech";
+      speech.textContent = "";
+      arrivalState = null;
+      hideArrival();
+    }
+
+    let idleAnimId = null;
+    function ensureIdleLoop() {
+      if (idleAnimId) return;
+      const loop = () => {
+        if (arrivalState === "happy" || arrivalState === "late" || (speedKey === "heli" && animating)) {
+          drawMountains();
+        }
+        idleAnimId = requestAnimationFrame(loop);
+      };
+      idleAnimId = requestAnimationFrame(loop);
+    }
+
+    function resizeCanvas() {
+      const wrap = canvas.parentElement;
+      const w = Math.max(320, wrap.clientWidth);
+      const h = Math.max(260, wrap.clientHeight);
+      canvas.width = w;
+      canvas.height = h;
+      rebuildPath();
+      drawMountains();
+    }
+
+    function resetJourney() {
+      if (animId) cancelAnimationFrame(animId);
+      animating = false;
+      arrived = false;
+      progress = 0;
+      hideSpeech();
+      $("#goBtn").disabled = false;
+      if (playMode === "challenge") {
+        rollChallenge();
+      } else {
+        departMinutes = FREE_WAKE;
+        clockMinutes = departMinutes;
+        hideMom();
+        updateClockUI();
+        updateStats();
+        rebuildPath();
+        drawMountains();
+      }
+    }
+
+    function startJourney() {
+      if (animating || arrived) return;
+      if (customMode) {
+        speedKmh = Math.max(1, Number($("#customSpeed").value) || 1);
+        syncVehicle();
+      }
+      hideSpeech();
+      if (playMode === "challenge") hideMom();
+      animating = true;
+      arrived = false;
+      progress = 0;
+      clockMinutes = departMinutes;
+      $("#goBtn").disabled = true;
+      updateStats();
+      updateClockUI();
+
+      const hours = travelHours();
+      const durationMs = Math.max(2500, Math.min(18000, hours * 4000));
+      const start = performance.now();
+      const startClock = departMinutes;
+      const endClock = startClock + hours * 60;
+
+      function frame(now) {
+        const t = Math.min(1, (now - start) / durationMs);
+        const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+        progress = eased;
+        clockMinutes = startClock + (endClock - startClock) * t;
+        updateClockUI();
+        drawMountains();
+
+        if (t < 1) {
+          animId = requestAnimationFrame(frame);
+        } else {
+          animating = false;
+          arrived = true;
+          progress = 1;
+          clockMinutes = endClock;
+          updateClockUI();
+          drawMountains();
+          const late = Math.round(endClock) > BELL_MINUTES;
+          placeSpeech(late);
+          $("#goBtn").disabled = true; // only "Another school day" unlocks the next run
+          updateStats();
+        }
+      }
+      animId = requestAnimationFrame(frame);
+    }
+
+    /* speed pills */
+    const pills = $("#speedPills");
+    SPEEDS.forEach((s) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "speed-pill" + (s.kmh === speedKmh ? " active" : "");
+      btn.textContent = String(s.kmh);
+      btn.dataset.speed = String(s.kmh);
+      btn.addEventListener("click", () => {
+        if (controlsLocked()) return;
+        setSpeedChoice(s.kmh, false);
+      });
+      pills.appendChild(btn);
+    });
+    {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "speed-pill";
+      btn.textContent = "Custom";
+      btn.dataset.speed = "custom";
+      btn.addEventListener("click", () => {
+        if (controlsLocked() || playMode === "challenge") return;
+        const v = Math.max(1, Number($("#customSpeed").value) || 10);
+        setSpeedChoice(v, true);
+      });
+      pills.appendChild(btn);
+    }
+
+    $("#customSpeed").addEventListener("input", () => {
+      if (controlsLocked() || !customMode || playMode === "challenge") return;
+      speedKmh = Math.max(1, Number($("#customSpeed").value) || 1);
+      syncVehicle();
+      drawMountains();
+    });
+
+    document.querySelectorAll(".play-mode").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (animating) return;
+        setPlayMode(btn.dataset.play);
+      });
+    });
+
+    $("#momBtn").addEventListener("click", askMom);
+
+    $("#distanceSlider").addEventListener("input", (e) => {
+      if (controlsLocked() || playMode === "challenge") {
+        e.target.value = String(peaks);
+        return;
+      }
+      peaks = Number(e.target.value);
+      hideSpeech();
+      progress = 0;
+      updateStats();
+      rebuildPath();
+      drawMountains();
+    });
+
+    $("#goBtn").addEventListener("click", startJourney);
+    $("#resetBtn").addEventListener("click", () => resetJourney());
+
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+      if (speech.classList.contains("show")) {
+        const late = speech.classList.contains("late");
+        placeSpeech(late);
+      }
+    });
+
+    // boot
+    renderAllTex();
+    initCakeGame();
+    initDualCakes();
+    updateClockUI();
+    updateStats();
+    resizeCanvas();
+    ensureIdleLoop();
+  </script>
+</body>
+</html>
