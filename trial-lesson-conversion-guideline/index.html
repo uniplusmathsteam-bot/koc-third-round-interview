@@ -1,0 +1,1757 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Uni+ 高試堂轉化比率注意事項和流程 V5 — S3 AI 課程科組試堂標準作業指引">
+  <title>Uni+ 試堂轉化 SOP · V5</title>
+  <style>
+    :root {
+      --ink: #16211d;
+      --muted: #5e6b65;
+      --paper: #f5f1e8;
+      --card: #fffdf8;
+      --line: #d9d6cc;
+      --green: #0b6b53;
+      --green-dark: #064d3c;
+      --green-soft: #dcebe3;
+      --lime: #c7e36d;
+      --orange: #e76f42;
+      --orange-soft: #f8ddd1;
+      --blue: #3979a8;
+      --blue-soft: #deebf4;
+      --yellow: #f5c85b;
+      --red: #b53a2e;
+      --red-soft: #f6e0dc;
+      --shadow: 0 12px 40px rgba(22, 33, 29, .08);
+      --radius: 22px;
+      --sans: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", "Hiragino Sans GB", "Segoe UI", sans-serif;
+      --display: "Noto Serif TC", "Source Han Serif TC", "Songti TC", Georgia, serif;
+      --mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 86px;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 4%, rgba(199, 227, 109, .22), transparent 25rem),
+        radial-gradient(circle at 92% 8%, rgba(231, 111, 66, .12), transparent 22rem),
+        linear-gradient(rgba(22, 33, 29, .025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(22, 33, 29, .025) 1px, transparent 1px),
+        var(--paper);
+      background-size: auto, auto, 28px 28px, 28px 28px, auto;
+      font-family: var(--sans);
+      line-height: 1.55;
+    }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button, input, select, textarea { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 8px;
+      left: 8px;
+      z-index: 1000;
+      padding: 10px 14px;
+      color: white;
+      background: var(--green-dark);
+      border-radius: 10px;
+      transform: translateY(-150%);
+      transition: transform .2s;
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 18px;
+      background: rgba(245, 241, 232, .92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      font-weight: 700;
+      color: var(--green-dark);
+    }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--green);
+      color: white;
+      font-size: .85rem;
+      font-weight: 800;
+    }
+    .brand-text { font-size: .92rem; white-space: nowrap; }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      flex: 1;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a {
+      padding: 8px 11px;
+      border-radius: 999px;
+      font-size: .82rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .nav-links a:hover { background: var(--green-soft); color: var(--green-dark); }
+
+    .topbar-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+
+    .phase-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--card);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: .82rem;
+      font-weight: 700;
+    }
+    .phase-chip .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--muted);
+    }
+    .phase-chip.running {
+      border-color: var(--green);
+      background: var(--green-soft);
+      color: var(--green-dark);
+    }
+    .phase-chip.running .dot {
+      background: var(--green);
+      box-shadow: 0 0 0 4px rgba(11, 107, 83, .18);
+      animation: pulse 1.4s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.25); }
+    }
+
+    .container {
+      width: min(1080px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.35fr .9fr;
+      gap: 28px;
+      padding: 42px 0 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--orange);
+      font-weight: 800;
+      letter-spacing: .04em;
+      font-size: .85rem;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 0 0 14px;
+      font-family: var(--display);
+      font-size: clamp(2rem, 4.4vw, 3.1rem);
+      line-height: 1.18;
+      color: var(--green-dark);
+      letter-spacing: -.02em;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--orange);
+    }
+
+    .hero-lede {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 38rem;
+    }
+
+    .button-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      border: 2px solid transparent;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .15s, background .15s, border-color .15s;
+    }
+    .button:hover { transform: translateY(-1px); }
+    .button.primary { background: var(--green); color: white; }
+    .button.primary:hover { background: var(--green-dark); }
+    .button.secondary {
+      background: var(--card);
+      border-color: var(--line);
+      color: var(--green-dark);
+    }
+    .button.ghost {
+      background: transparent;
+      border-color: var(--line);
+      color: var(--muted);
+    }
+    .button.small { padding: 8px 12px; font-size: .85rem; border-radius: 10px; }
+
+    .kpi-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 6px;
+      background: linear-gradient(180deg, var(--lime), var(--green));
+    }
+    .kpi-label {
+      margin: 0;
+      color: var(--muted);
+      font-size: .85rem;
+      font-weight: 700;
+    }
+    .kpi-value {
+      margin: 6px 0 8px;
+      font-family: var(--display);
+      font-size: 3.4rem;
+      line-height: 1;
+      color: var(--green-dark);
+      font-weight: 700;
+    }
+    .kpi-note { margin: 0; color: var(--muted); font-size: .92rem; }
+    .kpi-list {
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+    .kpi-list li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      font-size: .88rem;
+      color: var(--ink);
+    }
+    .kpi-list li::before {
+      content: "▸";
+      color: var(--orange);
+      font-weight: 800;
+    }
+
+    .section {
+      padding: 36px 0;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .section-label {
+      margin: 0 0 6px;
+      color: var(--orange);
+      font-weight: 800;
+      font-size: .82rem;
+      letter-spacing: .03em;
+    }
+    .section-head h2,
+    .section h2 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(1.55rem, 3vw, 2.1rem);
+      color: var(--green-dark);
+      line-height: 1.2;
+    }
+    .section-intro {
+      margin: 0;
+      max-width: 40rem;
+      color: var(--muted);
+    }
+
+    .principle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .principle-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .principle-card .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--green-dark);
+      font-size: .75rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .principle-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+      color: var(--green-dark);
+    }
+    .principle-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .split-bar {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 40% 60%;
+      height: 34px;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      font-size: .75rem;
+      font-weight: 800;
+    }
+    .split-bar span {
+      display: grid;
+      place-items: center;
+      color: white;
+    }
+    .split-trial { background: var(--orange); }
+    .split-existing { background: var(--green); }
+
+    .redlines {
+      margin-top: 18px;
+      background: var(--red-soft);
+      border: 1px solid #e8b8b0;
+      border-radius: 18px;
+      padding: 16px 18px;
+    }
+    .redlines h3 {
+      margin: 0 0 10px;
+      color: var(--red);
+      font-size: 1rem;
+    }
+    .redlines ul {
+      margin: 0;
+      padding-left: 1.15rem;
+      color: var(--ink);
+      display: grid;
+      gap: 6px;
+    }
+    .redlines li { font-size: .92rem; }
+
+    .timeline-wrap {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .timeline-track {
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .timeline-marker {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: #faf8f2;
+      border-radius: 14px;
+      padding: 10px 6px;
+      cursor: pointer;
+      text-align: center;
+      transition: background .15s, border-color .15s, transform .15s;
+      min-height: 74px;
+    }
+    .timeline-marker:hover { transform: translateY(-1px); border-color: var(--green); }
+    .timeline-marker.active {
+      background: var(--green);
+      border-color: var(--green);
+      color: white;
+      box-shadow: 0 6px 0 var(--green-dark);
+    }
+    .timeline-marker .t-time {
+      display: block;
+      font-size: .68rem;
+      font-weight: 800;
+      opacity: .85;
+      margin-bottom: 4px;
+    }
+    .timeline-marker .t-title {
+      display: block;
+      font-size: .78rem;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+    .timeline-detail {
+      border-top: 1px dashed var(--line);
+      padding-top: 14px;
+    }
+    .timeline-detail h3 {
+      margin: 0 0 6px;
+      color: var(--green-dark);
+      font-size: 1.1rem;
+    }
+    .timeline-detail p { margin: 0; color: var(--muted); }
+    .timeline-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: .78rem;
+      font-weight: 800;
+    }
+    .pill.role-tutor { background: var(--green-soft); color: var(--green-dark); }
+    .pill.role-csm { background: var(--orange-soft); color: #9a3d22; }
+
+    .flow-grid { display: grid; gap: 16px; }
+    .phase-block {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .phase-block header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .phase-block h3 {
+      margin: 0;
+      color: var(--green-dark);
+      font-size: 1.15rem;
+    }
+    .phase-time {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--lime);
+      color: var(--green-dark);
+      font-size: .78rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .cycle-box {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      margin: 10px 0;
+      background: #faf8f2;
+    }
+    .cycle-box h4 {
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: .98rem;
+    }
+    .cycle-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .cycle-step {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px;
+      font-size: .82rem;
+    }
+    .cycle-step b {
+      display: block;
+      color: var(--green-dark);
+      margin-bottom: 4px;
+      font-size: .78rem;
+    }
+
+    .script-block {
+      position: relative;
+      margin: 10px 0;
+      padding: 14px 14px 14px 16px;
+      border-left: 4px solid var(--orange);
+      background: #fff8f3;
+      border-radius: 0 12px 12px 0;
+    }
+    .script-block .script-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .script-block .script-label span {
+      font-size: .75rem;
+      font-weight: 800;
+      color: var(--orange);
+      letter-spacing: .03em;
+    }
+    .script-text {
+      margin: 0;
+      white-space: pre-wrap;
+      font-size: .92rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    .note-callout {
+      margin: 10px 0 0;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: var(--blue-soft);
+      color: #234e6d;
+      font-size: .88rem;
+    }
+
+    .timer-panel {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 16px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .timer-display {
+      text-align: center;
+      padding: 18px;
+      border-radius: 18px;
+      background:
+        linear-gradient(160deg, var(--green-soft), #fffdf8 60%);
+      border: 1px solid var(--line);
+    }
+    .timer-clock {
+      font-family: var(--mono);
+      font-size: clamp(2.6rem, 7vw, 3.8rem);
+      font-weight: 700;
+      color: var(--green-dark);
+      letter-spacing: .04em;
+      line-height: 1;
+      margin: 8px 0;
+    }
+    .timer-phase-name {
+      margin: 0;
+      font-weight: 800;
+      color: var(--orange);
+      font-size: 1rem;
+    }
+    .timer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .phase-progress {
+      display: grid;
+      gap: 8px;
+    }
+    .phase-progress-row {
+      display: grid;
+      grid-template-columns: 72px 1fr 56px;
+      gap: 8px;
+      align-items: center;
+      font-size: .82rem;
+    }
+    .phase-progress-row .bar {
+      height: 10px;
+      background: #eee9df;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .phase-progress-row .bar > i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--green);
+      border-radius: 999px;
+      transition: width .3s;
+    }
+    .phase-progress-row.current .bar > i { background: var(--orange); }
+    .phase-progress-row.done .label { color: var(--green); font-weight: 700; }
+
+    .generator {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 16px;
+    }
+    .gen-form, .gen-preview {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .field { margin-bottom: 14px; }
+    .field label {
+      display: block;
+      font-size: .82rem;
+      font-weight: 800;
+      color: var(--green-dark);
+      margin-bottom: 6px;
+    }
+    .field input[type="text"],
+    .field textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+    }
+    .choice-grid {
+      display: grid;
+      gap: 8px;
+    }
+    .choice {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #faf8f2;
+      cursor: pointer;
+    }
+    .choice:has(input:checked) {
+      border-color: var(--green);
+      background: var(--green-soft);
+    }
+    .choice input { margin-top: 3px; }
+    .choice strong { display: block; font-size: .9rem; margin-bottom: 2px; }
+    .choice small { color: var(--muted); font-size: .8rem; line-height: 1.4; }
+
+    .preview-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .preview-toolbar h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: var(--green-dark);
+    }
+    #reportPreview {
+      white-space: pre-wrap;
+      background: #faf8f2;
+      border: 1px dashed var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      min-height: 280px;
+      font-size: .9rem;
+      line-height: 1.65;
+      color: var(--ink);
+    }
+
+    .check-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .role-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+    .role-filters button[aria-pressed="true"] {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+    .progress-text {
+      font-weight: 800;
+      color: var(--green-dark);
+      font-size: .92rem;
+    }
+    .check-list { display: grid; gap: 8px; }
+    .check-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: start;
+      padding: 12px 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    .check-item.done {
+      background: var(--green-soft);
+      border-color: #b7d6c8;
+    }
+    .check-item .check-body strong {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--green-dark);
+    }
+    .check-item .check-body span {
+      color: var(--muted);
+      font-size: .85rem;
+    }
+    .check-item .when {
+      font-size: .75rem;
+      font-weight: 800;
+      color: var(--orange);
+      white-space: nowrap;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(120%);
+      background: var(--green-dark);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .9rem;
+      opacity: 0;
+      transition: transform .25s, opacity .25s;
+      z-index: 200;
+      max-width: min(90vw, 420px);
+      text-align: center;
+      box-shadow: var(--shadow);
+      pointer-events: none;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    footer {
+      padding: 28px 0 48px;
+      color: var(--muted);
+      font-size: .85rem;
+      text-align: center;
+      border-top: 1px solid var(--line);
+      margin-top: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .principle-grid,
+      .timer-panel,
+      .generator,
+      .cycle-steps,
+      .timeline-track {
+        grid-template-columns: 1fr;
+      }
+      .timeline-track {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .brand-text { display: none; }
+      .nav-links { display: none; }
+    }
+
+    @media print {
+      .topbar, .skip-link, .toast, .timer-controls, .button-row,
+      .preview-toolbar .button, .check-toolbar .button,
+      .script-block .button, .phase-chip { display: none !important; }
+      body {
+        background: white;
+        color: black;
+      }
+      .section { break-inside: avoid; padding: 12px 0; }
+      .kpi-card, .principle-card, .phase-block, .gen-form, .gen-preview,
+      .timeline-wrap, .check-item, .timer-panel {
+        box-shadow: none;
+        border: 1px solid #ccc;
+      }
+      #reportPreview { border-style: solid; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳至主要內容</a>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="UniPlus 試堂轉化指引首頁">
+      <span class="brand-mark" aria-hidden="true">U+</span>
+      <span class="brand-text">Uni+ · 試堂轉化 SOP</span>
+    </a>
+    <nav class="nav-links" aria-label="頁面導覽">
+      <a href="#principles">核心原則</a>
+      <a href="#timeline">時序總表</a>
+      <a href="#flow">現場流程</a>
+      <a href="#timer">節奏計時</a>
+      <a href="#generator">回饋產生器</a>
+      <a href="#checklist">閉環清單</a>
+    </nav>
+    <div class="topbar-actions">
+      <button class="phase-chip" id="phaseChip" type="button" aria-label="跳至節奏計時器">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="phaseChipText">00:00 · 就緒</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="container hero" id="top">
+      <div>
+        <p class="eyebrow">S3 AI 課程科組 · 試堂標準作業 · V5</p>
+        <h1>高試堂轉化比率<br><em>注意事項和流程</em></h1>
+        <p class="hero-lede">
+          為令新人導師也可以有高效的試堂轉化率，請詳細查核以下試堂注意流程。
+          本頁把 Notion V5 重整為可互動操作的現場指引——含節奏計時、家長回饋文字產生器、與閉環責任清單。
+        </p>
+        <div class="button-row">
+          <a class="button primary" href="#generator">打開回饋產生器 <span aria-hidden="true">→</span></a>
+          <a class="button secondary" href="#timer">開始 60 分鐘彩排</a>
+        </div>
+      </div>
+      <aside class="kpi-card" aria-label="轉化目標">
+        <p class="kpi-label">轉化目標</p>
+        <p class="kpi-value">&gt;70%</p>
+        <p class="kpi-note">新人導師亦可達成的試堂轉化基準線</p>
+        <ul class="kpi-list">
+          <li>試堂目的：展示 Uni+ 解決特定卡點的精準降維能力</li>
+          <li>留下無可辯駁的學術實證，而非上一堂普通補習課</li>
+          <li>回饋黃金三角直接為 CSM 鋪平報讀閉環</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="section container" id="principles">
+      <div class="section-head">
+        <div>
+          <p class="section-label">00 · 核心原則</p>
+          <h2>三條鐵律，先記住再進場。</h2>
+        </div>
+        <p class="section-intro">轉化第一性原理、多進度平衡、回饋黃金三角——整份 V5 都圍著這三件事轉。</p>
+      </div>
+
+      <div class="principle-grid">
+        <article class="principle-card">
+          <span class="tag">第一性原理</span>
+          <h3>轉化，不是補習</h3>
+          <p>試堂的目的不是上一堂普通的補習課，而是向家長與學生展示 Uni+ 解決特定卡點的精準降維能力，並留下無可辯駁的學術實證。</p>
+        </article>
+        <article class="principle-card">
+          <span class="tag">多進度平衡</span>
+          <h3>試堂 40% · 舊生 60%</h3>
+          <p>試堂生動手做題的窗口，即是導師巡視、指導舊生的安全節奏。</p>
+          <div class="split-bar" aria-hidden="true">
+            <span class="split-trial">試堂 40%</span>
+            <span class="split-existing">舊生 60%</span>
+          </div>
+        </article>
+        <article class="principle-card">
+          <span class="tag">回饋黃金三角</span>
+          <h3>賦能 → 痛點 → 方案</h3>
+          <p>特質賦能（認同感）➔ 精準指出學術錯漏（痛點）➔ 專屬改善方案（購買理由），直接為 CSM 鋪平報讀閉環之路。</p>
+        </article>
+      </div>
+
+      <div class="redlines" id="redlines">
+        <h3>紅線清單 · 嚴禁</h3>
+        <ul>
+          <li>嚴禁在課前 10 分鐘內打開題庫找卷；教材與平板內容必須於開課前 15 分鐘在桌面上就緒。</li>
+          <li>嚴禁學生即堂自選課題；課前備課需先準備好相關教材、筆記與互動教學內容。</li>
+          <li>若學生卡住，嚴禁長篇大論重講——改用短動詞指令指向題目當下步驟。</li>
+          <li>家長回饋嚴禁與體制內學校或競品做任何拉踩比較；措辭客觀、專業、聚焦學術增量。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section container" id="timeline">
+      <div class="section-head">
+        <div>
+          <p class="section-label">01 · 全景地圖</p>
+          <h2>試堂時序總表（60 分鐘課時）</h2>
+        </div>
+        <p class="section-intro">點選任一時間節點，查看該段的核心動作、產出與責任人。</p>
+      </div>
+      <div class="timeline-wrap">
+        <div class="timeline-track" id="timelineTrack" role="tablist" aria-label="試堂時序"></div>
+        <div class="timeline-detail" id="timelineDetail" role="tabpanel"></div>
+      </div>
+    </section>
+
+    <section class="section container" id="flow">
+      <div class="section-head">
+        <div>
+          <p class="section-label">02 · 現場流程規範</p>
+          <h2>Classroom UX Flow · 60 分鐘不翻車時間鎖</h2>
+        </div>
+        <p class="section-intro">試堂生單點專注力極限為 10–12 分鐘。導師必須嚴格按照節奏執行，不超時、不拖泥帶水。</p>
+      </div>
+      <div class="flow-grid" id="flowGrid"></div>
+    </section>
+
+    <section class="section container" id="timer">
+      <div class="section-head">
+        <div>
+          <p class="section-label">03 · 節奏彩排</p>
+          <h2>60 分鐘試堂計時器</h2>
+        </div>
+        <p class="section-intro">新人導師可對著計時器彩排。進入下一階段時會跳出提示。</p>
+      </div>
+      <div class="timer-panel">
+        <div class="timer-display">
+          <p class="timer-phase-name" id="timerPhaseName">課前就緒</p>
+          <div class="timer-clock" id="timerClock" aria-live="polite">00:00</div>
+          <p style="margin:0;color:var(--muted);font-size:.88rem;">正計時 · 60:00 結束</p>
+          <div class="timer-controls">
+            <button class="button primary small" id="startTimer" type="button">開始</button>
+            <button class="button ghost small" id="resetTimer" type="button">重設</button>
+          </div>
+        </div>
+        <div class="phase-progress" id="phaseProgress" aria-label="階段進度"></div>
+      </div>
+    </section>
+
+    <section class="section container" id="generator">
+      <div class="section-head">
+        <div>
+          <p class="section-label">04 · 課後家長文字回饋</p>
+          <h2>模組化報告產生器</h2>
+        </div>
+        <p class="section-intro">試堂結束後 30 分鐘內必發（最遲下課當天離校前）。選模組、填變數，一鍵複製四段式學術報告。</p>
+      </div>
+      <div class="generator">
+        <form class="gen-form" id="reportForm" autocomplete="off">
+          <div class="field">
+            <label for="studentName">學生姓名</label>
+            <input type="text" id="studentName" placeholder="例：Chan Tai Man" value="">
+          </div>
+          <div class="field">
+            <label for="topicName">今日核心課題</label>
+            <input type="text" id="topicName" placeholder="例：Prompt 結構與條件約束" value="">
+          </div>
+          <div class="field">
+            <label for="questionType">課堂產出認證（題型）</label>
+            <input type="text" id="questionType" placeholder="例：Level 2 變種 Prompt 改寫題" value="">
+          </div>
+
+          <div class="field">
+            <label>學習特質觀察（模組一 · 4 選 1）</label>
+            <div class="choice-grid" id="moduleChoices"></div>
+          </div>
+
+          <div class="field">
+            <label>學術錯漏診斷 ＆ 常規處方（模組二＋三 · 3 選 1）</label>
+            <div class="choice-grid" id="pairingChoices"></div>
+          </div>
+
+          <div class="field">
+            <label for="pairVar">配對變數（填入診斷句中的 [ ]）</label>
+            <input type="text" id="pairVar" placeholder="依所選配對自動建議，可自行改寫">
+            <p style="margin:6px 0 0;font-size:.8rem;color:var(--muted);" id="pairVarHint"></p>
+          </div>
+        </form>
+
+        <div class="gen-preview">
+          <div class="preview-toolbar">
+            <h3>四段式報告預覽</h3>
+            <button class="button primary small" id="copyReport" type="button">一鍵複製</button>
+          </div>
+          <pre id="reportPreview"></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="checklist">
+      <div class="section-head">
+        <div>
+          <p class="section-label">05 · 試堂全流程閉環</p>
+          <h2>工業級責任劃分 Checklist</h2>
+        </div>
+        <p class="section-intro">逐項勾選。進度會暫存在本機瀏覽器，方便同一堂試堂中途離開再回來。</p>
+      </div>
+      <div class="check-toolbar">
+        <div class="role-filters" role="group" aria-label="責任人篩選">
+          <button class="button ghost small" type="button" data-role="all" aria-pressed="true">全部</button>
+          <button class="button ghost small" type="button" data-role="tutor" aria-pressed="false">導師</button>
+          <button class="button ghost small" type="button" data-role="csm" aria-pressed="false">CSM</button>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <span class="progress-text" id="checkProgress">0 / 8</span>
+          <button class="button ghost small" id="resetChecklist" type="button">重設清單</button>
+        </div>
+      </div>
+      <div class="check-list" id="checkList"></div>
+    </section>
+  </main>
+
+  <footer class="container">
+    Uni+ Education · 高試堂轉化比率注意事項和流程 V5 · S3 AI 課程科組內部指引<br>
+    本頁可離線開啟。請勿把內部 SOP 外傳至公開渠道。
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    /**
+     * SUBJECT_EXAMPLES — AI-course swaps for the original 數理 examples.
+     * Edit this object only if the S3 AI syllabus uses different wording.
+     * Original V5 數理 examples are preserved in comments for audit.
+     */
+    var SUBJECT_EXAMPLES = {
+      // Original: 「移項先劃界，括號先鎖定」
+      mantra: "先鎖約束，再寫指令；輸出格式，最後定",
+      // Original: 負號分配 / 移項代數變號 / 繁複運算
+      pairing1Options: "條件漏寫／輸出格式跳步／多步驟指令省略中段",
+      pairing1Default: "條件漏寫",
+      // Original: 初中代數恆等式 / 幾何代號 / 交叉相乘
+      pairing2Options: "Token 與上下文長度／Few-shot 範例結構／評分準則拆解",
+      pairing2Default: "Few-shot 範例結構",
+      // pairing3 uses 視覺化分鏡圖解法 — kept as-is (generalises)
+      pairing3Focus: "長 Prompt 解構焦慮、複合條件梳理較慢"
+    };
+
+    var PHASES = [
+      {
+        id: "pre24",
+        time: "課前 T-24H～T-5H",
+        short: "課前預檢",
+        title: "CSM + 新人導師預檢",
+        detail: "預檢學生學習進度與痛點。課前備課需先準備好相關教材內容、筆記與互動教學內容（禁止學生即堂自選課題）。系統鎖定目標課題，生成「數位雙模套組」。",
+        role: "CSM + 導師",
+        output: "數位雙模套組鎖定",
+        timerStart: null,
+        timerEnd: null
+      },
+      {
+        id: "pre15",
+        time: "課前 T-15M",
+        short: "物料就緒",
+        title: "載入數位雙模套組",
+        detail: "新人導師確認物料：平板互動看板載入、精準的教學內容和筆記。硬性規則——嚴禁在課前 10 分鐘內打開題庫找卷。",
+        role: "導師",
+        output: "平板已開、筆記備好",
+        timerStart: null,
+        timerEnd: null
+      },
+      {
+        id: "p0",
+        time: "課堂 0–3M",
+        short: "破冰",
+        title: "破冰與目標鎖定",
+        detail: "「我是你的數理指導教練」風格開場（AI 課可改為「AI 學習指導教練」）。閉環驗證話術鎖定今日課題與卡點。",
+        role: "導師",
+        output: "目標對齊",
+        timerStart: 0,
+        timerEnd: 3 * 60
+      },
+      {
+        id: "p1",
+        time: "課堂 3–20M",
+        short: "Phase 1",
+        title: "首勝戰役 · TLA",
+        detail: "基礎拿下 ➔ 互動看板攻克核心變種題。Cycle 1 建立安全感拿下 First Blood；Cycle 2 思維工具化製造 Aha Moment。",
+        role: "導師",
+        output: "Level 1–2 大紅勾",
+        timerStart: 3 * 60,
+        timerEnd: 20 * 60
+      },
+      {
+        id: "p2",
+        time: "課堂 20–50M",
+        short: "Phase 2",
+        title: "鞏固驗收",
+        detail: "Cycle 3 題型拓展（20–35M）+ 攻克核心測考題／堂課成效驗收小測（35–50M）。此階段導師可大比例專注舊生。",
+        role: "導師",
+        output: "MCQ 小測批改",
+        timerStart: 20 * 60,
+        timerEnd: 50 * 60
+      },
+      {
+        id: "p3",
+        time: "課堂 50–55M",
+        short: "Phase 3",
+        title: "雙向存檔",
+        detail: "數位看板拍照存檔 + 實體卷紅筆大勾。學生手機存檔思維框架；導師拍下成果作家長報告實證。",
+        role: "導師 ➔ 學生",
+        output: "雙向照片留痕",
+        timerStart: 50 * 60,
+        timerEnd: 55 * 60
+      },
+      {
+        id: "p4",
+        time: "課堂 55–60M",
+        short: "課尾交付",
+        title: "心錨植入 ＆ 前台交付",
+        detail: "正向心錨植入 ➔ 前台專業交付 30 秒（Moment of Truth）。三句話：特質肯定、實證呈現、預期管理。",
+        role: "導師 ➔ 家長",
+        output: "30 秒專業交接",
+        timerStart: 55 * 60,
+        timerEnd: 60 * 60
+      },
+      {
+        id: "post30",
+        time: "課後 T+30M 內",
+        short: "Teams 報告",
+        title: "推送試堂後回饋",
+        detail: "導師推送「試堂後回饋文字 + 課堂實證照片」至 Teams 科組 + CS 群組。複製四段式報告並 @CSM 接棒。",
+        role: "導師 ➔ CSM",
+        output: "四段式報告 + 照片",
+        timerStart: null,
+        timerEnd: null
+      },
+      {
+        id: "post24",
+        time: "課後 T+24H 內",
+        short: "銷售閉環",
+        title: "CSM 學位鎖定",
+        detail: "CSM 引用學術處方主動回訪，完成學位鎖定與報讀閉環（T+1Day 上午前）。",
+        role: "CSM",
+        output: "報讀閉環",
+        timerStart: null,
+        timerEnd: null
+      }
+    ];
+
+    var TIMER_LANES = [
+      { id: "ice", label: "破冰", start: 0, end: 3 * 60 },
+      { id: "p1", label: "Phase 1 首勝", start: 3 * 60, end: 20 * 60 },
+      { id: "c3", label: "Cycle 3 拓展", start: 20 * 60, end: 35 * 60 },
+      { id: "quiz", label: "小測驗收", start: 35 * 60, end: 50 * 60 },
+      { id: "archive", label: "雙向存檔", start: 50 * 60, end: 55 * 60 },
+      { id: "handoff", label: "前台交付", start: 55 * 60, end: 60 * 60 }
+    ];
+
+    var BOUNDARY_TOASTS = {
+      180: "進入 Phase 1：首勝戰役",
+      1200: "進入 Phase 2：Cycle 3 題型拓展",
+      2100: "進入小測驗收時段",
+      3000: "進入 Phase 3：雙向存檔",
+      3300: "進入課尾心錨與前台交付"
+    };
+
+    var FLOW_SECTIONS = [
+      {
+        title: "課前載入：徹底杜絕現場挑題",
+        time: "課前 15 分鐘",
+        html:
+          "<p>硬性規則：新人導師<strong>嚴禁在課前 10 分鐘內打開題庫找卷</strong>。教材與平板內容必須於開課前 15 分鐘在桌面上就緒。</p>" +
+          "<p><strong>教材標準化配置【試堂數位雙模套組】</strong>（前置完成）：</p>" +
+          "<ul>" +
+          "<li>以最終解決試考題為目標的教學筆記：最少 3 道相關課題重點題（Level 1 基礎核心、Level 2 典型變種、Level 3 綜合思維）。</li>" +
+          "<li>Uni+ 電子互動看板（iPad 或螢幕）：預先載入視覺化思維導圖、步驟分解動態框、課題重點總結。</li>" +
+          "</ul>"
+      },
+      {
+        title: "開場破冰與驗證",
+        time: "0–3 分鐘 · 水",
+        html: "",
+        scripts: [
+          {
+            label: "閉環驗證話術",
+            text: "Hello [同學名]，放學過嚟辛苦喇。CSM 同事話我知你學校最近學緊 [課題名稱]，今日嚟 Uni+ 我哋專注做一件事：睇下平時做題有邊啲位容易卡住，幫你梳理順暢。我哋先睇一個核心解題框架，等陣做題你會發現思路清晰好多。(最好以分鏡圖解法做教學示範)"
+          }
+        ],
+        note: "時間管理鐵律：試堂生單點專注力極限為 10–12 分鐘。導師必須嚴格按照節奏執行。"
+      },
+      {
+        title: "Phase 1：首勝與 Aha Moment 爆發",
+        time: "3–20 分鐘",
+        html:
+          "<div class=\"cycle-box\">" +
+          "<h4>Cycle 1：建立安全感（7–8 分鐘）➔ 拿下首勝 First Blood</h4>" +
+          "<div class=\"cycle-steps\">" +
+          "<div class=\"cycle-step\"><b>拆解 2m · 水</b>螢幕示範分鏡圖像講解或 Step 1 與 Step 2,3 極簡架構。</div>" +
+          "<div class=\"cycle-step\"><b>練習 3m · 土</b>學生做 Level 1；導師轉身處理舊生。</div>" +
+          "<div class=\"cycle-step\"><b>肯定 2m · 火</b>紅筆大紅勾 + 特質肯定。</div>" +
+          "</div></div>" +
+          "<div class=\"cycle-box\">" +
+          "<h4>Cycle 2：思維工具化（10–12 分鐘）➔ 製造 Aha Moment</h4>" +
+          "<div class=\"cycle-steps\">" +
+          "<div class=\"cycle-step\"><b>看板引導 3m · 金</b>點亮 Uni+ 電子互動看板。</div>" +
+          "<div class=\"cycle-step\"><b>解題 5m · 金</b>學生對照看板挑戰 Level 2；導師巡視舊生。</div>" +
+          "<div class=\"cycle-step\"><b>工具驗收 3m · 木</b>引導提問 + 大力認可。</div>" +
+          "</div></div>",
+        scripts: [
+          {
+            label: "Cycle 1 · Learning 指令",
+            text: "跟住呢兩個框架步驟試下呢條。你做嗰陣我完全唔打擾你，寫完話我知。"
+          },
+          {
+            label: "降階防禦機制（學生卡住時）",
+            text: "第一步，先將題目入面嘅未知數同已知數字圈出嚟。"
+          },
+          {
+            label: "Cycle 1 · Assessment 肯定",
+            text: "非常好！邏輯理解完全到位，步驟一清晰，節奏即刻出嚟。"
+          },
+          {
+            label: "Cycle 2 · Teaching 看板引導",
+            text: "遇到變種題型時，可以用呢套『Uni+ 視覺化解題矩陣』。特別留意螢幕上標註嘅呢個關鍵陷阱（例：條件漏寫、輸出格式跳步、隱藏約束）。記住呢句檢驗法則/口訣：『" + SUBJECT_EXAMPLES.mantra + "』。"
+          },
+          {
+            label: "Cycle 2 · Assessment 思維回饋",
+            text: "做得好！喺呢一步，你頭先係點樣運用電子看板嘅檢驗法則/口訣避開陷阱嘅？\n\n（學生答出關鍵點後）\n無錯！將思維步驟化/實體化，解題自然穩健。"
+          }
+        ],
+        note: "若學生卡住，嚴禁長篇大論重講！只給短動詞指令。"
+      },
+      {
+        title: "Phase 2：鞏固演練與綜合挑戰",
+        time: "20–50 分鐘",
+        html:
+          "<p><strong>Cycle 3 題型拓展（20–35 分鐘）：</strong>學生運用剛掌握的框架，挑戰 Level 3 綜合題與配套題型（此階段導師可大比例專注於舊生批改與輔導）。</p>" +
+          "<p><strong>堂課成效驗收小測（35–50 分鐘）：</strong>實體 MCQ 測試卷 + 答案上傳電子平台收尾。導師即場用紅筆批改，圈出亮點，寫上評語。</p>"
+      },
+      {
+        title: "Phase 3：數位雙向存檔 ＆ 課尾賦能",
+        time: "50–55 分鐘",
+        scripts: [
+          {
+            label: "學生手機存檔",
+            text: "[同學名]，拎手機出嚟，影低平板上面呢套 Uni+ 思維框架，同埋你剛剛親手做啱嘅變種題步驟。返去溫習或者之後學校做題卡關嗰陣，隨時開相冊睇返，呢個係你專屬嘅解題工具。"
+          }
+        ],
+        html:
+          "<p><strong>導師拍照備份：</strong>拍下「學生工整步驟 + 滿分大紅勾 + 實體 MCQ 測驗卷分數和導師備注」作為家長報告實證素材。</p>" +
+          "<p><strong>卷面視覺打造：</strong>在小測卷上方用螢光筆標註：「★ 測考必備變種題型 100% 獨立解出！順利完成今日任務目標！」</p>"
+      },
+      {
+        title: "課尾心錨植入 ＆ 前台交付",
+        time: "55–60 分鐘",
+        scripts: [
+          {
+            label: "學生正向心錨",
+            text: "今日這堂課用電子框架梳理後，係咪覺得思路清晰好多？（等學生點頭）\n\n陣間見到媽咪，可以大方同佢講：『我今日喺 Uni+ 學咗一套好清晰嘅解題框架，仲自己獨立解出咗兩條平時好易卡關嘅測考常出變種題，我影咗相，返屋企開俾你睇！』"
+          },
+          {
+            label: "前台專業交付 30 秒 · Moment of Truth",
+            text: "【特質肯定】[家長稱呼]，[同學名] 今日上堂非常專注，邏輯理解力好強。\n\n【實證呈現】您睇下呢份產出，最後呢道綜合變種題結構幾深，佢掌握咗我哋引導嘅思維框架後，完全靠自己獨立推導出嚟，同學手機亦已經拍照存低咗相應嘅思維工具看板。\n\n【預期管理】同學好有潛力，後續只要喺 [例如：步驟規範化／驗算習慣／Prompt 約束完整性] 上做少少微調，成績發揮會更加穩定。詳細嘅學術診斷報告，我會今日教學工作完成後發至 WhatsApp 群組讓您參考！\n\n（禮貌致意，瀟灑轉身回教室。）"
+          }
+        ]
+      }
+    ];
+
+    var MODULES = [
+      {
+        id: "A",
+        title: "A 型：反應敏銳、領悟力強（中上潛力型）",
+        text: "同學數理直覺與邏輯吸收力非常出色，面對新概念一點即通。唯目前在解題節奏上存在『思維速度快於書寫步驟』的傾向，偶爾會簡略中間關鍵推理。只要建立標準化書寫節奏，整體答題穩定度將顯著躍升。"
+      },
+      {
+        id: "B",
+        title: "B 型：細緻謹慎、基礎扎實（後勁穩健型）",
+        text: "同學展現出極強的專注力與嚴謹求實的學習態度。課堂前半段面對陌生結構較為審慎，在引導其掌握視覺化思維架構後，後半堂展現出強大的推導韌性與解題穩定度，屬於後勁極為充足的蓄力型學生。"
+      },
+      {
+        id: "C",
+        title: "C 型：認真踏實、急需掌握底層方法（突破型）",
+        text: "同學學習態度十分端正認真，筆記整潔。能看出過去在數理科上花費了不少努力，但在面對變種題型時，有時缺乏結構化的破題切入點。今日課堂引導其掌握本質原理後，解題速度與靈活性均有可見的提升。"
+      },
+      {
+        id: "D",
+        title: "D 型：主動探究、思維開闊（衝星拔尖型）",
+        text: "同學具備優秀的發問意識與邏輯思辨力，不單追求計算出正確答案，更能主動思考各步驟之間的因果關係。在引導高階思維架構後展現出極佳的知識遷移能力，具備衝擊頂尖優良成績的素養。"
+      }
+    ];
+
+    var PAIRINGS = [
+      {
+        id: "1",
+        title: "配對 1：步驟跳躍、審題急促、非技術性失誤",
+        diagnosis: "運算敏捷但解題過程稍顯急躁，在 [" + SUBJECT_EXAMPLES.pairing1Options + "] 環節習慣跳步，容易造成『明明完全理解、卷面卻產生非技術性失分』的情況。",
+        diagnosisTemplate: "運算敏捷但解題過程稍顯急躁，在 [{var}] 環節習慣跳步，容易造成『明明完全理解、卷面卻產生非技術性失分』的情況。",
+        prescription: "常規課程將重點為其導入 Uni+ 『三秒眼動驗算清單』與『步驟錨定法』，在完全保留其敏捷運算優勢的基礎上，建立自動化防漏機制，穩穩鎖定卷面分數。",
+        varHint: "建議填：" + SUBJECT_EXAMPLES.pairing1Options,
+        varDefault: SUBJECT_EXAMPLES.pairing1Default
+      },
+      {
+        id: "2",
+        title: "配對 2：先驗概念需鞏固、知識點調用卡關",
+        diagnosis: "對當前新課題的直觀理解良好，但每當需要聯乘調用過往知識板塊（如：[" + SUBJECT_EXAMPLES.pairing2Options + "]）時，會出現短暫的思維中斷，影響解題流暢度。",
+        diagnosisTemplate: "對當前新課題的直觀理解良好，但每當需要聯乘調用過往知識板塊（如：[{var}]）時，會出現短暫的思維中斷，影響解題流暢度。",
+        prescription: "常規課程前 4 堂，導師每週特設 5–8 分鐘『微型先驗知識修復模組（Micro-Patch）』，在不佔用新進度的前提下精準補強基礎盲區，令新舊知識無縫咬合。",
+        varHint: "建議填：" + SUBJECT_EXAMPLES.pairing2Options,
+        varDefault: SUBJECT_EXAMPLES.pairing2Default
+      },
+      {
+        id: "3",
+        title: "配對 3：" + SUBJECT_EXAMPLES.pairing3Focus,
+        diagnosis: "純計算基本功扎實，但在面對文字長題或複合條件時，暫時欠缺高效的『信息篩選機制』，容易對繁複條件產生心理抗拒，不知從何下筆。",
+        diagnosisTemplate: "純計算基本功扎實，但在面對文字長題或複合條件時，暫時欠缺高效的『信息篩選機制』，容易對繁複條件產生心理抗拒，不知從何下筆。",
+        prescription: "常規課程將重點訓練『Uni+ 視覺化分鏡圖解法』，引導同學運用圖像/圖表與符號將多行條件提煉為『已知、約束、求解目標』三步標準路徑，從容應對各類綜合應用題。",
+        varHint: "此配對無需額外變數（可留空或寫補充說明）",
+        varDefault: ""
+      }
+    ];
+
+    var CHECKLIST = [
+      { id: "c1", when: "課前 T-24H 至 T-5H", action: "課前預檢與教材鎖定", output: "系統鎖定目標課題，生成「數位雙模套組」，禁止現場換題", role: "both", roleLabel: "CSM + 導師" },
+      { id: "c2", when: "課前 T-15M", action: "載入數位雙模套組", output: "平板已打開互動工具，備好課堂筆記", role: "tutor", roleLabel: "導師" },
+      { id: "c3", when: "課堂 T+20M", action: "Phase 1 首勝落實", output: "學生完成 Level 1–2 題目，獲得大紅勾", role: "tutor", roleLabel: "導師" },
+      { id: "c4", when: "課堂 T+50M", action: "雙向存檔留痕", output: "學生手機拍下看板與步驟；導師拍下成果備份", role: "tutor", roleLabel: "導師 ➔ 學生" },
+      { id: "c5", when: "課堂 T+55M", action: "實體筆記包裝", output: "批改測考卷，螢光筆標記評語", role: "tutor", roleLabel: "導師" },
+      { id: "c6", when: "課堂 T+60M", action: "前台交付與心錨", output: "叮囑學生分享台詞；前台 30 秒高專業交接", role: "tutor", roleLabel: "導師 ➔ 家長" },
+      { id: "c7", when: "課後 T+30M 內", action: "Teams 報告推送", output: "複製 4 段式報告並附上照片，發布至服務群，@CSM 接棒", role: "tutor", roleLabel: "導師 ➔ CSM" },
+      { id: "c8", when: "課後 T+24H 內", action: "銷售閉環推進", output: "CSM 引用導師報告中的「專屬處方」，發送課表建議，鎖定學位報讀", role: "csm", roleLabel: "CSM" }
+    ];
+
+    var STORAGE_KEY = "uniplus-trial-checklist-v5";
+    var TOTAL_SECONDS = 60 * 60;
+
+    function $(id) { return document.getElementById(id); }
+
+    function showToast(msg) {
+      var el = $("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(function () { el.classList.remove("show"); }, 2600);
+    }
+
+    async function copyText(text, btn) {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); } finally { document.body.removeChild(ta); }
+      }
+      if (btn) {
+        var old = btn.textContent;
+        btn.textContent = "已複製";
+        setTimeout(function () { btn.textContent = old; }, 1400);
+      }
+      showToast("已複製到剪貼簿");
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    /* ---------- Timeline ---------- */
+    function renderTimeline(activeId) {
+      var track = $("timelineTrack");
+      var detail = $("timelineDetail");
+      var active = PHASES.find(function (p) { return p.id === activeId; }) || PHASES[0];
+
+      track.innerHTML = PHASES.map(function (p) {
+        var isActive = p.id === active.id;
+        return (
+          "<button type=\"button\" class=\"timeline-marker" + (isActive ? " active" : "") + "\" role=\"tab\" aria-selected=\"" + isActive + "\" data-phase=\"" + p.id + "\">" +
+          "<span class=\"t-time\">" + escapeHtml(p.time) + "</span>" +
+          "<span class=\"t-title\">" + escapeHtml(p.short) + "</span>" +
+          "</button>"
+        );
+      }).join("");
+
+      detail.innerHTML =
+        "<h3>" + escapeHtml(active.title) + "</h3>" +
+        "<p>" + escapeHtml(active.detail) + "</p>" +
+        "<div class=\"timeline-meta\">" +
+        "<span class=\"pill\">時段：" + escapeHtml(active.time) + "</span>" +
+        "<span class=\"pill role-tutor\">責任：" + escapeHtml(active.role) + "</span>" +
+        "<span class=\"pill\">產出：" + escapeHtml(active.output) + "</span>" +
+        "</div>";
+
+      track.querySelectorAll("[data-phase]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          renderTimeline(btn.getAttribute("data-phase"));
+        });
+      });
+    }
+
+    /* ---------- Flow + scripts ---------- */
+    function renderFlow() {
+      var grid = $("flowGrid");
+      grid.innerHTML = FLOW_SECTIONS.map(function (sec, idx) {
+        var scriptsHtml = (sec.scripts || []).map(function (sc, sidx) {
+          var sid = "script-" + idx + "-" + sidx;
+          return (
+            "<div class=\"script-block\">" +
+            "<div class=\"script-label\">" +
+            "<span>話術 · " + escapeHtml(sc.label) + "</span>" +
+            "<button class=\"button ghost small\" type=\"button\" data-copy-script=\"" + sid + "\">複製</button>" +
+            "</div>" +
+            "<pre class=\"script-text\" id=\"" + sid + "\">" + escapeHtml(sc.text) + "</pre>" +
+            "</div>"
+          );
+        }).join("");
+
+        return (
+          "<article class=\"phase-block\">" +
+          "<header>" +
+          "<h3>" + escapeHtml(sec.title) + "</h3>" +
+          "<span class=\"phase-time\">" + escapeHtml(sec.time) + "</span>" +
+          "</header>" +
+          (sec.html || "") +
+          scriptsHtml +
+          (sec.note ? "<p class=\"note-callout\">" + escapeHtml(sec.note) + "</p>" : "") +
+          "</article>"
+        );
+      }).join("");
+
+      grid.querySelectorAll("[data-copy-script]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var el = $(btn.getAttribute("data-copy-script"));
+          copyText(el.textContent, btn);
+        });
+      });
+    }
+
+    /* ---------- Timer ---------- */
+    var secondsElapsed = 0;
+    var timerId = null;
+    var lastBoundary = -1;
+
+    function formatTime(sec) {
+      var m = Math.floor(sec / 60);
+      var s = sec % 60;
+      return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+    }
+
+    function currentLane(sec) {
+      for (var i = 0; i < TIMER_LANES.length; i++) {
+        var lane = TIMER_LANES[i];
+        if (sec >= lane.start && sec < lane.end) return lane;
+      }
+      if (sec >= TOTAL_SECONDS) return TIMER_LANES[TIMER_LANES.length - 1];
+      return null;
+    }
+
+    function renderPhaseProgress() {
+      var wrap = $("phaseProgress");
+      wrap.innerHTML = TIMER_LANES.map(function (lane) {
+        var pct = 0;
+        var cls = "";
+        if (secondsElapsed >= lane.end) {
+          pct = 100;
+          cls = " done";
+        } else if (secondsElapsed >= lane.start) {
+          pct = ((secondsElapsed - lane.start) / (lane.end - lane.start)) * 100;
+          cls = " current";
+        }
+        return (
+          "<div class=\"phase-progress-row" + cls + "\">" +
+          "<span class=\"label\">" + escapeHtml(lane.label) + "</span>" +
+          "<div class=\"bar\"><i style=\"width:" + pct.toFixed(1) + "%\"></i></div>" +
+          "<span>" + formatTime(lane.start) + "</span>" +
+          "</div>"
+        );
+      }).join("");
+    }
+
+    function renderTimer() {
+      $("timerClock").textContent = formatTime(secondsElapsed);
+      var lane = currentLane(secondsElapsed);
+      var phaseName = secondsElapsed === 0 && !timerId
+        ? "課前就緒"
+        : (lane ? lane.label : "試堂結束");
+      $("timerPhaseName").textContent = phaseName;
+
+      var chip = $("phaseChip");
+      var chipText = $("phaseChipText");
+      if (timerId) {
+        chip.classList.add("running");
+        chipText.textContent = formatTime(secondsElapsed) + " · " + phaseName;
+      } else if (secondsElapsed > 0) {
+        chip.classList.remove("running");
+        chipText.textContent = formatTime(secondsElapsed) + " · 暫停";
+      } else {
+        chip.classList.remove("running");
+        chipText.textContent = "00:00 · 就緒";
+      }
+
+      renderPhaseProgress();
+
+      if (BOUNDARY_TOASTS[secondsElapsed] && secondsElapsed !== lastBoundary) {
+        lastBoundary = secondsElapsed;
+        showToast(BOUNDARY_TOASTS[secondsElapsed]);
+      }
+    }
+
+    function stopTimer() {
+      clearInterval(timerId);
+      timerId = null;
+      $("startTimer").textContent = secondsElapsed === 0 ? "開始" : "繼續";
+      renderTimer();
+    }
+
+    function startTimer() {
+      if (timerId) {
+        stopTimer();
+        showToast("計時已暫停");
+        return;
+      }
+      if (secondsElapsed >= TOTAL_SECONDS) secondsElapsed = 0;
+      timerId = setInterval(function () {
+        secondsElapsed += 1;
+        renderTimer();
+        if (secondsElapsed >= TOTAL_SECONDS) {
+          stopTimer();
+          showToast("60 分鐘到 · 試堂節奏彩排完成");
+          $("startTimer").textContent = "再來一次";
+        }
+      }, 1000);
+      $("startTimer").textContent = "暫停";
+      renderTimer();
+    }
+
+    /* ---------- Report generator ---------- */
+    function renderModuleChoices() {
+      $("moduleChoices").innerHTML = MODULES.map(function (m, i) {
+        return (
+          "<label class=\"choice\">" +
+          "<input type=\"radio\" name=\"module\" value=\"" + m.id + "\"" + (i === 0 ? " checked" : "") + ">" +
+          "<span><strong>" + escapeHtml(m.title) + "</strong><small>" + escapeHtml(m.text.slice(0, 42)) + "…</small></span>" +
+          "</label>"
+        );
+      }).join("");
+    }
+
+    function renderPairingChoices() {
+      $("pairingChoices").innerHTML = PAIRINGS.map(function (p, i) {
+        return (
+          "<label class=\"choice\">" +
+          "<input type=\"radio\" name=\"pairing\" value=\"" + p.id + "\"" + (i === 0 ? " checked" : "") + ">" +
+          "<span><strong>" + escapeHtml(p.title) + "</strong><small>" + escapeHtml(p.prescription.slice(0, 40)) + "…</small></span>" +
+          "</label>"
+        );
+      }).join("");
+    }
+
+    function selectedModule() {
+      var el = document.querySelector("input[name=\"module\"]:checked");
+      return MODULES.find(function (m) { return m.id === (el && el.value); }) || MODULES[0];
+    }
+
+    function selectedPairing() {
+      var el = document.querySelector("input[name=\"pairing\"]:checked");
+      return PAIRINGS.find(function (p) { return p.id === (el && el.value); }) || PAIRINGS[0];
+    }
+
+    function syncPairVar() {
+      var pairing = selectedPairing();
+      $("pairVarHint").textContent = pairing.varHint;
+      if (!$("pairVar").dataset.touched) {
+        $("pairVar").value = pairing.varDefault;
+      }
+    }
+
+    function buildReport() {
+      var name = ($("studentName").value || "[同學名]").trim();
+      var topic = ($("topicName").value || "[課題名稱]").trim();
+      var qtype = ($("questionType").value || "[具體題型]").trim();
+      var mod = selectedModule();
+      var pairing = selectedPairing();
+      var v = ($("pairVar").value || "").trim();
+      var diagnosis = pairing.diagnosisTemplate.replace("{var}", v || "（請填入具體環節）");
+      if (pairing.id === "3") {
+        diagnosis = pairing.diagnosisTemplate;
+      }
+
+      return (
+        "【Uni+ 課堂即時學術診斷與學習反饋】\n" +
+        "學生姓名：" + name + "\n" +
+        "今日核心課題：" + topic + "\n" +
+        "課堂產出認證：" + qtype + " 零提示獨立攻克（已由同學拍照存入手機作為複習工具）\n\n" +
+        "【學習特質深度觀察】\n" +
+        mod.text + "\n\n" +
+        "【學術錯漏精準診斷 (Debug)】\n" +
+        diagnosis + "\n\n" +
+        "【Uni+ 常規課程調優處方 (Roadmap)】\n" +
+        pairing.prescription + "\n\n" +
+        "附件：已附上今日同學堂上成功獨立解出的【工整解題筆記】與【電子思維看板】照片。\n" +
+        "課程顧問 @CSM 稍後會為您跟進最適合同學的學習進度規劃與時間安排。"
+      );
+    }
+
+    function updateReportPreview() {
+      $("reportPreview").textContent = buildReport();
+    }
+
+    /* ---------- Checklist ---------- */
+    var roleFilter = "all";
+    var checkedMap = {};
+
+    function loadChecklist() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) checkedMap = JSON.parse(raw) || {};
+      } catch (e) {
+        checkedMap = {};
+      }
+    }
+
+    function saveChecklist() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedMap));
+      } catch (e) { /* private mode */ }
+    }
+
+    function renderChecklist() {
+      var list = $("checkList");
+      var visible = CHECKLIST.filter(function (item) {
+        if (roleFilter === "all") return true;
+        if (roleFilter === "tutor") return item.role === "tutor" || item.role === "both";
+        if (roleFilter === "csm") return item.role === "csm" || item.role === "both";
+        return true;
+      });
+
+      list.innerHTML = visible.map(function (item) {
+        var done = !!checkedMap[item.id];
+        return (
+          "<label class=\"check-item" + (done ? " done" : "") + "\">" +
+          "<input type=\"checkbox\" data-check=\"" + item.id + "\"" + (done ? " checked" : "") + ">" +
+          "<span class=\"check-body\">" +
+          "<strong>" + escapeHtml(item.action) + "</strong>" +
+          "<span>" + escapeHtml(item.output) + " · " + escapeHtml(item.roleLabel) + "</span>" +
+          "</span>" +
+          "<span class=\"when\">" + escapeHtml(item.when) + "</span>" +
+          "</label>"
+        );
+      }).join("");
+
+      var doneCount = CHECKLIST.filter(function (i) { return checkedMap[i.id]; }).length;
+      $("checkProgress").textContent = doneCount + " / " + CHECKLIST.length;
+
+      list.querySelectorAll("[data-check]").forEach(function (cb) {
+        cb.addEventListener("change", function () {
+          var id = cb.getAttribute("data-check");
+          if (cb.checked) checkedMap[id] = true;
+          else delete checkedMap[id];
+          saveChecklist();
+          renderChecklist();
+        });
+      });
+    }
+
+    /* ---------- Boot ---------- */
+    renderTimeline(PHASES[2].id);
+    renderFlow();
+    renderModuleChoices();
+    renderPairingChoices();
+    syncPairVar();
+    updateReportPreview();
+    loadChecklist();
+    renderChecklist();
+    renderTimer();
+
+    $("startTimer").addEventListener("click", startTimer);
+    $("resetTimer").addEventListener("click", function () {
+      stopTimer();
+      secondsElapsed = 0;
+      lastBoundary = -1;
+      $("startTimer").textContent = "開始";
+      renderTimer();
+      showToast("計時已重設");
+    });
+    $("phaseChip").addEventListener("click", function () {
+      $("timer").scrollIntoView({ behavior: "smooth" });
+    });
+
+    ["studentName", "topicName", "questionType", "pairVar"].forEach(function (id) {
+      $(id).addEventListener("input", function () {
+        if (id === "pairVar") $("pairVar").dataset.touched = "1";
+        updateReportPreview();
+      });
+    });
+    document.querySelectorAll("#moduleChoices, #pairingChoices").forEach(function (wrap) {
+      wrap.addEventListener("change", function (e) {
+        if (e.target.name === "pairing") {
+          delete $("pairVar").dataset.touched;
+          syncPairVar();
+        }
+        updateReportPreview();
+      });
+    });
+    $("copyReport").addEventListener("click", function () {
+      copyText(buildReport(), $("copyReport"));
+    });
+
+    document.querySelectorAll(".role-filters button").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        roleFilter = btn.getAttribute("data-role");
+        document.querySelectorAll(".role-filters button").forEach(function (b) {
+          b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+        });
+        renderChecklist();
+      });
+    });
+    $("resetChecklist").addEventListener("click", function () {
+      if (!confirm("確定重設全部勾選？下一堂試堂再用。")) return;
+      checkedMap = {};
+      saveChecklist();
+      renderChecklist();
+      showToast("清單已重設");
+    });
+  }());
+  </script>
+</body>
+</html>
